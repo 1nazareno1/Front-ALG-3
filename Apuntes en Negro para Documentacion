@@ -1,0 +1,57 @@
+*Tema de proyecto:
+
+-Cereales y Calidad
+El Departamento de Cereales y Calidad desarrolla actividades en dos áreas principales:
+*Procesamiento de Cereales
+  -Asesoramiento a comercios e industrias en la elaboración de harinas, panificados, pastas, galletitas, etc.
+  -Análisis de subproductos de cereales.
+  -Investigación aplicada.
+  -Dictado de cursos de capacitación.
+*Gestión de la Calidad
+  -Diseño e implementación de sistemas de gestión de calidad.
+  -Aplicación de HACCP (Análisis de Peligros y Puntos Críticos de Control).
+  -Asesoramiento en normas ISO 9001, 22000 y 14001.
+  -POES-MIP (Procedimientos Operativos Estándar de Saneamiento y Manejo Integrado de Plagas).
+  -Participación en reuniones de normalización de IRAM.
+*Cursos Virtuales
++Ofrecen formación en:
+  -ISO 9001:2015.
+  -Buenas Prácticas de Manufactura (BPM y BPM-ALG).
+  -Inspectores Bromatológicos.
+  -Manejo integrado de plagas en agroalimentación.
+  -POES (Procedimientos de saneamiento).
+  -Manipulación de alimentos (avalado por el Ministerio de Desarrollo Agrario).
+
+/////
+
+*Roles:
+-Nazareno leiva: qa
+-Zapata bengamin: diseñador 
+-Sofia silvera: analista funcional
+-Juan martín randazo: código 1
+-Federico Diaz: código 2
+
+/////
+
+*Vamos a usar:
+-Diseño: figma
+-Af: documentación
+-Lenguaje: java
+
+/////
+
+*Objetivo general:
+-Desarrollar una página web funcional y bien estructurada utilizando HTML y JavaScript.
+
+*Objetivos específicos:
++Estructura y diseño:
+-Crear una interfaz visualmente atractiva.
+-Garantizar un diseño que responda de manera eficiente y que se adapte a distintos dispositivos.
+
++Interactividad y experiencia de usuario:
+-Implementar elementos dinámicos con JavaScript (por ejemplo, efectos visuales, validaciones de formularios).
+-Asegurar una navegación fluida entre las secciones de la página.
+
++Compatibilidad y accesibilidad:
+-Asegurar que la página funcione en diferentes navegadores.
+-Aplicar principios de accesibilidad para mejorar la experiencia de usuarios con discapacidades.
