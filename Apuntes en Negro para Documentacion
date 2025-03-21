@@ -1,26 +1,38 @@
-*Tema de proyecto:
+
+*Posible Tema de proyecto:
 
 -Cereales y Calidad
-El Departamento de Cereales y Calidad desarrolla actividades en dos áreas principales:
 *Procesamiento de Cereales
-  -Asesoramiento a comercios e industrias en la elaboración de harinas, panificados, pastas, galletitas, etc.
-  -Análisis de subproductos de cereales.
-  -Investigación aplicada.
-  -Dictado de cursos de capacitación.
-*Gestión de la Calidad
-  -Diseño e implementación de sistemas de gestión de calidad.
-  -Aplicación de HACCP (Análisis de Peligros y Puntos Críticos de Control).
-  -Asesoramiento en normas ISO 9001, 22000 y 14001.
-  -POES-MIP (Procedimientos Operativos Estándar de Saneamiento y Manejo Integrado de Plagas).
-  -Participación en reuniones de normalización de IRAM.
-*Cursos Virtuales
-+Ofrecen formación en:
-  -ISO 9001:2015.
-  -Buenas Prácticas de Manufactura (BPM y BPM-ALG).
-  -Inspectores Bromatológicos.
-  -Manejo integrado de plagas en agroalimentación.
-  -POES (Procedimientos de saneamiento).
-  -Manipulación de alimentos (avalado por el Ministerio de Desarrollo Agrario).
+El equipo de trabajo se dedica al análisis, investigación aplicada y capacitación en el ámbito cerealero, además de ofrecer kits de ayuda. 
+Está compuesto por los licenciados Carla Urrea Méndez y Guillermo Ramírez, quienes trabajan en la misma oficina y se comunican mediante WhatsApp, 
+correo electrónico y drives compartidos.
+
+*Infraestructura y Recursos
+Cuentan con una computadora laboral, dos personales y una de laboratorio sin batería. Las evaluaciones de los cursos se realizan con Google Forms y se almacenan en el drive. 
+Aunque las computadoras deberían estar en red, este sistema no funciona. También disponen de dos impresoras conectadas por cable y software de Microsoft con licencia paga.
+
+*Proceso de Trabajo
+Los clientes contactan al equipo por correo o WhatsApp y envían las muestras, que son registradas con un código anónimo. Actualmente, no hay un sistema específico para registrar los resultados, 
+por lo que se documentan en Word, se convierten en PDF y se almacenan en el drive compartido.
+
+*Capacitación
+Los cursos se imparten a través de la plataforma paga Canvas Student, cuyo costo es cubierto por los profesionales.
+
+//////
+
+*Tareas para posible proyecto
+
+-Presentar propuesta de aplicación para el registro de muestras
+-Panel administrativo para gestionar muestras, emitir certificados, generar presupuestos y visualizar el estado de entrega.
+-Registro de historial de muestras por cliente.
+-Sacar fotos de todos los documentos, registros, excel, reportes
+-Preguntas:
+      *Presupuesto: ¿Cómo manejan los pagos?
+      *¿Qué datos se toman en cuenta del cliente a la hora de recibir una muestra?
+      *¿Qué requisitos existen a hora de registrar una muestra?
+      *¿Cuentan con un historial de las muestras e informes? 
+-Computadora de laboratorio: agregar la pila
+
 
 /////
 
@@ -54,4 +66,4 @@ El Departamento de Cereales y Calidad desarrolla actividades en dos áreas princ
 
 +Compatibilidad y accesibilidad:
 -Asegurar que la página funcione en diferentes navegadores.
--Aplicar principios de accesibilidad para mejorar la experiencia de usuarios con discapacidades.
+-Aplicar principios de accesibilidad para mejorar la experiencia de usuarios.
