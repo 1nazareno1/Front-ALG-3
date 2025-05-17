@@ -1,42 +1,24 @@
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
+import Sidebar from "./components/Sidebar";
+import Header from "./components/Header";
+import MainContent from "./components/MainContent";
 
 function App() {
   return (
     <>
-      <Box>
-        <Card sx={() => ({ margin: "16px" })}>
-          <CardContent>
-            <Typography variant="h4">Titulo</Typography>
-            <Typography variant="body1">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
-              sunt expedita provident, officiis magnam officia repellat dolorum
-              voluptas in ab ipsa vel ullam cumque tenetur, culpa, corrupti
-              natus dignissimos repudiandae.
-            </Typography>
-          </CardContent>
-        </Card>
-        <Card sx={() => ({ margin: "16px" })}>
-          <CardContent>
-            <Typography variant="h4">Titulo</Typography>
-            <Typography variant="body1">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
-              sunt expedita provident, officiis magnam officia repellat dolorum
-              voluptas in ab ipsa vel ullam cumque tenetur, culpa, corrupti
-              natus dignissimos repudiandae.
-            </Typography>
-          </CardContent>
-        </Card>
-        <Card sx={() => ({ margin: "16px" })}>
-          <CardContent>
-            <Typography variant="h4">Titulo</Typography>
-            <Typography variant="body1">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
-              sunt expedita provident, officiis magnam officia repellat dolorum
-              voluptas in ab ipsa vel ullam cumque tenetur, culpa, corrupti
-              natus dignissimos repudiandae.
-            </Typography>
-          </CardContent>
-        </Card>
+      <CssBaseline />
+      <Box sx={{ display: "flex", height: "100vh" }}>
+        {/* Sidebar */}
+        <Sidebar />
+
+        {/* Main Content */}
+        <Box sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
+          {/* Header */}
+          <Header />
+
+          {/* Main Content */}
+          <MainContent />
+        </Box>
       </Box>
     </>
   );
