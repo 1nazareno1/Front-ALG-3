@@ -1,45 +1,26 @@
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Interface } from './components/interfaces/Interface'
+import { HomePage } from './pages/home/HomePage'
+import { ForumPage } from './pages/forum/ForumPage'
+import { theme } from './theme/Theme'
+import { ThemeProvider } from '@mui/material'
 
+//* Este archivo contiene toda la aplicación
 function App() {
   return (
     <>
-      <Box>
-        <Card sx={() => ({ margin: "16px" })}>
-          <CardContent>
-            <Typography variant="h4">Titulo</Typography>
-            <Typography variant="body1">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
-              sunt expedita provident, officiis magnam officia repellat dolorum
-              voluptas in ab ipsa vel ullam cumque tenetur, culpa, corrupti
-              natus dignissimos repudiandae.
-            </Typography>
-          </CardContent>
-        </Card>
-        <Card sx={() => ({ margin: "16px" })}>
-          <CardContent>
-            <Typography variant="h4">Titulo</Typography>
-            <Typography variant="body1">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
-              sunt expedita provident, officiis magnam officia repellat dolorum
-              voluptas in ab ipsa vel ullam cumque tenetur, culpa, corrupti
-              natus dignissimos repudiandae.
-            </Typography>
-          </CardContent>
-        </Card>
-        <Card sx={() => ({ margin: "16px" })}>
-          <CardContent>
-            <Typography variant="h4">Titulo</Typography>
-            <Typography variant="body1">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
-              sunt expedita provident, officiis magnam officia repellat dolorum
-              voluptas in ab ipsa vel ullam cumque tenetur, culpa, corrupti
-              natus dignissimos repudiandae.
-            </Typography>
-          </CardContent>
-        </Card>
-      </Box>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <Interface>
+            <Routes>
+              <Route path="/" index element={<HomePage />} />
+              <Route path="/foro" element={<ForumPage />} />
+            </Routes>
+          </Interface>
+        </ThemeProvider>
+      </BrowserRouter>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
