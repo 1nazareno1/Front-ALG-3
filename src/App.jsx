@@ -3,15 +3,17 @@ import { Interface } from './components/interfaces/Interface'
 import { HomePage } from './pages/home/HomePage'
 import { ForumPage } from './pages/forum/ForumPage'
 import { theme } from './theme/Theme'
-import { ThemeProvider } from '@mui/material'
-
+import Sidebar from './components/Sidebar'
+import Header from './components/Header'
+import MainContent from './components/MainContent'
+import { ThemeProvider, Box, CssBaseline } from '@mui/material'
 //* Este archivo contiene toda la aplicación
 function App() {
   return (
-    <>
+    <> 
       <CssBaseline />
       <Box sx={{ display: "flex", height: "100vh" }}>
-        {/* Sidebar */}
+        {/* Sidebar */} 
         <Sidebar />
 
         {/* Main Content */}
@@ -23,7 +25,7 @@ function App() {
           <MainContent />
         </Box>
       </Box>
-      <BrowserRouter>
+      <BrowserRouter>  
         <ThemeProvider theme={theme}>
           <Interface>
             <Routes>
