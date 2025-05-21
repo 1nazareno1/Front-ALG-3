@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
-import { MainNavbar } from '../navbar/MainNavbar'
-import { LateralNavbar } from '../navbar/LateralNavbar'
+import { MainNavbar } from '../navbar/Barra horizontal/MainNavbar'
+import { LateralNavbar } from '../navbar/Barra Lateral/LateralNavbar'
 
 export const Interface = ({ children }) => {
   return (
