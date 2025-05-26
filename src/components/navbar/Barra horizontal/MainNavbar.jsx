@@ -49,7 +49,7 @@ export const MainNavbar = () => {
             <Typography component={"a"} href="/foro" sx={{textDecoration: 'none'}}>
               Inicia sesión
             </Typography>
-            <Typography component={"a"} href="/foro" sx={{textDecoration: 'none'}}>
+            <Typography component={"a"} href="/registro" sx={{textDecoration: 'none'}}>
               ¿Nuevo? Registrarse
             </Typography>
           </Box>
