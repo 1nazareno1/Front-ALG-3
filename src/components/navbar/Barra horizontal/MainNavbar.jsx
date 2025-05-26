@@ -4,10 +4,14 @@ import {
   Drawer,
   useMediaQuery,
   useTheme,
+  TextField, //* nuevo
+  Button,     //* nuevo
+  Typography
 } from '@mui/material'
 import { Menu } from '@mui/icons-material'
 import React, { useState } from 'react'
 import { Logo } from './Logo'
+import { Search } from '@mui/icons-material'
 
 //* Menu horizontal superior (logo, menu de hamburguesa)
 export const MainNavbar = () => {
@@ -29,6 +33,27 @@ export const MainNavbar = () => {
         })}
       >
         <Logo />
+        {isDesktop && (
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+             <TextField
+              size="small"
+              placeholder="Buscar..."
+              variant="outlined"
+              sx={{ background: 'white', borderRadius: 1 }}
+              InputProps={{
+                startAdornment: (
+                  <Search sx={{ color: 'grey.500', mr: 1 }} />
+                ),
+              }}
+            />
+            <Typography component={"a"} href="/foro" sx={{textDecoration: 'none'}}>
+              Inicia sesión
+            </Typography>
+            <Typography component={"a"} href="/foro" sx={{textDecoration: 'none'}}>
+              ¿Nuevo? Registrarse
+            </Typography>
+          </Box>
+        )}
         {!isDesktop ? (
           <Box onClick={() => setMenuOpen(!menuOpen)}>
             <Menu color="primary" fontSize={'medium'} />
