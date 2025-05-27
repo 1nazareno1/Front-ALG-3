@@ -5,7 +5,6 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
   Typography,
 } from '@mui/material'
 import { AccountCircle, Login, Logout } from '@mui/icons-material'
@@ -14,7 +13,7 @@ import { MenuLinks } from '../../../utils/Commons'
 import { MenuMobileLinkComponent } from './MenuMobileLinkComponent'
 
 export const MobileNavbar = ({ menuOpen, onClose }) => {
-  // Simulaccion de Login
+  // Simulacion de Login
   const isLoggedIn = false
   const userName = 'BenjaminZapata'
 
