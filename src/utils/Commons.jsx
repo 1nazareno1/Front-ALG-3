@@ -16,7 +16,7 @@ export const MenuLinks = [
   {
     title: 'Calendario',
     icon: <CalendarMonth />,
-    link: '',
+    link: '/calendario',
     logged: false,
   },
   {
