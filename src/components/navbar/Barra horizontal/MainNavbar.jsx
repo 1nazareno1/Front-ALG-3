@@ -1,19 +1,25 @@
+//? Importes de React
+import { useState } from 'react'
+//? Importes de Terceros
 import {
   Box,
   Divider,
   Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  TextField,
+  Typography,
   useMediaQuery,
   useTheme,
-  TextField, //* nuevo
-  Button,     //* nuevo
-  Typography
 } from '@mui/material'
-import { Menu } from '@mui/icons-material'
-import React, { useState } from 'react'
+//? Importes propios
 import { Logo } from './Logo'
-import { Search } from '@mui/icons-material'
+import { Menu, Search } from '@mui/icons-material'
 
-//* Menu horizontal superior (logo, menu de hamburguesa)
+import { MobileNavbar } from './MobileNavbar'
+
 export const MainNavbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const theme = useTheme()
@@ -35,21 +41,27 @@ export const MainNavbar = () => {
         <Logo />
         {isDesktop && (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-             <TextField
+            <TextField
               size="small"
               placeholder="Buscar..."
               variant="outlined"
               sx={{ background: 'white', borderRadius: 1 }}
               InputProps={{
-                startAdornment: (
-                  <Search sx={{ color: 'grey.500', mr: 1 }} />
-                ),
+                startAdornment: <Search sx={{ color: 'grey.500', mr: 1 }} />,
               }}
             />
-            <Typography component={"a"} href="/foro" sx={{textDecoration: 'none'}}>
+            <Typography
+              component={'a'}
+              href="/foro"
+              sx={{ textDecoration: 'none' }}
+            >
               Inicia sesión
             </Typography>
-            <Typography component={"a"} href="/foro" sx={{textDecoration: 'none'}}>
+            <Typography
+              component={'a'}
+              href="/foro"
+              sx={{ textDecoration: 'none' }}
+            >
               ¿Nuevo? Registrarse
             </Typography>
           </Box>
@@ -60,30 +72,7 @@ export const MainNavbar = () => {
           </Box>
         ) : null}
       </Box>
-      <Drawer open={menuOpen} onClose={() => setMenuOpen(false)}>
-        <Box
-          sx={(theme) => ({
-            background: theme.palette.primary.main,
-            width: '350px',
-            height: '100vh',
-            padding: theme.spacing(3),
-          })}
-        >
-          <Logo color="white" />
-          <Divider
-            sx={(theme) => ({
-              background: theme.palette.primary.light,
-              marginY: theme.spacing(3),
-            })}
-          />
-          <Divider
-            sx={(theme) => ({
-              background: theme.palette.primary.light,
-              marginY: theme.spacing(3),
-            })}
-          />
-        </Box>
-      </Drawer>
+      <MobileNavbar menuOpen={menuOpen} onClose={() => setMenuOpen(false)} />
     </>
   )
 }
