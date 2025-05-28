@@ -8,10 +8,10 @@ export const LateralNavbar = () => {
   const [expandedNavbar, setExpandedNavbar] = useState(false)
   const [showText, setShowText] = useState(false)
   const { pathname } = useLocation()
-  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
   const navigate = useNavigate()
-  const theme = useTheme()
   const timeoutRef = useRef(null)
+  const theme = useTheme()
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
   const isLogged = false
 
   if (!isDesktop) return null
