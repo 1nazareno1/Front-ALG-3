@@ -1,6 +1,8 @@
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { TestComponent } from "../../components/commons/TestComponent";
 
+
+
 export const HomePage = () => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
