@@ -48,7 +48,7 @@ export const LinkButton = styled(ButtonBase, {
   padding: theme.spacing(1),
   width: theme.spacing(6),
   '&:hover': {
-    background: theme.palette.secondary.main,
+    background: theme.palette.primary.main,
     color: theme.palette.common.white,
   },
 }))

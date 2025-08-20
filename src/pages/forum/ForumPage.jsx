@@ -1,3 +1,3 @@
 export const ForumPage = () => {
-  return <div>ForumPage</div>
+  return <div></div>
 }
