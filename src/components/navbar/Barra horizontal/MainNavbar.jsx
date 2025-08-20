@@ -1,5 +1,6 @@
 //? Importes de React
 import { useState } from 'react'
+
 //? Importes de Terceros
 import {
   Box,
@@ -17,6 +18,7 @@ import {
 //? Importes propios
 import { Logo } from './Logo'
 import { Menu, Search } from '@mui/icons-material'
+import LoginModal from "../../modals/LoginModal"
 
 import { MobileNavbar } from './MobileNavbar'
 
@@ -24,6 +26,7 @@ export const MainNavbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
+  const [modalOpen, setLoginOpen] = useState(false)
 
   return (
     <>
@@ -51,12 +54,20 @@ export const MainNavbar = () => {
               }}
             />
             <Typography
-              component={'a'}
-              href="/foro"
-              sx={{ textDecoration: 'none' }}
+              component="button"
+              onClick={() => setLoginOpen(true)}
+              sx={{
+                 textDecoration: 'none',
+                background: 'none',
+                border: 'none',
+                color: 'blue',
+                front: 'inherit',
+                padding: 0,
+               }}
             >
               Inicia sesión
             </Typography>
+            <LoginModal open={modalOpen} onClose={() => setLoginOpen(false)} />
             <Typography
               component={'a'}
               href="/foro"
