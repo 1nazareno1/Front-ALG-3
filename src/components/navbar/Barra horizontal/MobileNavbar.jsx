@@ -14,7 +14,7 @@ import { MenuMobileLinkComponent } from './MenuMobileLinkComponent'
 
 export const MobileNavbar = ({ menuOpen, onClose }) => {
   // Simulacion de Login
-  const isLoggedIn = false
+  const isLoggedIn = true
   const userName = 'BenjaminZapata'
 
   return (
