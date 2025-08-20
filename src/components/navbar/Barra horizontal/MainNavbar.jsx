@@ -71,7 +71,7 @@ export const MainNavbar = () => {
             <Typography
               component={'a'}
               href="/foro"
-              sx={{ textDecoration: 'none' }}
+              sx={{ textDecoration: 'none', userSelect: 'none' }}
             >
               ¿Nuevo? Registrarse
             </Typography>
