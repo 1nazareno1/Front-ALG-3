@@ -4,6 +4,7 @@ import { HomePage } from './pages/home/HomePage'
 import { ForumPage } from './pages/forum/ForumPage'
 import { theme } from './theme/Theme'
 import { ThemeProvider } from '@mui/material'
+import { ForumPostPage } from './pages/home/ForumPostPage'
 
 //* Este archivo contiene toda la aplicación
 function App() {
@@ -15,6 +16,7 @@ function App() {
             <Routes>
               <Route path="/" index element={<HomePage />} />
               <Route path="/foro" element={<ForumPage />} />
+              <Route path="/post" element={<ForumPostPage />} />
             </Routes>
           </Interface>
         </ThemeProvider>

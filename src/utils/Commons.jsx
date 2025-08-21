@@ -32,3 +32,46 @@ export const MenuLinks = [
     logged: true,
   },
 ]
+
+/**
+ * Calcula y formatea el tiempo transcurrido desde una fecha en formato string.
+ * @param {string} dateString - La fecha de creación en formato string (ej: "2024-12-17T03:24:00").
+ * @returns {string} Una cadena de texto formateada como "Creado hace X tiempo".
+ */
+export function getTimeAgoFromString(dateString) {
+  const dateInMillis = new Date(dateString).getTime()
+
+  const now = new Date().getTime()
+  const differenceInMs = now - dateInMillis
+
+  const seconds = Math.floor(differenceInMs / 1000)
+  const minutes = Math.floor(seconds / 60)
+  const hours = Math.floor(minutes / 60)
+  const days = Math.floor(hours / 24)
+  const weeks = Math.floor(days / 7)
+  const months = Math.floor(days / 30.44)
+  const years = Math.floor(days / 365.25)
+
+  if (years > 0) {
+    return `hace ${years} ${years === 1 ? 'año' : 'años'}`
+  } else if (months > 0) {
+    return `hace ${months} ${months === 1 ? 'mes' : 'meses'}`
+  } else if (weeks > 0) {
+    return `hace ${weeks} ${weeks === 1 ? 'semana' : 'semanas'}`
+  } else if (days > 0) {
+    return `hace ${days} ${days === 1 ? 'día' : 'días'}`
+  } else if (hours > 0) {
+    return `hace ${hours} ${hours === 1 ? 'hora' : 'horas'}`
+  } else if (minutes > 0) {
+    return `hace ${minutes} ${minutes === 1 ? 'minuto' : 'minutos'}`
+  } else {
+    return 'hace un momento'
+  }
+}
+
+export function processRegisterDate(registerDate) {
+  const day = String(registerDate.getDate()).padStart(2, '0')
+  const month = String(registerDate.getMonth() + 1).padStart(2, '0')
+  const year = String(registerDate.getFullYear())
+  return `${day}-${month}-${year}`
+}
