@@ -18,7 +18,7 @@ import {
 //? Importes propios
 import { Logo } from './Logo'
 import { Menu, Search } from '@mui/icons-material'
-import LoginModal from "../../modals/LoginModal"
+import LoginModal from '../../modals/LoginModal'
 
 import { MobileNavbar } from './MobileNavbar'
 
@@ -57,13 +57,14 @@ export const MainNavbar = () => {
               component="button"
               onClick={() => setLoginOpen(true)}
               sx={{
-                 textDecoration: 'none',
+                cursor: 'pointer',
+                textDecoration: 'none',
                 background: 'none',
                 border: 'none',
                 color: 'blue',
                 front: 'inherit',
                 padding: 0,
-               }}
+              }}
             >
               Inicia sesión
             </Typography>
