@@ -1,5 +1,6 @@
 import { AdminPanelSettings } from '@mui/icons-material'
 import { Box, Tooltip, Typography } from '@mui/material'
+import { processRegisterDate } from '../../utils/Commons'
 
 export const UserCardComponent = ({
   career,
@@ -10,28 +11,26 @@ export const UserCardComponent = ({
   title,
   username,
 }) => {
-  const processRegisterDate = (registerDate) => {
-    const day = String(registerDate.getDate()).padStart(2, '0')
-    const month = String(registerDate.getMonth() + 1).padStart(2, '0')
-    const year = String(registerDate.getFullYear())
-    return `${day}-${month}-${year}`
-  }
-
   const registerDateStandarized = processRegisterDate(registerDate)
+  
   return (
     <Box
       sx={(theme) => ({
         backgroundColor: theme.palette.secondary.main,
         borderRadius: theme.spacing(1),
         display: 'flex',
+        height: 'fit-content',
         flexDirection: 'column',
         padding: theme.spacing(2),
-        width: '327px',
+        minWidth: '327px',
       })}
     >
       <Typography
         fontSize={20}
-        sx={(theme) => ({ color: theme.palette.common.white })}
+        sx={(theme) => ({
+          color: theme.palette.common.white,
+          cursor: 'pointer',
+        })}
         fontWeight={600}
       >
         {username}
@@ -77,7 +76,10 @@ export const UserCardComponent = ({
       <Typography
         mt={2}
         fontSize={12}
-        sx={(theme) => ({ color: theme.palette.common.white })}
+        sx={(theme) => ({
+          color: theme.palette.common.white,
+          cursor: 'pointer',
+        })}
       >
         {messageCount} mensajes
       </Typography>
@@ -85,11 +87,21 @@ export const UserCardComponent = ({
         fontSize={12}
         sx={(theme) => ({ color: theme.palette.common.white })}
       >
-        <Typography component={'span'} fontSize={12} fontWeight={600}>
+        <Typography
+          component={'span'}
+          fontSize={12}
+          fontWeight={600}
+          sx={{ cursor: 'pointer' }}
+        >
           {likeCount} agradecimientos
         </Typography>{' '}
         en{' '}
-        <Typography component={'span'} fontSize={12} fontWeight={600}>
+        <Typography
+          component={'span'}
+          fontSize={12}
+          fontWeight={600}
+          sx={{ cursor: 'pointer' }}
+        >
           {postCount} temas
         </Typography>
       </Typography>
