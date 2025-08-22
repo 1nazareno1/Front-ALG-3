@@ -19,6 +19,7 @@ import {
 import { Logo } from './Logo'
 import { Menu, Search } from '@mui/icons-material'
 import LoginModal from "../../modals/LoginModal"
+import RegistrarseModal from "../../modals/RegistrarseModal"
 
 import { MobileNavbar } from './MobileNavbar'
 
