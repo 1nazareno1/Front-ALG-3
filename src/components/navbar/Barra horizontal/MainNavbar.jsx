@@ -27,7 +27,8 @@ export const MainNavbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
-  const [modalOpen, setLoginOpen] = useState(false)
+  const [loginOpen, setloginOpen] = useState(false)
+  const [registerOpen, setRegisterOpen] = useState(false)
 
   return (
     <>
@@ -56,7 +57,7 @@ export const MainNavbar = () => {
             />
             <Typography
               component="button"
-              onClick={() => setLoginOpen(true)}
+              onClick={() => setloginOpen(true)}
               sx={{
                  textDecoration: 'none',
                 background: 'none',
@@ -67,15 +68,25 @@ export const MainNavbar = () => {
                }}
             >
               Inicia sesión
+              
             </Typography>
-            <LoginModal open={modalOpen} onClose={() => setLoginOpen(false)} />
+            <LoginModal open={loginOpen} onClose={() => setloginOpen(false)} />
+            
             <Typography
-              component={'a'}
-              href="/foro"
-              sx={{ textDecoration: 'none', userSelect: 'none' }}
+              component="button"
+              onClick={() => setRegisterOpen(true)}
+              sx={{
+                 textDecoration: 'none',
+                background: 'none',
+                border: 'none',
+                color: 'blue',
+                front: 'inherit',
+                padding: 0,
+               }}
             >
               ¿Nuevo? Registrarse
             </Typography>
+            <RegistrarseModal open={registerOpen} onClose={() => setRegisterOpen(false)} />
           </Box>
         )}
         {!isDesktop ? (
