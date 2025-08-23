@@ -17,7 +17,7 @@ export const theme = createTheme({
   palette: {
     type: 'light',
     error: {
-      main: '#EE6055',
+      main: '#eb483cff',
     },
     primary: {
       main: '#043AA9',

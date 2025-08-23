@@ -1,15 +1,8 @@
 //? Importes de React
 import { useState } from 'react'
-
 //? Importes de Terceros
 import {
   Box,
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   TextField,
   Typography,
   useMediaQuery,
@@ -17,16 +10,22 @@ import {
 } from '@mui/material'
 //? Importes propios
 import { Logo } from './Logo'
-import { Menu, Search } from '@mui/icons-material'
+import {
+  Logout,
+  Menu,
+  NotificationImportant,
+  Search,
+} from '@mui/icons-material'
 import LoginModal from '../../modals/LoginModal'
-
 import { MobileNavbar } from './MobileNavbar'
+import { useSelector } from 'react-redux'
 
 export const MainNavbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [modalOpen, setLoginOpen] = useState(false)
+  const { isLogged, username } = useSelector((state) => state.auth)
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
-  const [modalOpen, setLoginOpen] = useState(false)
 
   return (
     <>
@@ -42,8 +41,14 @@ export const MainNavbar = () => {
         })}
       >
         <Logo />
-        {isDesktop && (
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        {isDesktop ? (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: isLogged ? 7 : 2,
+            }}
+          >
             <TextField
               size="small"
               placeholder="Buscar..."
@@ -53,31 +58,52 @@ export const MainNavbar = () => {
                 startAdornment: <Search sx={{ color: 'grey.500', mr: 1 }} />,
               }}
             />
-            <Typography
-              component="button"
-              onClick={() => setLoginOpen(true)}
-              sx={{
-                cursor: 'pointer',
-                textDecoration: 'none',
-                background: 'none',
-                border: 'none',
-                color: 'blue',
-                front: 'inherit',
-                padding: 0,
-              }}
-            >
-              Inicia sesión
-            </Typography>
-            <LoginModal open={modalOpen} onClose={() => setLoginOpen(false)} />
-            <Typography
-              component={'a'}
-              href="/foro"
-              sx={{ textDecoration: 'none', userSelect: 'none' }}
-            >
-              ¿Nuevo? Registrarse
-            </Typography>
+            {isLogged ? (
+              <Box display={'flex'} gap={3}>
+                <Typography color="primary">
+                  Hola{' '}
+                  <Typography component={'span'} fontWeight={500}>
+                    {username}
+                  </Typography>
+                </Typography>
+                <NotificationImportant
+                  color="primary"
+                  sx={{ cursor: 'pointer' }}
+                />
+                <Logout color="primary" sx={{ cursor: 'pointer' }} />
+              </Box>
+            ) : (
+              <>
+                <Typography
+                  component="button"
+                  onClick={() => setLoginOpen(true)}
+                  sx={{
+                    cursor: 'pointer',
+                    textDecoration: 'none',
+                    background: 'none',
+                    border: 'none',
+                    color: 'blue',
+                    front: 'inherit',
+                    padding: 0,
+                  }}
+                >
+                  Inicia sesión
+                </Typography>
+                <LoginModal
+                  open={modalOpen}
+                  onClose={() => setLoginOpen(false)}
+                />
+                <Typography
+                  component={'a'}
+                  href="/foro"
+                  sx={{ textDecoration: 'none', userSelect: 'none' }}
+                >
+                  ¿Nuevo? Registrarse
+                </Typography>
+              </>
+            )}
           </Box>
-        )}
+        ) : null}
         {!isDesktop ? (
           <Box onClick={() => setMenuOpen(!menuOpen)}>
             <Menu color="primary" fontSize={'medium'} />

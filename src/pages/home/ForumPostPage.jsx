@@ -1,22 +1,25 @@
-import { useEffect, useState } from 'react'
 import { ArrowBack, Message, ThumbUp } from '@mui/icons-material'
-import { UserCardComponent } from '../../components/posts/UserCardComponent'
 import { Box, CircularProgress, Typography } from '@mui/material'
-import { getTimeAgoFromString } from '../../utils/Commons'
+import { PostTopContent } from '../../components/posts/PostTopContent'
+import { useEffect, useState } from 'react'
+import { UserCardComponent } from '../../components/posts/UserCardComponent'
 import { useWindowSize } from '../../hooks/useWindowSize'
-import { UserCardModalComponent } from '../../components/posts/UserCardModalComponent'
+import { useSelector } from 'react-redux'
 
 export const ForumPostPage = () => {
   const [loading, setLoading] = useState(true)
   const [postData, setPostData] = useState({})
   const [userModalOpen, setUserModalOpen] = useState(false)
+  const [userLike, setUserLike] = useState(false)
+  const { userID: id } = useSelector((state) => state.auth)
   const { upLg } = useWindowSize()
 
   useEffect(() => {
     setTimeout(() => {
+      const userLiked = Math.random() < 0.5 ? [1] : []
       setPostData({
         answers: 0,
-        likes: 0,
+        likes: userLiked,
         title: 'Nombre del tema',
         body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
               nibh sem, cursus ac pellentesque vel, eleifend sit amet felis.
@@ -45,6 +48,12 @@ export const ForumPostPage = () => {
     }, 1000)
   }, [])
 
+  useEffect(() => {
+    if (postData.likes && postData.likes.includes(id)) {
+      setUserLike(true)
+    }
+  }, [id, postData])
+
   return (
     <Box
       sx={(theme) => ({
@@ -54,6 +63,7 @@ export const ForumPostPage = () => {
         [theme.breakpoints.down('lg')]: {
           gap: theme.spacing(2),
           margin: theme.spacing(2),
+          marginRight: theme.spacing(4),
         },
       })}
     >
@@ -72,42 +82,23 @@ export const ForumPostPage = () => {
               minWidth: '55%',
             })}
           >
-            <Box>
-              <Typography>{`General > Noticias • ${getTimeAgoFromString(
-                postData.date
-              )}`}</Typography>{' '}
-              {!upLg ? (
-                <UserCardModalComponent
-                  career={'Tec. Sup. en Alimentos'}
-                  likeCount={4}
-                  messageCount={32}
-                  open={userModalOpen}
-                  postCount={1}
-                  registerDate={new Date()}
-                  setOpen={setUserModalOpen}
-                  title={'Administrador'}
-                  username={'Beto'}
-                />
-              ) : null}
-            </Box>
-            <Typography
-              fontSize={'40px'}
-              fontWeight={700}
-              sx={(theme) => ({
-                lineHeight: 1.1,
-                [theme.breakpoints.down('lg')]: {
-                  lineHeight: 1,
-                  fontSize: '32px',
-                },
-              })}
-            >
-              {postData.title}
-            </Typography>{' '}
+            <PostTopContent
+              postData={postData}
+              setUserModalOpen={setUserModalOpen}
+              upLg={upLg}
+              userModalOpen={userModalOpen}
+            />
             <Typography>{postData.body}</Typography>
             <Box display={'flex'} gap={2}>
               <Box display={'flex'} gap={1} alignItems={'center'}>
-                <ThumbUp sx={theme => ({ })} />
-                <Typography>{postData.likes} agradecimientos</Typography>
+                <ThumbUp
+                  sx={(theme) => ({
+                    color: userLike
+                      ? theme.palette.primary.main
+                      : theme.palette.primary.dark,
+                  })}
+                />
+                <Typography>{postData.likes.length} agradecimientos</Typography>
               </Box>
               <Box display={'flex'} gap={1} alignItems={'center'}>
                 <Message />

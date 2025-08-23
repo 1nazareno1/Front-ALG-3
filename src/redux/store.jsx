@@ -2,6 +2,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 // Importes propios
 import usersSlice from './slices/usersSlice'
+import authSlice from './slices/authSlice'
 
 const store = configureStore({
   devTools: true,
@@ -11,6 +12,7 @@ const store = configureStore({
     }),
   reducer: {
     usuarios: usersSlice,
+    auth: authSlice,
   },
 })
 

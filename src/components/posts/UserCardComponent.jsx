@@ -12,7 +12,7 @@ export const UserCardComponent = ({
   username,
 }) => {
   const registerDateStandarized = processRegisterDate(registerDate)
-  
+
   return (
     <Box
       sx={(theme) => ({
@@ -37,7 +37,7 @@ export const UserCardComponent = ({
       </Typography>
       <Box display={'flex'} my={1} gap={0.5} alignItems={'center'}>
         {title == 'Administrador' || title == 'Moderador' ? (
-          <Tooltip title={`Este usuario es ${title}`}>
+          <Tooltip placement={'top'} title={`Este usuario es ${title}`}>
             <AdminPanelSettings
               sx={(theme) => ({
                 color: theme.palette.common.white,
