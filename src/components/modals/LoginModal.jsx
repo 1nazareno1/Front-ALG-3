@@ -5,39 +5,41 @@ import {
   Modal,
   TextField,
   Typography,
-} from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close'
-import { useDispatch, useSelector } from 'react-redux'
-import { getUserSession } from '../../redux/slices/authSlice'
-import { useEffect } from 'react'
-import { toast } from 'sonner'
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserSession } from "../../redux/slices/authSlice";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
-function LoginModal({ open, onClose }) {
-  const { status } = useSelector((state) => state.auth)
-  const dispatch = useDispatch()
+export const LoginModal = ({ open, onClose }) => {
+  const { status } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const handleLogin = async (username, password) => {
     try {
-      await dispatch(getUserSession({ username, password })).unwrap()
-      toast.success('Usuario logueado con exito')
-    } catch {}
-  }
+      await dispatch(getUserSession({ username, password })).unwrap();
+      toast.success("Usuario logueado con exito");
+    } catch {
+      toast.error("Error al iniciar sesion");
+    }
+  };
 
   useEffect(() => {
-    if (status == 'succesful') onClose()
-  }, [handleLogin])
+    if (status == "succesful") onClose();
+  }, [status, onClose]);
 
   return (
     <Modal open={open} onClose={onClose}>
       <Box
         sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
           width: 574,
           height: 370,
-          bgcolor: 'background.paper',
+          bgcolor: "background.paper",
           boxShadow: 24,
           p: 4,
           borderRadius: 2,
@@ -45,9 +47,9 @@ function LoginModal({ open, onClose }) {
       >
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
             mb: 2,
           }}
         >
@@ -58,11 +60,11 @@ function LoginModal({ open, onClose }) {
             component="button"
             onClick={onClose}
             sx={{
-              background: 'none',
-              border: 'none',
+              background: "none",
+              border: "none",
               fontSize: 28,
-              cursor: 'pointer',
-              color: 'grey.700',
+              cursor: "pointer",
+              color: "grey.700",
               lineHeight: 1,
               p: 0,
             }}
@@ -75,7 +77,7 @@ function LoginModal({ open, onClose }) {
           sx={{
             fontWeight: 400,
             fontsize: 18,
-            color: 'grey.700',
+            color: "grey.700",
             letterSpacing: 0.5,
             mb: 0.5,
           }}
@@ -95,7 +97,7 @@ function LoginModal({ open, onClose }) {
           sx={{
             fontWeight: 400,
             fontsize: 18,
-            color: 'grey.700',
+            color: "grey.700",
             letterSpacing: 0.5,
             mb: 0.5,
           }}
@@ -118,11 +120,11 @@ function LoginModal({ open, onClose }) {
           onClick={() => handleLogin()}
           sx={(theme) => ({
             backgroundColor:
-              status == 'loading'
+              status == "loading"
                 ? theme.palette.secondary.dark
                 : theme.palette.primary.main,
-            mx: 'auto',
-            display: 'flex',
+            mx: "auto",
+            display: "flex",
             borderRadius: 2,
             height: 40,
             width: 200,
@@ -130,13 +132,13 @@ function LoginModal({ open, onClose }) {
             mt: 1,
             fontWeight: 400,
             fontsize: 18,
-            textTransform: 'none',
+            textTransform: "none",
           })}
         >
-          {status == 'loading' ? (
+          {status == "loading" ? (
             <CircularProgress size={16} color="secondary" />
           ) : (
-            'Ingresar'
+            "Ingresar"
           )}
         </Button>
 
@@ -146,13 +148,13 @@ function LoginModal({ open, onClose }) {
           sx={(theme) => ({
             color: theme.palette.secondary.dark,
             fontsize: 10,
-            display: 'block',
-            textAlign: 'center',
+            display: "block",
+            textAlign: "center",
             mt: 1,
-            textDecoration: 'none',
-            cursor: 'pointer',
-            transition: 'ease-in .1s',
-            '&:hover': {
+            textDecoration: "none",
+            cursor: "pointer",
+            transition: "ease-in .1s",
+            "&:hover": {
               color: theme.palette.primary.main,
             },
           })}
@@ -161,6 +163,5 @@ function LoginModal({ open, onClose }) {
         </Typography>
       </Box>
     </Modal>
-  )
-}
-export default LoginModal
+  );
+};
