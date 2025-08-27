@@ -1,5 +1,5 @@
 import { AdminPanelSettings, Close } from '@mui/icons-material'
-import { Box, Dialog, Tooltip, Typography } from '@mui/material'
+import { Box, capitalize, Dialog, Tooltip, Typography } from '@mui/material'
 import { processRegisterDate } from '../../utils/Commons'
 
 export const UserCardModalComponent = ({
@@ -53,8 +53,11 @@ export const UserCardModalComponent = ({
             </Box>
           </Box>
           <Box display={'flex'} my={1} gap={0.5} alignItems={'center'}>
-            {title == 'Administrador' || title == 'Moderador' ? (
-              <Tooltip placement={'top'} title={`Este usuario es ${title}`}>
+            {title == 'ADMIN' || title == 'MODERADOR' ? (
+              <Tooltip
+                placement={'top'}
+                title={`Este usuario es ${capitalize(title.toLowerCase())}`}
+              >
                 <AdminPanelSettings
                   sx={(theme) => ({
                     color: theme.palette.common.black,
@@ -69,7 +72,7 @@ export const UserCardModalComponent = ({
               sx={(theme) => ({ color: theme.palette.common.black })}
               fontWeight={500}
             >
-              {title}
+              {capitalize(title.toLowerCase())}
             </Typography>
           </Box>
           <Typography
@@ -110,7 +113,7 @@ export const UserCardModalComponent = ({
               fontWeight={600}
               sx={{ cursor: 'pointer' }}
             >
-              {likeCount} agradecimientos
+              {likeCount} me gustas
             </Typography>{' '}
             en{' '}
             <Typography

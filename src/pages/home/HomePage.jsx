@@ -1,41 +1,44 @@
-import { Box, CircularProgress, Typography } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { ForumPosts } from "../../components/forums/ForumPosts";
-import { getPosts } from "../../redux/slices/postsSlice";
-import { useWindowSize } from "../../hooks/useWindowSize";
+import { Box, CircularProgress, Typography } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { ForumPosts } from '../../components/forums/ForumPosts'
+import { getPosts } from '../../redux/slices/postsSlice'
+import { useWindowSize } from '../../hooks/useWindowSize'
+import { getAllUsers } from '../../redux/slices/usersSlice'
 
 export const HomePage = () => {
-  const { upLg, downMd } = useWindowSize();
-  const dispatch = useDispatch();
-  const { posts, status: postsStatus } = useSelector((state) => state.posts);
+  const { upLg, downMd } = useWindowSize()
+  const dispatch = useDispatch()
+  const { posts, status: postsStatus } = useSelector((state) => state.posts)
+  const { users } = useSelector((state) => state.usuarios)
 
   useEffect(() => {
-    dispatch(getPosts());
+    dispatch(getPosts())
+    dispatch(getAllUsers())
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   return (
     <Box>
       <Box
         sx={(theme) => ({
-          alignItems: "center",
+          alignItems: 'center',
           background: theme.palette.secondary.light,
-          display: "flex",
-          flexDirection: !upLg ? "column" : "row",
+          display: 'flex',
+          flexDirection: !upLg ? 'column' : 'row',
           gap: !upLg ? theme.spacing(2) : theme.spacing(5),
           height: theme.spacing(30),
-          justifyContent: "space-evenly",
+          justifyContent: 'space-evenly',
           padding: !upLg ? theme.spacing(5) : theme.spacing(2),
-          width: upLg ? "calc(100vw - 78px)" : "100vw",
+          width: upLg ? 'calc(100vw - 78px)' : '100vw',
         })}
       >
         <img
           src="/iseta.png"
           style={{
-            width: "100%",
-            maxWidth: !upLg ? "400px" : "300px",
-            marginLeft: !upLg ? "0px" : "16px",
+            width: '100%',
+            maxWidth: !upLg ? '400px' : '300px',
+            marginLeft: !upLg ? '0px' : '16px',
           }}
         />
         <Box>
@@ -50,22 +53,22 @@ export const HomePage = () => {
       </Box>
       <Box
         sx={(theme) => ({
-          display: "flex",
+          display: 'flex',
           margin: downMd
             ? `${theme.spacing(2)} ${theme.spacing(0)}`
             : theme.spacing(2),
           gap: theme.spacing(1),
-          justifyContent: "space-evenly",
+          justifyContent: 'space-evenly',
         })}
       >
-        {postsStatus == "succesful" ? (
-          <ForumPosts posts={posts} />
+        {postsStatus == 'succesful' ? (
+          <ForumPosts posts={posts} users={users} />
         ) : (
           <Box
-            width={"100%"}
-            display={"flex"}
-            flexDirection={"column"}
-            alignItems={"center"}
+            width={'100%'}
+            display={'flex'}
+            flexDirection={'column'}
+            alignItems={'center'}
             marginTop={24}
             gap={3}
           >
@@ -87,5 +90,5 @@ export const HomePage = () => {
         ) : null}
       </Box>
     </Box>
-  );
-};
+  )
+}

@@ -1,6 +1,5 @@
 import { Box, Typography } from '@mui/material'
 import { useLocation, useNavigate } from 'react-router-dom'
-import React from 'react'
 
 export const Logo = ({ color = 'main' }) => {
   const location = useLocation()
@@ -23,11 +22,11 @@ export const Logo = ({ color = 'main' }) => {
         textDecoration: 'none',
         outline: 'none',
         '&:focus-visible': {
-          outline: '2px solid', // Accesibilidad: se ve al usar tabulador
+          outline: '2px solid',
         },
       }}
       role="button"
-      tabIndex={0} // para que sea accesible por teclado
+      tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') handleClick()
       }}
@@ -35,10 +34,10 @@ export const Logo = ({ color = 'main' }) => {
       <Box
         onClick={() => navigate('/')}
         component="img"
-        src="vite.svg" // 🔁 Reemplazá con tu logo real
+        src="android-chrome-192x192.png"
         alt="Logo"
         sx={{
-          height: 40,
+          height: 60,
         }}
       />
       <Typography
@@ -57,4 +56,3 @@ export const Logo = ({ color = 'main' }) => {
     </Box>
   )
 }
-

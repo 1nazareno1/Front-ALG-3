@@ -1,55 +1,80 @@
 // Importes de terceros
-import axios from "axios";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { toast } from "sonner";
-// Importes propios
+import axios from 'axios'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { toast } from 'sonner'
 
 const initialState = {
-  user: {},
-};
+  users: [],
+  searchedUser: null,
+}
 
 export const createUser = createAsyncThunk(
-  "users/createUser",
-  async (nombreCompleto, email, rol = "USUARIO", activo = true) => {
+  'users/createUser',
+  async (nombreCompleto, email, rol = 'USUARIO', activo = true) => {
     try {
       const res = await axios.put(
         `https://backend-algiii.onrender.com/api/user/${id}`
-      );
-      return res.data;
+      )
+      return res.data
     } catch {
-      toast.error(`ERROR: No se pudo crear el usuario`);
+      toast.error(`ERROR: No se pudo crear el usuario`)
     }
   }
-);
+)
 
-export const getUserById = createAsyncThunk("users/getUserById", async (id) => {
+export const getUserById = createAsyncThunk('users/getUserById', async (id) => {
   try {
     const res = await axios.get(
       `https://backend-algiii.onrender.com/api/user/${id}`
-    );
-    return res.data;
+    )
+    return res.data
   } catch {
-    toast.error(`ERROR: No se pudo obtener el usuario de ID ${id}`);
+    toast.error(`ERROR: No se pudo obtener el usuario de ID ${id}`)
   }
-});
+})
+
+export const getAllUsers = createAsyncThunk('users/getAllUsers', async () => {
+  try {
+    const res = await axios.get(`https://backend-algiii.onrender.com/api/user`)
+    return res.data
+  } catch {
+    toast.error(`ERROR: No se pudieron obtener los usuarios`)
+  }
+})
 
 const usersSlice = createSlice({
-  name: "users",
+  name: 'users',
   initialState: initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    // addCategory
-    builder.addCase(getUserById.fulfilled, (state, { payload }) => {
-      state.user = payload;
-      state.status = "successful";
-    });
-    builder.addCase(getUserById.rejected, (state) => {
-      state.status = "rejected";
-    });
-    builder.addCase(getUserById.pending, (state) => {
-      state.status = "loading";
-    });
+  reducers: {
+    setSearchedUser: (state, action) => {
+      state.searchedUser = action.payload
+    },
   },
-});
+  extraReducers: (builder) => {
+    //* getUserById
+    builder.addCase(getUserById.fulfilled, (state, { payload }) => {
+      state.searchedUser = payload
+      state.status = 'successful'
+    })
+    builder.addCase(getUserById.rejected, (state) => {
+      state.status = 'rejected'
+    })
+    builder.addCase(getUserById.pending, (state) => {
+      state.status = 'loading'
+    })
+    //* getAllUsers
+    builder.addCase(getAllUsers.fulfilled, (state, { payload }) => {
+      state.users = payload
+      state.status = 'successful'
+    })
+    builder.addCase(getAllUsers.rejected, (state) => {
+      state.status = 'rejected'
+    })
+    builder.addCase(getAllUsers.pending, (state) => {
+      state.status = 'loading'
+    })
+  },
+})
 
-export default usersSlice.reducer;
+export const { setSearchedUser } = usersSlice.actions
+export default usersSlice.reducer
