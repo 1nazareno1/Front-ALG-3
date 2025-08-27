@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles'
+import { createTheme } from "@mui/material/styles";
 
 /* 
 //* Creamos el tema de la aplicación - Esto incluye:
@@ -15,25 +15,25 @@ export const theme = createTheme({
     },
   },
   palette: {
-    type: 'light',
+    type: "light",
     error: {
-      main: '#EE6055',
+      main: "#eb483cff",
     },
     primary: {
-      main: '#043AA9',
-      light: '#FCFCFC',
-      dark: '#0A100D',
+      main: "#043AA9",
+      light: "#FCFCFC",
+      dark: "#0A100D",
     },
     secondary: {
-      main: '#0168AD',
-      light: '#F0F0F0',
-      dark: '#AAAAAA',
+      main: "#1987D0",
+      light: "#F0F0F0",
+      dark: "#AAAAAA",
     },
     success: {
-      main: '#AAF683',
+      main: "#AAF683",
     },
     warning: {
-      main: '#FFDC5E',
+      main: "#FFDC5E",
     },
   },
-})
+});
