@@ -1,4 +1,6 @@
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, Button, useMediaQuery, useTheme, CircularProgress, Typography  } from '@mui/material'
+import { Link } from 'react-router-dom'
+import { UserCardComponent } from '../../components/posts/UserCardComponent'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { ForumPosts } from "../../components/forums/ForumPosts";
