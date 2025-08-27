@@ -1,21 +1,22 @@
-import { Box, TextField, Typography, Button } from '@mui/material';
+import { Box, TextField, Typography, Button, FormControlLabel, Checkbox } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import React from 'react';
+import React, { useState } from 'react';
+import CheckBoxOutlineBlankRoundedIcon from '@mui/icons-material/CheckBoxOutlineBlankRounded';
+import CheckBoxRoundedIcon from '@mui/icons-material/CheckBoxRounded';
 
 function RegistrarsePage({ onClose }) {
+  const [aceptaTerminos, setAceptaTerminos] = useState(false);
+
   return (
     <Box
       sx={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 574,
-        height: 525,
-        bgcolor: 'background.paper',
-        boxShadow: 24,
+        maxWidth: 600,
+        mx: 'auto',
+        my: 5,
         p: 4,
+        bgcolor: 'background.paper',
         borderRadius: 2,
+        boxShadow: 3,
       }}
     >
       {/* Encabezado */}
@@ -67,7 +68,21 @@ function RegistrarsePage({ onClose }) {
       <Typography sx={{ fontWeight: 400, fontSize: 18, color: 'grey.700', letterSpacing: 0.5, mb: 0.5 }}>
         CONTRASEÑA
       </Typography>
-      <TextField type="password" variant="outlined" fullWidth sx={{ mb: 3 }} InputProps={{ sx: { height: 35, fontSize: 15 } }} />
+      <TextField type="password" variant="outlined" fullWidth sx={{ mb: 2 }} InputProps={{ sx: { height: 35, fontSize: 15 } }} />
+
+      {/* Checkbox Términos */}
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={aceptaTerminos}
+            onChange={(e) => setAceptaTerminos(e.target.checked)}
+            icon={<CheckBoxOutlineBlankRoundedIcon />}
+            checkedIcon={<CheckBoxRoundedIcon />}
+          />
+        }
+        label="Acepto los términos y condiciones"
+        sx={{ mb: 2, color: 'grey.700' }}
+      />
 
       <Button
         variant="contained"
@@ -87,8 +102,10 @@ function RegistrarsePage({ onClose }) {
             bgcolor: '#002f86',
           },
         }}
+        disabled={!aceptaTerminos} 
       >
         Registrarse
+        
       </Button>
     </Box>
   );

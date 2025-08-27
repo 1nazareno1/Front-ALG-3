@@ -1,4 +1,5 @@
-import { Box, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Button, useMediaQuery, useTheme } from '@mui/material'
+import { Link } from 'react-router-dom'
 import { UserCardComponent } from '../../components/posts/UserCardComponent'
 
 export const HomePage = () => {
@@ -17,7 +18,14 @@ export const HomePage = () => {
           justifyContent: 'center',
           width: isDesktop ? 'calc(100vw - 78px)' : '100vw',
         })}
-      ></Box>
+      >
+        {/* Botón que abre la página de registro */}
+        <a href="/registrarse" target='_blank' rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+          <Button variant="contained" color="primary">
+            Registrarse
+          </Button>
+        </a>
+      </Box>
     </Box>
   )
 }
