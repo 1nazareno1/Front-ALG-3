@@ -2,15 +2,16 @@ import { useState } from "react";
 import { IconButton, Badge, Box, Typography } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { ClickAwayListener } from "@mui/material";
+import { Cancel } from "@mui/icons-material";
 
-export const NotificationsMenu = ({ notificaciones }) => {
+export const NotificationsMenu = ({ notifications, closeNotification }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <IconButton onClick={() => setOpen(!open)} sx={{ ml: 1 }}>
         <Badge
-          badgeContent={notificaciones.length}
+          badgeContent={notifications.length}
           color="secondary"
           anchorOrigin={{ vertical: "bottom" }}
         >
@@ -35,17 +36,46 @@ export const NotificationsMenu = ({ notificaciones }) => {
               zIndex: 9999,
             }}
           >
-            <Typography variant="h6" sx={{ mb: 1 }}>
-              Notificaciones
-            </Typography>
-
-            {notificaciones.length === 0 ? (
-              <Typography sx={{ mb: 1 }}>No tienes notificaciones.</Typography>
+            {notifications.length === 0 ? (
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <Typography fontSize={12}>No hay notificaciones</Typography>
+              </Box>
             ) : (
-              notificaciones.map((n) => (
-                <Typography key={n.id} sx={{ mb: 1 }}>
-                  {n.mensaje}
-                </Typography>
+              notifications.map((n) => (
+                <Box
+                  key={n.id}
+                  sx={() => ({
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    p: 0.5,
+                    "&:hover": {
+                      cursor: "pointer",
+                    },
+                  })}
+                >
+                  {" "}
+                  <Typography
+                    fontSize={12}
+                    key={n.id}
+                    sx={(theme) => ({
+                      userSelect: "none",
+                      "&:hover": {
+                        color: theme.palette.primary.main,
+                        fontWeight: 500,
+                      },
+                    })}
+                  >
+                    {n.mensaje}
+                  </Typography>
+                  <Cancel
+                    onClick={() => closeNotification(n.id)}
+                    fontSize={"10px"}
+                    sx={(theme) => ({
+                      "&:hover": { color: theme.palette.error.main },
+                    })}
+                  />
+                </Box>
               ))
             )}
           </Box>

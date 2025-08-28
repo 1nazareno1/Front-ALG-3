@@ -7,10 +7,17 @@ import { useState } from "react";
 
 export const LoggedDesktop = ({ username }) => {
   const dispatch = useDispatch();
-  const [notificaciones] = useState([
-    { id: 1, mensaje: "tienes una nueva respuesta" },
-    { id: 2, mensaje: "Tu post fue Bloqueado" },
+  const [notifications, setNotifications] = useState([
+    { id: 1, mensaje: `Usuario X ha comentado tu post "Bienvenidos al Foro"` },
+    { id: 2, mensaje: `Tu post "Bienvenidos al Foro" fue cerrado` },
   ]);
+
+  const closeNotification = (id) => {
+    const newNotifications = notifications.filter(
+      (notification) => notification.id !== id
+    );
+    setNotifications(newNotifications);
+  };
 
   return (
     <Box display={"flex"} gap={3} alignItems={"center"}>
@@ -20,7 +27,7 @@ export const LoggedDesktop = ({ username }) => {
           {username}
         </Typography>
       </Typography>
-      <NotificationsMenu notificaciones={notificaciones} />
+      <NotificationsMenu notifications={notifications} closeNotification={closeNotification} />
       <Tooltip title="Cerrar sesión" placement="top">
         <Box
           height={24}
