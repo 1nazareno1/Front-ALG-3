@@ -10,7 +10,9 @@ export const NotificationsMenu = ({ notificaciones }) => {
     <>
       <IconButton onClick={() => setOpen(!open)} sx={{ ml: 1 }}>
         <Badge badgeContent={notificaciones.length} color="error">
-          <NotificationsIcon sx={{ color: "#2273b6ff" }} />
+          <NotificationsIcon
+            sx={(theme) => ({ color: theme.palette.primary.main })}
+          />
         </Badge>
       </IconButton>
 
@@ -34,9 +36,7 @@ export const NotificationsMenu = ({ notificaciones }) => {
             </Typography>
 
             {notificaciones.length === 0 ? (
-              <Typography sx={{ mb: 1 }}>
-                No tienes notificaciones.
-              </Typography>
+              <Typography sx={{ mb: 1 }}>No tienes notificaciones.</Typography>
             ) : (
               notificaciones.map((n) => (
                 <Typography key={n.id} sx={{ mb: 1 }}>

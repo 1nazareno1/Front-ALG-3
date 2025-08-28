@@ -1,4 +1,4 @@
-import { ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material'
+import { ListItem, ListItemIcon, Typography } from '@mui/material'
 
 export const MenuMobileLinkComponent = ({ icon, text }) => {
   return (

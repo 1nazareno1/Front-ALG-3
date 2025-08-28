@@ -23,7 +23,8 @@ export const RegisterPage = () => {
       <Box
         sx={{
           maxWidth: 1024,
-          p: 4,
+          py: 2,
+          px: 4,
           mx: "auto",
           mt: isLg ? 4 : 0,
         }}
