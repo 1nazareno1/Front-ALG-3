@@ -10,6 +10,10 @@ import { theme } from "./theme/Theme";
 import { ThemeProvider } from "@mui/material";
 import { Toaster } from "sonner";
 
+
+//importamos la página de registro
+import  RegistrarsePage  from './pages/registrarse/RegistrarsePage'
+
 //* Este archivo contiene toda la aplicación
 function App() {
   return (
