@@ -48,6 +48,7 @@ export const MainNavbar = () => {
                 startAdornment: <Search sx={{ color: "grey.500", mr: 1 }} />,
               }}
             />
+
             {isLogged ? (
               <LoggedDesktop username={username} />
             ) : (
