@@ -16,6 +16,7 @@ export const MainNavbar = () => {
   const [modalOpen, setLoginOpen] = useState(false);
   const { isLogged, username } = useSelector((state) => state.auth);
   const { upLg } = useWindowSize();
+  
 
   return (
     <>
@@ -48,8 +49,12 @@ export const MainNavbar = () => {
                 startAdornment: <Search sx={{ color: "grey.500", mr: 1 }} />,
               }}
             />
+            
             {isLogged ? (
+              
               <LoggedDesktop username={username} />
+              
+              
             ) : (
               <NotLoggedDesktop
                 modalOpen={modalOpen}

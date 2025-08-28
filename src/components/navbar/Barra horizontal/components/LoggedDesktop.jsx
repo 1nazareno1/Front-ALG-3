@@ -2,9 +2,15 @@ import { Box, Tooltip, Typography } from '@mui/material'
 import { logout } from '../../../../redux/slices/authSlice'
 import { Logout, NotificationImportant } from '@mui/icons-material'
 import { useDispatch } from 'react-redux'
+import { NotificationsMenu } from './NotificationsMenu';
+import React, { useState } from 'react';
 
 export const LoggedDesktop = ({ username }) => {
   const dispatch = useDispatch()
+  const [notificaciones] = useState([
+    {id: 1, mensaje: "tienes una nueva respuesta"},
+    {id: 2, mensaje: "Tu post fue Bloqueado"}
+  ])
 
   return (
     <Box display={'flex'} gap={3}>
@@ -14,7 +20,8 @@ export const LoggedDesktop = ({ username }) => {
           {username}
         </Typography>
       </Typography>
-      <NotificationImportant color="primary" sx={{ cursor: 'pointer' }} />
+      
+      <NotificationsMenu notificaciones={notificaciones} />
       <Tooltip title="Cerrar sesión" placement="top">
         <Box
           onClick={() => {
