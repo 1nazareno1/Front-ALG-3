@@ -27,12 +27,14 @@ export const Logo = ({ color = 'main' }) => {
       }}
       role="button"
       tabIndex={0}
+      onClick={() => {
+        handleClick()
+      }}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') handleClick()
       }}
     >
       <Box
-        onClick={() => navigate('/')}
         component="img"
         src="android-chrome-192x192.png"
         alt="Logo"
@@ -41,7 +43,6 @@ export const Logo = ({ color = 'main' }) => {
         }}
       />
       <Typography
-        onClick={() => navigate('/')}
         variant="h4"
         sx={(theme) => ({
           color:

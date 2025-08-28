@@ -1,5 +1,5 @@
-import { ArrowBack, ThumbUp } from '@mui/icons-material'
-import { Box, CircularProgress, Typography } from '@mui/material'
+import { ArrowBack } from '@mui/icons-material'
+import { Box, CircularProgress } from '@mui/material'
 import { PostTopContent } from '../../components/posts/PostTopContent'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
