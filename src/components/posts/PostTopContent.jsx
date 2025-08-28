@@ -1,13 +1,14 @@
-import { Box, Tooltip, Typography } from "@mui/material";
-import { Flag } from "@mui/icons-material";
-import { UserCardModalComponent } from "./UserCardModalComponent";
-import { getTimeAgoFromString } from "../../utils/Commons";
+import { Box, Tooltip, Typography } from '@mui/material'
+import { Flag } from '@mui/icons-material'
+import { UserCardModalComponent } from './UserCardModalComponent'
+import { getTimeAgoFromString } from '../../utils/Commons'
 
 export const PostTopContent = ({
   handleReport,
   postData,
   setUserModalOpen,
   upLg,
+  userData,
   userModalOpen,
 }) => {
   return (
@@ -15,47 +16,47 @@ export const PostTopContent = ({
       <Box>
         <Typography>{`General > Noticias • ${getTimeAgoFromString(
           postData.createdAt
-        )}`}</Typography>{" "}
+        )}`}</Typography>{' '}
         {!upLg ? (
           <UserCardModalComponent
-            career={"Tec. Sup. en Alimentos"}
+            career={'Tec. Sup. en Alimentos'}
             likeCount={4}
             messageCount={32}
             open={userModalOpen}
             postCount={1}
-            registerDate={new Date()}
             setOpen={setUserModalOpen}
-            title={"Administrador"}
-            username={"Beto"}
+            title={userData.rol}
+            username={userData.nombre_apellido}
+            registerDate={userData.createdAt}
           />
         ) : null}
       </Box>
       <Box
-        display={"flex"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
+        display={'flex'}
+        justifyContent={'space-between'}
+        alignItems={'center'}
       >
         <Typography
-          fontSize={"40px"}
+          fontSize={'40px'}
           fontWeight={700}
           sx={(theme) => ({
             lineHeight: 1.1,
-            [theme.breakpoints.down("lg")]: {
+            [theme.breakpoints.down('lg')]: {
               lineHeight: 1,
-              fontSize: "32px",
+              fontSize: '32px',
             },
           })}
         >
           {postData.titulo}
-        </Typography>{" "}
-        <Tooltip placement={"top"} title="Denunciar post">
+        </Typography>{' '}
+        <Tooltip placement={'top'} title="Denunciar post">
           <Box
             sx={(theme) => ({
-              cursor: "pointer",
-              transition: "ease-in .1s",
-              "&:hover": {
+              cursor: 'pointer',
+              transition: 'ease-in .1s',
+              '&:hover': {
                 color: theme.palette.error.main,
-                marginBottom: theme.spacing(1),
+                transform: 'translateY(-2.5px)',
               },
             })}
             onClick={() => handleReport(postData.id)}
@@ -65,5 +66,5 @@ export const PostTopContent = ({
         </Tooltip>
       </Box>
     </>
-  );
-};
+  )
+}

@@ -3,12 +3,12 @@ import { useState } from "react";
 //? Importes de Terceros
 import { Box, TextField } from "@mui/material";
 //? Importes propios
+import { LoggedDesktop } from "./components/LoggedDesktop";
 import { Logo } from "./Logo";
 import { Menu, Search } from "@mui/icons-material";
 import { MobileNavbar } from "./MobileNavbar";
-import { useSelector } from "react-redux";
 import { NotLoggedDesktop } from "./components/NotLoggedDesktop";
-import { LoggedDesktop } from "./components/LoggedDesktop";
+import { useSelector } from "react-redux";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 
 export const MainNavbar = () => {

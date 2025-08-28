@@ -1,5 +1,5 @@
-import { Typography } from "@mui/material";
-import { LoginModal } from "../../../modals/LoginModal";
+import { Typography } from '@mui/material'
+import { LoginModal } from '../../../modals/LoginModal'
 
 export const NotLoggedDesktop = ({ modalOpen, setModalOpen }) => {
   return (
@@ -8,12 +8,12 @@ export const NotLoggedDesktop = ({ modalOpen, setModalOpen }) => {
         component="button"
         onClick={() => setModalOpen(true)}
         sx={{
-          cursor: "pointer",
-          textDecoration: "none",
-          background: "none",
-          border: "none",
-          color: "blue",
-          front: "inherit",
+          cursor: 'pointer',
+          textDecoration: 'none',
+          background: 'none',
+          border: 'none',
+          color: 'blue',
+          front: 'inherit',
           padding: 0,
         }}
       >
@@ -21,12 +21,12 @@ export const NotLoggedDesktop = ({ modalOpen, setModalOpen }) => {
       </Typography>
       <LoginModal open={modalOpen} onClose={() => setModalOpen(false)} />
       <Typography
-        component={"a"}
-        href="/foro"
-        sx={{ textDecoration: "none", userSelect: "none" }}
+        component={'a'}
+        href="/registro"
+        sx={{ textDecoration: 'none', userSelect: 'none' }}
       >
         ¿Nuevo? Registrarse
       </Typography>
     </>
-  );
-};
+  )
+}

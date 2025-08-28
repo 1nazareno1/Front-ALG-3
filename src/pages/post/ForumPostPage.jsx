@@ -1,160 +1,161 @@
-import { ArrowBack, ThumbUp } from "@mui/icons-material";
-import { Box, CircularProgress, Typography } from "@mui/material";
-import { PostTopContent } from "../../components/posts/PostTopContent";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { UserCardComponent } from "../../components/posts/UserCardComponent";
-import { useDispatch, useSelector } from "react-redux";
-import { useWindowSize } from "../../hooks/useWindowSize";
-import { getUserById } from "../../redux/slices/usersSlice";
-import { toast } from "sonner";
+import { ArrowBack } from '@mui/icons-material'
+import { Box, CircularProgress } from '@mui/material'
+import { PostTopContent } from '../../components/posts/PostTopContent'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { UserCardComponent } from '../../components/posts/UserCardComponent'
+import { useDispatch, useSelector } from 'react-redux'
+import { useWindowSize } from '../../hooks/useWindowSize'
+import { getUserById, setSearchedUser } from '../../redux/slices/usersSlice'
+import { toast } from 'sonner'
+import { PostBodyContent } from '../../components/posts/PostBodyContent'
+import { ReportModal } from '../../components/modals/ReportModal'
 
 export const ForumPostPage = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { state } = location;
-  const [loading, setLoading] = useState(true);
-  const [postData, setPostData] = useState({});
-  const [userModalOpen, setUserModalOpen] = useState(false);
-  const [userLike, setUserLike] = useState(false);
-  const { userID } = useSelector((state) => state.auth);
-  const { user } = useSelector((state) => state.usuarios);
-  const { upLg } = useWindowSize();
-  const dispatch = useDispatch();
+  const location = useLocation()
+  const navigate = useNavigate()
+  const { state } = location
+  const [loading, setLoading] = useState(true)
+  const [postData, setPostData] = useState({})
+  const [userModalOpen, setUserModalOpen] = useState(false)
+  const [userLike, setUserLike] = useState(false)
+  const [reportModalOpen, setReportModalOpen] = useState(false)
+  const { userID } = useSelector((state) => state.auth)
+  const { users, searchedUser } = useSelector((state) => state.usuarios)
+  const { upLg } = useWindowSize()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (!state) {
-      return navigate("/");
+      return navigate('/')
     }
     if (state.id_creador) {
-      async function fetchUserData() {
-        await dispatch(getUserById(state.id_creador));
+      if (users.length > 0) {
+        const user = users.find((u) => u.id == state.id_creador)
+        dispatch(setSearchedUser(user))
+      } else {
+        async function fetchUserData() {
+          await dispatch(getUserById(state.id_creador))
+        }
+        fetchUserData()
       }
-      fetchUserData();
     }
-    const userLikes = Math.random() < 0.5 ? [1, 2, 3, 4, 5] : [];
+
+    const userLikes = Math.random() < 0.5 ? [1, 2, 3, 4, 5] : []
     setPostData({
       ...state,
       likes: userLikes,
-    });
+    })
 
-    setLoading(false);
+    setLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   useEffect(() => {
     if (postData.likes && postData.likes.includes(userID)) {
-      setUserLike(true);
+      setUserLike(true)
     }
-  }, [userID, postData]);
+  }, [userID, postData])
 
   const handleUserLike = () => {
     if (!userID) {
-      toast.error("Debes estar logueado para dar un agradecimiento");
-      return;
+      toast.error('Debes estar logueado para dar me gusta')
+      return
     }
     if (userLike) {
-      const newLikes = postData.likes.filter((like) => like !== userID);
+      const newLikes = postData.likes.filter((like) => like !== userID)
       setPostData({
         ...postData,
         likes: newLikes,
-      });
+      })
+      toast.success('Has dado me gusta a este post')
     } else {
-      const newLikes = [...postData.likes, userID];
+      const newLikes = [...postData.likes, userID]
       setPostData({
         ...postData,
         likes: newLikes,
-      });
+      })
     }
-    setUserLike(!userLike);
-  };
+    setUserLike(!userLike)
+  }
+
+  const handleReportModal = () => {
+    if (!userID) {
+      toast.error('Debes estar logueado para reportar un post')
+      return
+    } else setReportModalOpen(true)
+  }
 
   const handleReport = () => {
-    if (!userID) {
-      toast.error("Debes estar logueado para dar reportar un post");
-      return;
-    }
-  };
+    toast.success('Se ha reportado el post con exito')
+    setReportModalOpen(false)
+  }
 
   return (
     <Box
       sx={(theme) => ({
-        display: "flex",
+        display: 'flex',
         gap: theme.spacing(3),
         margin: theme.spacing(3),
-        [theme.breakpoints.down("lg")]: {
+        [theme.breakpoints.down('lg')]: {
           gap: theme.spacing(2),
           margin: theme.spacing(2),
           marginRight: theme.spacing(4),
         },
       })}
     >
-      <Box onClick={() => navigate(-1)} sx={{ cursor: "pointer" }}>
+      <Box onClick={() => navigate(-1)} sx={{ cursor: 'pointer' }}>
         <ArrowBack
-          sx={(theme) => ({ "&:hover": { color: theme.palette.primary.main } })}
+          sx={(theme) => ({ '&:hover': { color: theme.palette.primary.main } })}
         />
       </Box>
       {loading ? (
-        <Box sx={{ margin: "40vh auto 0px auto" }}>
+        <Box sx={{ margin: '40vh auto 0px auto' }}>
           <CircularProgress />
         </Box>
       ) : (
         <>
           <Box
             sx={(theme) => ({
-              display: "flex",
-              flexDirection: "column",
+              display: 'flex',
+              flexDirection: 'column',
               gap: theme.spacing(3),
-              minWidth: "55%",
+              minWidth: '55%',
             })}
           >
             <PostTopContent
+              handleReport={handleReportModal}
               postData={postData}
               setUserModalOpen={setUserModalOpen}
               upLg={upLg}
               userModalOpen={userModalOpen}
-              handleReport={handleReport}
+              userData={searchedUser}
             />
-            <Typography>{postData.contenido}</Typography>
-            <Box display={"flex"} gap={2}>
-              <Box
-                display={"flex"}
-                gap={1}
-                alignItems={"center"}
-                onClick={() => handleUserLike()}
-              >
-                <ThumbUp
-                  sx={(theme) => ({
-                    color: userLike
-                      ? theme.palette.primary.main
-                      : theme.palette.primary.dark,
-                    cursor: "pointer",
-                    transition: "ease-in-out 0.15s",
-                    "&:hover": {
-                      color: userLike
-                        ? theme.palette.error.dark
-                        : theme.palette.primary.main,
-                      transform: "translateY(-2.5px)",
-                    },
-                  })}
-                />
-                <Typography>{postData.likes.length} agradecimientos</Typography>
-              </Box>
-            </Box>
+            <PostBodyContent
+              handleUserLike={handleUserLike}
+              postData={postData}
+              userLike={userLike}
+            />
           </Box>
-          {upLg && user ? (
+          {upLg && searchedUser ? (
             <UserCardComponent
-              career={"Tec. Sup. en Alimentos"}
+              career={'Tec. Sup. en Alimentos'}
               likeCount={4}
               messageCount={32}
               postCount={1}
-              title={user.rol}
-              username={user.nombre_apellido}
-              registerDate={user.createdAt}
+              title={searchedUser.rol}
+              username={searchedUser.nombre_apellido}
+              registerDate={searchedUser.createdAt}
             />
           ) : null}
         </>
       )}
+      <ReportModal
+        handleReport={handleReport}
+        open={reportModalOpen}
+        postTitle={postData.titulo}
+        setOpen={setReportModalOpen}
+      />
     </Box>
-  );
-};
+  )
+}
