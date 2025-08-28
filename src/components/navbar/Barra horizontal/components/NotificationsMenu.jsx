@@ -9,7 +9,11 @@ export const NotificationsMenu = ({ notificaciones }) => {
   return (
     <>
       <IconButton onClick={() => setOpen(!open)} sx={{ ml: 1 }}>
-        <Badge badgeContent={notificaciones.length} color="error">
+        <Badge
+          badgeContent={notificaciones.length}
+          color="secondary"
+          anchorOrigin={{ vertical: "bottom" }}
+        >
           <NotificationsIcon
             sx={(theme) => ({ color: theme.palette.primary.main })}
           />
