@@ -76,3 +76,25 @@ export function processRegisterDate(registerDate) {
   const year = String(date.getFullYear());
   return `${day}-${month}-${year}`;
 }
+
+export class DebounceClass {
+  constructor(debounce = 1000) {
+    this.delay = debounce;
+    this.timeoutId = null;
+  }
+
+  callback(callback) {
+    this.clear();
+    this.timeoutId = setTimeout(() => {
+      callback();
+      this.timeoutId = null;
+    }, this.delay);
+  }
+
+  clear() {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = null;
+    }
+  }
+}
