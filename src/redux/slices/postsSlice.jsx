@@ -5,13 +5,14 @@ import { toast } from "sonner";
 
 const initialState = {
   posts: [],
+  searchedPost: {},
   status: "idle",
 };
 
 export const getPosts = createAsyncThunk("posts/getPosts", async () => {
   try {
     const res = await axios.get(
-      `https://backend-algiii.onrender.com/api/Tema/findAll`
+      `https://backend-algiii.onrender.com/api/post/findAll`
     );
     return res.data;
   } catch {
@@ -19,8 +20,22 @@ export const getPosts = createAsyncThunk("posts/getPosts", async () => {
   }
 });
 
+export const getPostById = createAsyncThunk(
+  "posts/getPostById",
+  async (postId) => {
+    try {
+      const res = await axios.get(
+        `https://backend-algiii.onrender.com/api/post/findById/${postId}`
+      );
+      return res.data;
+    } catch {
+      toast.error(`ERROR: No se pudo obtener el post #${postId}`);
+    }
+  }
+);
+
 const postsSlice = createSlice({
-  name: "auth",
+  name: "posts",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -35,6 +50,17 @@ const postsSlice = createSlice({
       builder.addCase(getPosts.fulfilled, (state, { payload }) => {
         state.status = "succesful";
         state.posts = payload;
+      }),
+      // getPostById
+      builder.addCase(getPostById.pending, (state) => {
+        state.status = "loading";
+      }),
+      builder.addCase(getPostById.rejected, (state) => {
+        state.status = "rejected";
+      }),
+      builder.addCase(getPostById.fulfilled, (state, { payload }) => {
+        state.status = "succesful";
+        state.searchedPost = payload;
       });
   },
 });

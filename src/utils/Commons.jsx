@@ -1,5 +1,33 @@
 import { CalendarMonth, Home, Link, Person, Search } from "@mui/icons-material";
 
+export const NotificationMock = [
+  {
+    id: 1,
+    mensaje: `Usuario X ha comentado tu post "Bienvenidos al Foro"`,
+    url: "/post/1",
+  },
+  {
+    id: 2,
+    mensaje: `Tu post "Bienvenidos al Foro" fue cerrado`,
+    url: "/post/1",
+  },
+  {
+    id: 3,
+    mensaje: `Usuario Y ha comentado tu post "Bienvenidos al Foro"`,
+    url: "/post/1",
+  },
+  {
+    id: 4,
+    mensaje: `Usuario Z ha comentado tu post "Bienvenidos al Foro"`,
+    url: "/post/1",
+  },
+  {
+    id: 5,
+    mensaje: `Usuario W ha comentado tu post "Bienvenidos al Foro"`,
+    url: "/post/1",
+  },
+];
+
 export const MenuLinks = [
   {
     title: "Inicio",
@@ -75,4 +103,26 @@ export function processRegisterDate(registerDate) {
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const year = String(date.getFullYear());
   return `${day}-${month}-${year}`;
+}
+
+export class DebounceClass {
+  constructor(debounce = 1000) {
+    this.delay = debounce;
+    this.timeoutId = null;
+  }
+
+  callback(callback) {
+    this.clear();
+    this.timeoutId = setTimeout(() => {
+      callback();
+      this.timeoutId = null;
+    }, this.delay);
+  }
+
+  clear() {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = null;
+    }
+  }
 }

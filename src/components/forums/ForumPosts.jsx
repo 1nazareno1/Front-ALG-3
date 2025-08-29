@@ -1,18 +1,18 @@
-import { LockOutlined, PushPinOutlined } from '@mui/icons-material'
-import { Box, Tooltip, Typography } from '@mui/material'
-import { useWindowSize } from '../../hooks/useWindowSize'
-import { useNavigate } from 'react-router-dom'
+import { LockOutlined, PushPinOutlined } from "@mui/icons-material";
+import { Box, Tooltip, Typography } from "@mui/material";
+import { useWindowSize } from "../../hooks/useWindowSize";
+import { useNavigate } from "react-router-dom";
 
 export const ForumPosts = ({ posts, users }) => {
-  const { downMd } = useWindowSize()
-  const navigate = useNavigate()
+  const { downMd } = useWindowSize();
+  const navigate = useNavigate();
 
   return (
     <Box
       sx={(theme) => ({
         borderRadius: theme.spacing(1),
-        width: '100%',
-        maxWidth: '850px',
+        width: "100%",
+        maxWidth: "850px",
       })}
     >
       <Box
@@ -21,14 +21,14 @@ export const ForumPosts = ({ posts, users }) => {
           borderTopLeftRadius: downMd ? theme.spacing(0) : theme.spacing(1),
           borderTopRightRadius: downMd ? theme.spacing(0) : theme.spacing(1),
           color: theme.palette.primary.contrastText,
-          height: '40px',
+          height: "40px",
           padding: theme.spacing(1.25),
-          width: '100%',
+          width: "100%",
         })}
       >
         <Typography>General</Typography>
       </Box>
-      <Box display={'flex'}>
+      <Box display={"flex"}>
         <Box
           sx={(theme) => ({
             backgroundColor: theme.palette.secondary.main,
@@ -39,10 +39,10 @@ export const ForumPosts = ({ posts, users }) => {
               ? theme.spacing(0)
               : theme.spacing(1),
             height: theme.spacing(3),
-            display: 'flex',
-            alignItems: 'center',
+            display: "flex",
+            alignItems: "center",
             paddingInline: theme.spacing(1),
-            width: downMd ? '40%' : '60%',
+            width: downMd ? "40%" : "60%",
           })}
         >
           <Typography fontSize={10} color="primary.contrastText">
@@ -59,11 +59,11 @@ export const ForumPosts = ({ posts, users }) => {
               ? theme.spacing(0)
               : theme.spacing(1),
             height: theme.spacing(3),
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             paddingInline: theme.spacing(1),
-            width: downMd ? '30%' : '20%',
+            width: downMd ? "30%" : "20%",
           })}
         >
           <Typography fontSize={10} color="primary.contrastText">
@@ -80,11 +80,11 @@ export const ForumPosts = ({ posts, users }) => {
               ? theme.spacing(0)
               : theme.spacing(1),
             height: theme.spacing(3),
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             paddingInline: theme.spacing(1),
-            width: downMd ? '30%' : '20%',
+            width: downMd ? "30%" : "20%",
           })}
         >
           <Typography fontSize={10} color="primary.contrastText">
@@ -96,17 +96,17 @@ export const ForumPosts = ({ posts, users }) => {
         <></>
       ) : (
         posts.map((post, index) => {
-          const { titulo, fijado, cerrado, createdAt, id_creador, id } = post
-          const user = users?.find((u) => u.id == id_creador)
-          const date = new Date(createdAt)
+          const { titulo, fijado, cerrado, createdAt, id_autor, id } = post;
+          const user = users?.find((u) => u.id == id_autor);
+          const date = new Date(createdAt);
           return (
-            <Box width={'100%'} display={'flex'} key={`post-${id}`}>
+            <Box width={"100%"} display={"flex"} key={`post-${id}`}>
               <Box
-                width={downMd ? '40%' : '60%'}
-                height={'64px'}
+                width={downMd ? "40%" : "60%"}
+                height={"64px"}
                 sx={(theme) => ({
-                  display: 'flex',
-                  flexDirection: 'column',
+                  display: "flex",
+                  flexDirection: "column",
                   paddingTop: theme.spacing(1.5),
                   paddingInline: theme.spacing(1.5),
                   backgroundColor:
@@ -117,20 +117,20 @@ export const ForumPosts = ({ posts, users }) => {
                 })}
               >
                 <Box
-                  display={'flex'}
+                  display={"flex"}
                   gap={downMd ? 0 : 1}
-                  alignItems={'center'}
+                  alignItems={"center"}
                 >
                   <Typography
                     fontSize={14}
                     sx={(theme) => ({
-                      cursor: 'pointer',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                      '&:hover': {
+                      cursor: "pointer",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      "&:hover": {
                         color: theme.palette.primary.main,
-                        textDecoration: 'underline',
+                        textDecoration: "underline",
                       },
                     })}
                     onClick={() =>
@@ -151,16 +151,16 @@ export const ForumPosts = ({ posts, users }) => {
                   ) : null}
                 </Box>
                 <Typography fontSize={12} fontWeight={600}>
-                  Por {user ? user.nombre_apellido : `#${id_creador}`}
+                  Por {user ? user.nombre_apellido : `#${id_autor}`}
                 </Typography>
               </Box>
               <Box
-                width={downMd ? '30%' : '20%'}
-                height={'64px'}
+                width={downMd ? "30%" : "20%"}
+                height={"64px"}
                 sx={(theme) => ({
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                   backgroundColor:
                     index % 2 == 0
                       ? theme.palette.primary.light
@@ -172,13 +172,13 @@ export const ForumPosts = ({ posts, users }) => {
                 </Typography>
               </Box>
               <Box
-                width={downMd ? '30%' : '20%'}
-                height={'64px'}
+                width={downMd ? "30%" : "20%"}
+                height={"64px"}
                 sx={(theme) => ({
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
                   backgroundColor:
                     index % 2 == 0
                       ? theme.palette.primary.light
@@ -194,9 +194,9 @@ export const ForumPosts = ({ posts, users }) => {
                 </Typography>
               </Box>
             </Box>
-          )
+          );
         })
       )}
     </Box>
-  )
-}
+  );
+};
