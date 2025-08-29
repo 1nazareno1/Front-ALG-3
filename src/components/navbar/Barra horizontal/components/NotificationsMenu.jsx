@@ -3,9 +3,11 @@ import { IconButton, Badge, Box, Typography } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { ClickAwayListener } from "@mui/material";
 import { Cancel } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 export const NotificationsMenu = ({ notifications, closeNotification }) => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -65,6 +67,10 @@ export const NotificationsMenu = ({ notifications, closeNotification }) => {
                         fontWeight: 500,
                       },
                     })}
+                    onClick={() => {
+                      closeNotification(n.id);
+                      navigate(n.url);
+                    }}
                   >
                     {n.mensaje}
                   </Typography>
