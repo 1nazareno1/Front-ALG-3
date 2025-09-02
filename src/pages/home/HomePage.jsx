@@ -29,7 +29,7 @@ export const HomePage = () => {
           gap: !upLg ? theme.spacing(2) : theme.spacing(5),
           height: theme.spacing(30),
           justifyContent: "space-evenly",
-          padding: !upLg ? theme.spacing(5) : theme.spacing(2),
+          padding: theme.spacing(2),
           width: upLg ? "calc(100vw - 78px)" : "100vw",
         })}
       >

@@ -14,7 +14,7 @@ export const SearchResult = ({ post }) => {
         alignItems={"center"}
       >
         <Box
-          onClick={() => navigate(`/post/${id}`)}
+          onClick={() => navigate(`/post/${id}`, { state: { ...post } })}
           sx={(theme) => ({
             cursor: "pointer",
             "&:hover": {
@@ -23,7 +23,16 @@ export const SearchResult = ({ post }) => {
             },
           })}
         >
-          <Typography variant="h6">{titulo}</Typography>
+          <Typography
+            variant="h6"
+            sx={(theme) => ({
+              [theme.breakpoints.down("md")]: {
+                fontSize: "1rem",
+              },
+            })}
+          >
+            {titulo}
+          </Typography>
         </Box>
         <Typography variant="body2">
           {getTimeAgoFromString(createdAt)}

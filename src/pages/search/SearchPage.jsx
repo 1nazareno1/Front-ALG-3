@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPostByTitle, resetResults } from "../../redux/slices/postsSlice";
 import { SearchResult } from "../../components/search/SearchResult";
 import { toast } from "sonner";
+import { useWindowSize } from "../../hooks/useWindowSize";
 import { Close } from "@mui/icons-material";
 
 export const SearchPage = () => {
@@ -20,6 +21,7 @@ export const SearchPage = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { state } = location;
+  const { upLg } = useWindowSize();
 
   useEffect(() => {
     if (results.length > 0) dispatch(resetResults());
@@ -30,11 +32,11 @@ export const SearchPage = () => {
   }, []);
 
   return (
-    <Box p={4}>
+    <Box mx={upLg ? 10 : 4} my={upLg ? 5 : 4}>
       <Typography variant="h5" gutterBottom mb={5}>
         Busqueda de Posts
       </Typography>
-      <Box display={"flex"} alignItems={"center"} gap={2} mx={10}>
+      <Box display={"flex"} alignItems={"center"} gap={2}>
         <TextField
           label="Nombre del tema"
           variant="outlined"
@@ -84,7 +86,7 @@ export const SearchPage = () => {
         </Button>
       </Box>
       {searchStatus === "idle" && (
-        <Typography variant="body2" mt={2} mx={10} color="textSecondary">
+        <Typography variant="body2" mt={2} color="textSecondary">
           Ingrese al menos 3 caracteres para buscar un post
         </Typography>
       )}
@@ -94,7 +96,7 @@ export const SearchPage = () => {
         </Box>
       )}
       {searchStatus === "succesful" && results.length > 0 ? (
-        <Box mx={10} mt={5}>
+        <Box mt={5}>
           {results.map((post) => {
             return <SearchResult post={post} />;
           })}
@@ -107,7 +109,7 @@ export const SearchPage = () => {
         </Box>
       ) : null}
       {searchStatus === "succesful" && results.length === 0 && (
-        <Typography variant="body2" mt={2} mx={10} color="textSecondary">
+        <Typography variant="body2" mt={2} color="textSecondary">
           No se encontraron posts con ese titulo
         </Typography>
       )}
