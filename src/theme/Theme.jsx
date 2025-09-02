@@ -7,6 +7,22 @@ import { createTheme } from "@mui/material/styles";
 */
 
 export const theme = createTheme({
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          "&:hover": {
+            backgroundColor: "#00297aff",
+            boxShadow: "none",
+          },
+          "&.Mui-disabled": {
+            backgroundColor: "#E0E0E0",
+            color: "#A0A0A0",
+          },
+        },
+      },
+    },
+  },
   breakpoints: {
     values: {
       sm: 375,

@@ -37,7 +37,7 @@ export const HomePage = () => {
           src="/iseta.png"
           style={{
             width: "100%",
-            maxWidth: !upLg ? "400px" : "300px",
+            maxWidth: !upLg ? "250px" : "300px",
             marginLeft: !upLg ? "0px" : "16px",
           }}
         />

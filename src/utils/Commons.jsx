@@ -38,13 +38,13 @@ export const MenuLinks = [
   {
     title: "Buscar",
     icon: <Search />,
-    link: "/buscar",
+    link: "/search",
     logged: false,
   },
   {
     title: "Calendario",
     icon: <CalendarMonth />,
-    link: "/calendario",
+    link: "/calendar",
     logged: false,
   },
   {
@@ -56,7 +56,7 @@ export const MenuLinks = [
   {
     title: "Mi perfil",
     icon: <Person />,
-    link: "/mi-perfil",
+    link: "/profile",
     logged: true,
   },
 ];
