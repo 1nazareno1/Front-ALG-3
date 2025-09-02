@@ -6,6 +6,7 @@ import { HomePage } from "./pages/home/HomePage";
 import { Interface } from "./components/interfaces/Interface";
 import { Providers } from "./redux/Providers";
 import { RegisterPage } from "./pages/register/RegisterPage";
+import { SearchPage } from "./pages/search/SearchPage";
 import { theme } from "./theme/Theme";
 import { ThemeProvider } from "@mui/material";
 import { Toaster } from "sonner";
@@ -23,6 +24,7 @@ function App() {
                 <Route path="/foro" element={<ForumPage />} />
                 <Route path="/registro" element={<RegisterPage />} />
                 <Route path="/post/:id" element={<ForumPostPage />} />
+                <Route path="/search" element={<SearchPage />} />
               </Routes>
             </Interface>
           </ThemeProvider>

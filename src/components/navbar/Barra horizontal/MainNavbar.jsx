@@ -10,6 +10,7 @@ import { MobileNavbar } from "./MobileNavbar";
 import { NotLoggedDesktop } from "./components/NotLoggedDesktop";
 import { useSelector } from "react-redux";
 import { useWindowSize } from "../../../hooks/useWindowSize";
+import { SearchComponent } from "./components/SearchComponent";
 
 export const MainNavbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -39,15 +40,7 @@ export const MainNavbar = () => {
               gap: isLogged ? 7 : 2,
             }}
           >
-            <TextField
-              size="small"
-              placeholder="Buscar..."
-              variant="outlined"
-              sx={{ background: "white", borderRadius: 1 }}
-              InputProps={{
-                startAdornment: <Search sx={{ color: "grey.500", mr: 1 }} />,
-              }}
-            />
+            <SearchComponent />
 
             {isLogged ? (
               <LoggedDesktop username={username} />
