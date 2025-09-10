@@ -41,12 +41,13 @@ export const MenuLinks = [
     link: "/search",
     logged: false,
   },
-  {
-    title: "Calendario",
-    icon: <CalendarMonth />,
-    link: "/calendar",
-    logged: false,
-  },
+ {
+  title: "Calendario",
+  icon: <CalendarMonth />,
+  link: "/calendar",
+  logged: false,
+  mobileOnly: true,
+},
   {
     title: "Ir a ISETA",
     icon: <Link />,

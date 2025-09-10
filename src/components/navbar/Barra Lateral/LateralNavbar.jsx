@@ -13,7 +13,9 @@ export const LateralNavbar = () => {
   const timeoutRef = useRef(null);
   const { upLg } = useWindowSize();
   const isLogged = false;
-
+  const filteredLinks = MenuLinks.filter(
+  (button) => !button.mobileOnly && (!button.logged || isLogged)
+);
   if (!upLg) return null;
 
   const handleMouseEnter = () => {
@@ -46,7 +48,7 @@ export const LateralNavbar = () => {
       })}
     >
       <Box display={"flex"} flexDirection={"column"} gap={1}>
-        {MenuLinks.map((button) => {
+        {filteredLinks.map((button) =>{
           if (!isLogged && button.logged) return;
           return (
             <LinkButton
