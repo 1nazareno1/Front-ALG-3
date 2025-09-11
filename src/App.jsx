@@ -10,6 +10,8 @@ import { SearchPage } from "./pages/search/SearchPage";
 import { theme } from "./theme/Theme";
 import { ThemeProvider } from "@mui/material";
 import { Toaster } from "sonner";
+import PerfilPage from './pages/perfil/PerfilPage';
+
 
 //* Este archivo contiene toda la aplicación
 function App() {
@@ -25,6 +27,7 @@ function App() {
                 <Route path="/registro" element={<RegisterPage />} />
                 <Route path="/post/:id" element={<ForumPostPage />} />
                 <Route path="/search" element={<SearchPage />} />
+                <Route path="/perfil" element={<PerfilPage />} />
               </Routes>
             </Interface>
           </ThemeProvider>

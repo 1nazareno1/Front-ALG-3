@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { MenuLinks } from "../../../utils/Commons";
 import { useWindowSize } from "../../../hooks/useWindowSize";
+import { useSelector } from "react-redux";
 
 export const LateralNavbar = () => {
   const [expandedNavbar, setExpandedNavbar] = useState(false);
@@ -12,7 +13,7 @@ export const LateralNavbar = () => {
   const navigate = useNavigate();
   const timeoutRef = useRef(null);
   const { upLg } = useWindowSize();
-  const isLogged = false;
+  const isLogged = useSelector((state) => state.auth.isLogged);
 
   if (!upLg) return null;
 
