@@ -9,24 +9,30 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserSession } from "../../redux/slices/authSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export const LoginModal = ({ open, onClose }) => {
   const { status } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const handleLogin = async (username, password) => {
+  const [nombre, setNombre] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
     try {
-      await dispatch(getUserSession({ username, password })).unwrap();
-      toast.success("Usuario logueado con exito");
+      await dispatch(getUserSession({ username: nombre, password })).unwrap();
+      toast.success("Usuario logueado con éxito");
     } catch {
-      toast.error("Error al iniciar sesion");
+      toast.error("Error al iniciar sesión");
     }
   };
 
+  // condición de validación: ambos campos llenos
+  const isFormValid = nombre.trim() !== "" && password.trim() !== "";
+
   useEffect(() => {
-    if (status == "succesful") onClose();
+    if (status === "succesful") onClose();
   }, [status, onClose]);
 
   return (
@@ -45,6 +51,7 @@ export const LoginModal = ({ open, onClose }) => {
           borderRadius: 2,
         }}
       >
+        {/* Header */}
         <Box
           sx={{
             display: "flex",
@@ -73,6 +80,8 @@ export const LoginModal = ({ open, onClose }) => {
             <CloseIcon fontSize="inherit" />
           </Box>
         </Box>
+
+        {/* Usuario */}
         <Typography
           sx={{
             fontWeight: 400,
@@ -87,12 +96,15 @@ export const LoginModal = ({ open, onClose }) => {
         <TextField
           variant="outlined"
           fullWidth
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
           sx={{ mb: 2 }}
           InputProps={{
             sx: { height: 35, fontsize: 15 },
           }}
         />
 
+        {/* Contraseña */}
         <Typography
           sx={{
             fontWeight: 400,
@@ -104,25 +116,30 @@ export const LoginModal = ({ open, onClose }) => {
         >
           CONTRASEÑA
         </Typography>
-
         <TextField
           type="password"
           variant="outlined"
           fullWidth
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           sx={{ mb: 3 }}
           InputProps={{
             sx: { height: 35, fontsize: 15 },
           }}
         />
+
+        {/* Botón ingresar */}
         <Button
           variant="contained"
           alignItems="center"
-          onClick={() => handleLogin()}
+          onClick={handleLogin}
+          disabled={!isFormValid || status === "loading"} // 🔹 bloqueo dinámico
           sx={(theme) => ({
-            backgroundColor:
-              status == "loading"
-                ? theme.palette.secondary.dark
-                : theme.palette.primary.main,
+            backgroundColor: !isFormValid
+              ? "grey.400"
+              : status === "loading"
+              ? theme.palette.secondary.dark
+              : theme.palette.primary.main,
             mx: "auto",
             display: "flex",
             borderRadius: 2,
@@ -133,15 +150,17 @@ export const LoginModal = ({ open, onClose }) => {
             fontWeight: 400,
             fontsize: 18,
             textTransform: "none",
+            transition: "background-color 0.3s ease", // 🔹 animación suave
           })}
         >
-          {status == "loading" ? (
+          {status === "loading" ? (
             <CircularProgress size={16} color="secondary" />
           ) : (
             "Ingresar"
           )}
         </Button>
 
+        {/* Link olvidar contraseña */}
         <Typography
           component="a"
           href="#"
@@ -159,7 +178,7 @@ export const LoginModal = ({ open, onClose }) => {
             },
           })}
         >
-          ¿Te olvidate la contraseña?
+          ¿Te olvidaste la contraseña?
         </Typography>
       </Box>
     </Modal>
