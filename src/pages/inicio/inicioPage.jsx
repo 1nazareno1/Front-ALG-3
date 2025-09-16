@@ -48,6 +48,23 @@ export const LoginPage = () => {
             mb: 0.5,
           }}
         >
+          NOMBRE DE USUARIO
+        </Typography>
+        <TextField
+          variant="outlined"
+          fullWidth
+          sx={{ mb: 1 }}
+          InputProps={{ sx: { height: 35, fontSize: 15 } }}
+        />
+        <Typography
+          sx={{
+            fontWeight: 400,
+            fontSize: 18,
+            color: "grey.700",
+            letterSpacing: 0.5,
+            mb: 0.5,
+          }}
+        >
           CONTRASEÑA
         </Typography>
         <TextField
