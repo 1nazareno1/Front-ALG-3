@@ -12,10 +12,12 @@ import { Logo } from './Logo'
 import { MenuLinks } from '../../../utils/Commons'
 import { MenuMobileLinkComponent } from './MenuMobileLinkComponent'
 
+
+
 export const MobileNavbar = ({ menuOpen, onClose }) => {
   // Simulacion de Login
   const isLoggedIn = true
-  const userName = 'BenjaminZapata'
+  const userName = 'Bnegra cabeza'
 
   return (
     <Drawer open={menuOpen} onClose={onClose}>
@@ -44,6 +46,7 @@ export const MobileNavbar = ({ menuOpen, onClose }) => {
                 key={`${button.title}-mobile`}
                 icon={button.icon}
                 text={button.title}
+                link={button.link}
               />
             )
           })}
