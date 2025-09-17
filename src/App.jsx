@@ -11,6 +11,7 @@ import { theme } from "./theme/Theme";
 import { ThemeProvider } from "@mui/material";
 import { Toaster } from "sonner";
 import PerfilPage from './pages/perfil/PerfilPage';
+import Calendario from './pages/Calendario/calendario';
 
 
 //* Este archivo contiene toda la aplicación
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/post/:id" element={<ForumPostPage />} />
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/perfil" element={<PerfilPage />} />
+                <Route path="/calendar" element={<Calendario />} />
               </Routes>
             </Interface>
           </ThemeProvider>
