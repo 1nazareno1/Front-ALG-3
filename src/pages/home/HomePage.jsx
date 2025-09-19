@@ -6,6 +6,7 @@ import { getPosts } from "../../redux/slices/postsSlice";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { getAllUsers } from "../../redux/slices/usersSlice";
 
+
 export const HomePage = () => {
   const { upLg, downMd } = useWindowSize();
   const dispatch = useDispatch();

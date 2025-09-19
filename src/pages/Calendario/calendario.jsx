@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Box, Typography } from '@mui/material';
-import Calendar from 'react-calendar';
+import { useState } from 'react';
+import { Box } from '@mui/material';
 
 const Calendario = () => {
   const [fechaSeleccionada, setFechaSeleccionada] = useState(new Date());
