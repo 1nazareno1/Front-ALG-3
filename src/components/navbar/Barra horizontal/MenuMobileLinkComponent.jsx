@@ -1,8 +1,11 @@
 import { ListItem, ListItemIcon, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom';
 
-export const MenuMobileLinkComponent = ({ icon, text }) => {
+export const MenuMobileLinkComponent = ({ icon, text, link }) => {
+  const navigate = useNavigate();
+
   return (
-    <ListItem button>
+    <ListItem button onClick={() => navigate(link)}>
       <ListItemIcon
         sx={(theme) => ({ color: 'white', minWidth: theme.spacing(6) })}
       >
