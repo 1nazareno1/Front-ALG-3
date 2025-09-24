@@ -38,7 +38,7 @@ export const MenuLinks = [
   {
     title: "Buscar",
     icon: <Search />,
-    link: "/search",
+    link: "/buscar",
     logged: false,
   },
   {

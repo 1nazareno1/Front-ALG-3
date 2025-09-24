@@ -1,11 +1,11 @@
 //? Importes de React
 import { useState } from "react";
 //? Importes de Terceros
-import { Box, TextField } from "@mui/material";
+import { Box } from "@mui/material";
 //? Importes propios
 import { LoggedDesktop } from "./components/LoggedDesktop";
 import { Logo } from "./Logo";
-import { Menu, Search } from "@mui/icons-material";
+import { Menu } from "@mui/icons-material";
 import { MobileNavbar } from "./MobileNavbar";
 import { NotLoggedDesktop } from "./components/NotLoggedDesktop";
 import { useSelector } from "react-redux";
@@ -41,7 +41,6 @@ export const MainNavbar = () => {
             }}
           >
             <SearchComponent />
-
             {isLogged ? (
               <LoggedDesktop username={username} />
             ) : (
@@ -54,7 +53,11 @@ export const MainNavbar = () => {
         ) : null}
         {!upLg ? (
           <Box onClick={() => setMenuOpen(!menuOpen)}>
-            <Menu color="primary" fontSize={"medium"} />
+            <Menu
+              color="primary"
+              fontSize={"medium"}
+              sx={{ cursor: "pointer" }}
+            />
           </Box>
         ) : null}
       </Box>

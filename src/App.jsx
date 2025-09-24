@@ -24,7 +24,7 @@ function App() {
                 <Route path="/foro" element={<ForumPage />} />
                 <Route path="/registro" element={<RegisterPage />} />
                 <Route path="/post/:id" element={<ForumPostPage />} />
-                <Route path="/search" element={<SearchPage />} />
+                <Route path="/buscar" element={<SearchPage />} />
               </Routes>
             </Interface>
           </ThemeProvider>
