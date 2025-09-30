@@ -70,7 +70,7 @@ const postsSlice = createSlice({
       }),
       builder.addCase(getPosts.fulfilled, (state, { payload }) => {
         state.status = "succesful";
-        state.posts = payload;
+        state.posts = payload || [];
       }),
       // getPostById
       builder.addCase(getPostById.pending, (state) => {
