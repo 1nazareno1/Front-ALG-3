@@ -18,7 +18,7 @@ export const SearchComponent = () => {
       onKeyDown={(e) => {
         if (e.key === "Enter" && inputValue.trim().length >= 3) {
           setInputValue("");
-          navigate(`/search`, { state: { query: inputValue } });
+          navigate(`/buscar`, { state: { query: inputValue } });
         }
       }}
       InputProps={{

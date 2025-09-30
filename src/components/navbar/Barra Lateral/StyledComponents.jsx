@@ -35,10 +35,10 @@ export const LinkButton = styled(ButtonBase, {
   shouldForwardProp: (prop) => prop !== 'pathname' && prop !== 'button',
 })(({ button, theme, pathname, expandednavbar }) => ({
   alignItems: 'center',
-  background: pathname == button.link ? 'rgba(4, 51, 147, .2)' : 'transparent',
+  background: pathname.includes(button.link) ? 'rgba(4, 51, 147, .2)' : 'transparent',
   borderRadius: theme.spacing(1),
   color:
-    pathname == button.link
+    pathname.includes(button.link)
       ? theme.palette.primary.main
       : theme.palette.primary.dark,
   display: 'flex',
