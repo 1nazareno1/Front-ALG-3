@@ -93,7 +93,33 @@ export const ForumPosts = ({ posts, users }) => {
         </Box>
       </Box>
       {posts.length == 0 ? (
-        <></>
+        <Box
+          sx={(theme) => ({
+            display: "flex",
+            flexDirection: "column",
+            backgroundColor: theme.palette.primary.light,
+            border: `1px solid ${theme.palette.secondary.dark}`,
+            borderTop: `none`,
+            marginTop: theme.spacing(-0.5),
+            borderBottomLeftRadius: theme.spacing(1),
+            borderBottomRightRadius: theme.spacing(1),
+          })}
+        >
+          <Typography
+            fontSize={14}
+            sx={(theme) => ({
+              color: theme.palette.primary.dark,
+              marginBottom: theme.spacing(2),
+              marginTop: theme.spacing(2.5),
+              overflow: "hidden",
+              textAlign: "center",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            })}
+          >
+            ¡No se han encontrado posts!
+          </Typography>
+        </Box>
       ) : (
         posts.map((post, index) => {
           const { titulo, fijado, cerrado, createdAt, id_autor, id } = post;
