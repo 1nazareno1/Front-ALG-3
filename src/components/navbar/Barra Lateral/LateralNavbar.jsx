@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import { MenuLinks } from "../../../utils/Commons";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import { useSelector } from "react-redux";
-import { useSelector } from "react-redux";
+
 
 export const LateralNavbar = () => {
   const [expandedNavbar, setExpandedNavbar] = useState(false);
