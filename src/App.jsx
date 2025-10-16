@@ -10,7 +10,7 @@ import { SearchPage } from "./pages/search/SearchPage";
 import { theme } from "./theme/Theme";
 import { ThemeProvider } from "@mui/material";
 import { Toaster } from "sonner";
-import { LoginPage } from './pages/inicio/inicioPage';
+import { LoginPage } from "./pages/inicio/inicioPage";
 
 //* Este archivo contiene toda la aplicación
 function App() {
@@ -22,7 +22,7 @@ function App() {
             <Interface>
               <Routes>
                 <Route path="/" index element={<HomePage />} />
-                <Route path="/foro" element={<ForumPage />} />
+                <Route path="/foro/:id" element={<ForumPage />} />
                 <Route path="/registro" element={<RegisterPage />} />
                 <Route path="/post/:id" element={<ForumPostPage />} />
                 <Route path="/search" element={<SearchPage />} />

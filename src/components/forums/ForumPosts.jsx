@@ -1,9 +1,14 @@
-import { LockOutlined, PushPinOutlined } from "@mui/icons-material";
-import { Box, Tooltip, Typography } from "@mui/material";
+import {
+  Add,
+  ChevronLeft,
+  LockOutlined,
+  PushPinOutlined,
+} from "@mui/icons-material";
+import { Box, Button, Tooltip, Typography } from "@mui/material";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useNavigate } from "react-router-dom";
 
-export const ForumPosts = ({ posts, users }) => {
+export const ForumPosts = ({ posts, postsStatus, users }) => {
   const { downMd } = useWindowSize();
   const navigate = useNavigate();
 
@@ -15,6 +20,40 @@ export const ForumPosts = ({ posts, users }) => {
         maxWidth: "850px",
       })}
     >
+      <Box display={"flex"} justifyContent={"space-between"} mb={2}>
+        <Box
+          display={"flex"}
+          alignItems={"center"}
+          onClick={() => navigate("/")}
+          sx={(theme) => ({
+            cursor: "pointer",
+            color: theme.palette.text.primary,
+            "&:hover": { color: theme.palette.primary.dark },
+            "&:hover .MuiTypography-root": { textDecoration: "underline" },
+          })}
+        >
+          <ChevronLeft />
+          <Typography component={"span"} fontSize={14} fontWeight={500}>
+            Volver al foro
+          </Typography>
+        </Box>
+        <Button
+          disabled={postsStatus !== "succesful"}
+          variant="contained"
+          onClick={() => navigate("/crear-post")}
+          sx={(theme) => ({
+            display: "flex",
+            alignItems: "center",
+            gap: theme.spacing(1),
+            height: "40px",
+            marginLeft: downMd ? theme.spacing(2) : theme.spacing(0),
+          })}
+        >
+          {" "}
+          <Add />
+          Crear post
+        </Button>
+      </Box>
       <Box
         sx={(theme) => ({
           backgroundColor: theme.palette.primary.main,
@@ -93,7 +132,22 @@ export const ForumPosts = ({ posts, users }) => {
         </Box>
       </Box>
       {posts.length == 0 ? (
-        <></>
+        <Box
+          width={"100%"}
+          display={"flex"}
+          justifyContent={"center"}
+          p={3}
+          sx={(theme) => ({
+            backgroundColor: theme.palette.primary.light,
+            borderBottomLeftRadius: theme.spacing(1),
+            borderBottomRightRadius: theme.spacing(1),
+          })}
+        >
+          <Typography fontSize={14}>
+            No existen posts dentro de esta categoria. ¡Se el primero en crear
+            uno!
+          </Typography>
+        </Box>
       ) : (
         posts.map((post, index) => {
           const { titulo, fijado, cerrado, createdAt, id_autor, id } = post;
@@ -150,8 +204,36 @@ export const ForumPosts = ({ posts, users }) => {
                     </Tooltip>
                   ) : null}
                 </Box>
-                <Typography fontSize={12} fontWeight={600}>
-                  Por {user ? user.nombre_apellido : `#${id_autor}`}
+
+                <Typography
+                  fontSize={12}
+                  fontWeight={600}
+                  sx={{
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  Por{" "}
+                  <Box
+                    component={"span"}
+                    onClick={() => navigate(`/perfil/${id_autor}`)}
+                  >
+                    <Typography
+                      component={"span"}
+                      fontSize={12}
+                      fontWeight={600}
+                      sx={(theme) => ({
+                        cursor: "pointer",
+                        "&:hover": {
+                          color: theme.palette.primary.main,
+                          textDecoration: "underline",
+                        },
+                      })}
+                    >
+                      {user ? user.nombre_apellido : `#${id_autor}`}
+                    </Typography>
+                  </Box>
                 </Typography>
               </Box>
               <Box

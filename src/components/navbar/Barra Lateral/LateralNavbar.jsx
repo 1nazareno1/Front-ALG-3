@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { MenuLinks } from "../../../utils/Commons";
 import { useWindowSize } from "../../../hooks/useWindowSize";
+import { useSelector } from "react-redux";
 
 export const LateralNavbar = () => {
   const [expandedNavbar, setExpandedNavbar] = useState(false);
