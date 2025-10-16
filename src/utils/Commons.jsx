@@ -1,4 +1,5 @@
 import { CalendarMonth, Home, Link, Person, Search } from "@mui/icons-material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export const NotificationMock = [
   {
@@ -32,32 +33,32 @@ export const MenuLinks = [
   {
     title: "Inicio",
     icon: <Home />,
-    link: "/",
+    link: "/home",
     logged: false,
   },
   {
     title: "Buscar",
     icon: <Search />,
-    link: "/search",
+    link: "/buscar",
     logged: false,
   },
   {
     title: "Calendario",
     icon: <CalendarMonth />,
-    link: "/calendar",
-    logged: false,
-  },
-  {
-    title: "Ir a ISETA",
-    icon: <Link />,
-    link: "",
+    link: "/calendario",
     logged: false,
   },
   {
     title: "Mi perfil",
-    icon: <Person />,
-    link: "/profile",
-    logged: true,
+    link: "/perfil",
+    icon: <AccountCircleIcon />,
+    logged: true, // Solo para usuarios logueados
+  },
+  {
+    title: "Ir a ISETA",
+    icon: <Link />,
+    link: "https://iseta.edu.ar/iseta/",
+    logged: false,
   },
 ];
 

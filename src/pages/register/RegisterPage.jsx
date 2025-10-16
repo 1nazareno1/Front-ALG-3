@@ -17,7 +17,21 @@ export const RegisterPage = () => {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   useState(false);
   const { isLg, downMd } = useWindowSize();
+  const [nombre, setNombre] = useState('');
+  const [apellido, setApellido] = useState('');
+  const [carrera, setCarrera] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
+  const handleRegister = () => {
+  if (!nombre || !apellido || !carrera || !email || !password) {
+    setErrorMsg('*Por favor, rellena todos los campos.');
+    return;
+  }
+  setErrorMsg('');
+  // Aquí iría la lógica de registro real
+};
   return (
     <>
       <Box
@@ -123,6 +137,8 @@ export const RegisterPage = () => {
               fullWidth
               sx={{ mb: 1 }}
               InputProps={{ sx: { height: 35, fontSize: 15 } }}
+              value={nombre}
+              onChange={e => setNombre(e.target.value)}
             />
           </Box>
           <Box
@@ -146,6 +162,8 @@ export const RegisterPage = () => {
               fullWidth
               sx={{ mb: 1 }}
               InputProps={{ sx: { height: 35, fontSize: 15 } }}
+              value={apellido}
+              onChange={e => setApellido(e.target.value)}
             />
           </Box>
           <Box
@@ -169,6 +187,8 @@ export const RegisterPage = () => {
               fullWidth
               sx={{ mb: 1 }}
               InputProps={{ sx: { height: 35, fontSize: 15 } }}
+              value={carrera}
+              onChange={e => setCarrera(e.target.value)}
             />
           </Box>
           <Box
@@ -192,6 +212,8 @@ export const RegisterPage = () => {
               fullWidth
               sx={{ mb: 1 }}
               InputProps={{ sx: { height: 35, fontSize: 15 } }}
+              value={email}
+              onChange={e => setEmail(e.target.value)}
             />
           </Box>
           <Box
@@ -217,6 +239,8 @@ export const RegisterPage = () => {
               fullWidth
               sx={{ mb: 1 }}
               InputProps={{ sx: { height: 35, fontSize: 15 } }}
+              value={password}
+              onChange={e => setPassword(e.target.value)}
             />
           </Box>
         </Box>
@@ -239,10 +263,17 @@ export const RegisterPage = () => {
             },
           }}
           disabled={!acceptedTerms}
+          onClick={handleRegister}
         >
           Registrarse
         </Button>
+        {errorMsg && (
+          <Typography color="error" sx={{ textAlign: 'center', mt: 1 }}>
+            {errorMsg}
+          </Typography>
+        )}
       </Box>
+    
     </>
   );
 };

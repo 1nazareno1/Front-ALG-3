@@ -138,7 +138,12 @@ export const ForumPosts = ({ posts, postsStatus, users }) => {
           justifyContent={"center"}
           p={3}
           sx={(theme) => ({
+            display: "flex",
+            flexDirection: "column",
             backgroundColor: theme.palette.primary.light,
+            border: `1px solid ${theme.palette.secondary.dark}`,
+            borderTop: `none`,
+            marginTop: theme.spacing(-0.5),
             borderBottomLeftRadius: theme.spacing(1),
             borderBottomRightRadius: theme.spacing(1),
           })}
