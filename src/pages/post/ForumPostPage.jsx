@@ -22,7 +22,7 @@ export const ForumPostPage = () => {
     userLike,
     userModalOpen,
   } = useForumPostPage();
-
+  
   return (
     <Box
       sx={(theme) => ({
@@ -42,7 +42,7 @@ export const ForumPostPage = () => {
       })}
     >
       <Box
-        onClick={() => navigate("/")}
+        onClick={() => navigate(-1)}
         sx={{ cursor: "pointer", height: "max-content" }}
       >
         <ArrowBack

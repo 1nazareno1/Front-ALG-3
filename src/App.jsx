@@ -11,6 +11,9 @@ import { Providers } from "./redux/Providers";
 import { RegisterPage } from "./pages/register/RegisterPage";
 import { SearchPage } from "./pages/search/SearchPage";
 import { theme } from "./theme/Theme";
+import { ThemeProvider } from "@mui/material";
+import { Toaster } from "sonner";
+import { LoginPage } from "./pages/inicio/inicioPage";
 
 //* Este archivo contiene toda la aplicación
 function App() {
@@ -21,10 +24,11 @@ function App() {
           <ThemeProvider theme={theme}>
             <Interface>
               <Routes>
-                <Route path="/home" index element={<HomePage />} />
-                <Route path="/foro" element={<ForumPage />} />
-                <Route path="/registro" element={<RegisterPage />} />
+                <Route path="/" index element={<HomePage />} />
+                <Route path="/foro/:id" element={<ForumPage />} />
                 <Route path="/post/:id" element={<ForumPostPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/registro" element={<RegisterPage />} />
                 <Route path="/buscar" element={<SearchPage />} />
                 <Route path="/perfil/:id" element={<ProfilePage />} />
                 {/* <Route path="/calendario" element={<Calendario />} /> */}

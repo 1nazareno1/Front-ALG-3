@@ -18,7 +18,7 @@ export const PostBodyContent = ({ handleUserLike, postData, userLike }) => {
                 sx={(theme) => ({
                   color: userLike
                     ? theme.palette.primary.main
-                    : theme.palette.primary.dark,
+                    : theme.palette.common.dark,
                   cursor: "pointer",
                   transition: "ease-in-out 0.15s",
                   "&:hover": {

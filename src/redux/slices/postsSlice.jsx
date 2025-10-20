@@ -5,11 +5,27 @@ import { toast } from "sonner";
 
 const initialState = {
   posts: [],
+  postsCategories: [],
   results: [],
   searchedPost: {},
-  status: "idle",
+  categoriesStatus: "idle",
+  postsStatus: "idle",
   searchStatus: "idle",
 };
+
+export const getPostCategories = createAsyncThunk(
+  "posts/getPostCategories",
+  async () => {
+    try {
+      const res = await axios.get(
+        `https://backend-algiii.onrender.com/api/Tema/findAll`
+      );
+      return res.data;
+    } catch {
+      toast.error(`ERROR: No se pudo obtener las categorias de los posts`);
+    }
+  }
+);
 
 export const getPosts = createAsyncThunk("posts/getPosts", async () => {
   try {
@@ -63,30 +79,41 @@ const postsSlice = createSlice({
     // getPosts
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     builder.addCase(getPosts.pending, (state) => {
-      state.status = "loading";
+      state.postsStatus = "loading";
     }),
       builder.addCase(getPosts.rejected, (state) => {
-        state.status = "rejected";
+        state.postsStatus = "rejected";
       }),
       builder.addCase(getPosts.fulfilled, (state, { payload }) => {
-        state.status = "succesful";
-        state.posts = payload || [];
+        state.postsStatus = "succesful";
+        state.posts = payload;
+      }),
+      // getPostCategories
+      builder.addCase(getPostCategories.pending, (state) => {
+        state.categoriesStatus = "loading";
+      }),
+      builder.addCase(getPostCategories.rejected, (state) => {
+        state.categoriesStatus = "rejected";
+      }),
+      builder.addCase(getPostCategories.fulfilled, (state, { payload }) => {
+        state.categoriesStatus = "succesful";
+        state.postsCategories = payload;
       }),
       // getPostById
       builder.addCase(getPostById.pending, (state) => {
-        state.status = "loading";
+        state.postsStatus = "loading";
       }),
       builder.addCase(getPostById.rejected, (state) => {
-        state.status = "rejected";
+        state.postsStatus = "rejected";
       }),
       builder.addCase(getPostById.fulfilled, (state, { payload }) => {
-        state.status = "succesful";
+        state.postsStatus = "succesful";
         state.searchedPost = payload;
-      });
-    // getPostByTitle
-    builder.addCase(getPostByTitle.pending, (state) => {
-      state.searchStatus = "loading";
-    }),
+      }),
+      // getPostByTitle
+      builder.addCase(getPostByTitle.pending, (state) => {
+        state.searchStatus = "loading";
+      }),
       builder.addCase(getPostByTitle.rejected, (state) => {
         state.searchStatus = "rejected";
       }),
