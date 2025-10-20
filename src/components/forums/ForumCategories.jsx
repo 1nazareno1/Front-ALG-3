@@ -90,7 +90,26 @@ export const ForumCategories = ({ categories }) => {
         </Box>
       </Box>
       {categories.length == 0 ? (
-        <></>
+        <Box
+          width={"100%"}
+          display={"flex"}
+          justifyContent={"center"}
+          p={3}
+          sx={(theme) => ({
+            display: "flex",
+            flexDirection: "column",
+            backgroundColor: theme.palette.primary.light,
+            border: `1px solid ${theme.palette.secondary.dark}`,
+            borderTop: `none`,
+            marginTop: theme.spacing(-0.5),
+            borderBottomLeftRadius: theme.spacing(1),
+            borderBottomRightRadius: theme.spacing(1),
+          })}
+        >
+          <Typography fontSize={14} textAlign={"center"}>
+            Hubo un error al cargar las categorias
+          </Typography>
+        </Box>
       ) : (
         categories.map((category, index) => {
           const { titulo, contenido, id, updatedAt } = category;

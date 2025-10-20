@@ -148,9 +148,10 @@ export const ForumPosts = ({ posts, postsStatus, users }) => {
             borderBottomRightRadius: theme.spacing(1),
           })}
         >
-          <Typography fontSize={14}>
-            No existen posts dentro de esta categoria. ¡Se el primero en crear
-            uno!
+          <Typography fontSize={14} textAlign={"center"}>
+            {posts == undefined
+              ? ""
+              : "No existen posts dentro de esta categoria. ¡Se el primero en crear            uno!"}
           </Typography>
         </Box>
       ) : (

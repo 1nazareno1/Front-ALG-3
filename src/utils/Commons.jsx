@@ -33,7 +33,7 @@ export const MenuLinks = [
   {
     title: "Inicio",
     icon: <Home />,
-    link: "/home",
+    link: "/inicio",
     logged: false,
   },
   {
