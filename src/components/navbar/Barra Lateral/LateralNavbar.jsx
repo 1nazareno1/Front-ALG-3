@@ -7,6 +7,7 @@ import { useWindowSize } from "../../../hooks/useWindowSize";
 import { useSelector } from "react-redux";
 
 
+
 export const LateralNavbar = () => {
   const [expandedNavbar, setExpandedNavbar] = useState(false);
   const [showText, setShowText] = useState(false);
