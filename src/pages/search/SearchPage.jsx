@@ -51,7 +51,7 @@ export const SearchPage = () => {
                     cursor: "pointer",
                     color:
                       inputValue.length > 0
-                        ? theme.palette.primary.dark
+                        ? theme.palette.common.dark
                         : theme.palette.secondary.dark,
                     "&:hover": {
                       color: inputValue.length > 0 && theme.palette.error.dark,

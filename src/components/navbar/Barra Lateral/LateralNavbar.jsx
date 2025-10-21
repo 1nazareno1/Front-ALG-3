@@ -13,7 +13,7 @@ export const LateralNavbar = () => {
   const navigate = useNavigate();
   const timeoutRef = useRef(null);
   const { upLg } = useWindowSize();
-  const isLogged = useSelector((state) => state.auth.isLogged);
+  const { isLogged, userID } = useSelector((state) => state.auth);
 
   if (!upLg) return null;
 
@@ -48,28 +48,35 @@ export const LateralNavbar = () => {
     >
       <Box display={"flex"} flexDirection={"column"} gap={1}>
         {MenuLinks.map((button) => {
+          const { link, title, icon } = button;
           if (!isLogged && button.logged) return;
           return (
             <LinkButton
               button={button}
               className="button"
-              key={button.title + "-LateralNavbar"}
+              key={title + "-LateralNavbar"}
               pathname={pathname}
               expandednavbar={expandedNavbar ? 1 : 0}
               onClick={() => {
-                navigate(button.link);
+                const url = link == "/perfil" ? link + `/${userID}` : link;
+                if (pathname.includes(url)) return;
+                if (url.includes("http")) {
+                  window.open(url, "_blank");
+                  return;
+                }
+                navigate(url);
               }}
             >
-              {button.icon}
+              {icon}
               <Typography
                 className="text"
                 sx={{
                   display: "none",
                   transitionDelay: "0.3s",
-                  fontWeight: pathname == button.link ? 800 : 400,
+                  fontWeight: pathname.includes(link) ? 800 : 400,
                 }}
               >
-                {showText ? button.title : ""}
+                {showText ? title : ""}
               </Typography>
             </LinkButton>
           );

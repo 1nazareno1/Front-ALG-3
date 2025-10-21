@@ -32,13 +32,17 @@ export const theme = createTheme({
   },
   palette: {
     type: "light",
+    common: {
+      black: "#0A100D",
+      white: "#FCFCFC",
+    },
     error: {
       main: "#eb483cff",
     },
     primary: {
       main: "#043AA9",
       light: "#FCFCFC",
-      dark: "#0A100D",
+      dark: "#033494ff",
     },
     secondary: {
       main: "#1987D0",
