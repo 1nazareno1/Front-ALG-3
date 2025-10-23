@@ -6,11 +6,12 @@ import {
 } from "@mui/icons-material";
 import { Box, Button, Tooltip, Typography } from "@mui/material";
 import { useWindowSize } from "../../hooks/useWindowSize";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const ForumPosts = ({ posts, postsStatus, users }) => {
   const { downMd } = useWindowSize();
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <Box
@@ -24,7 +25,7 @@ export const ForumPosts = ({ posts, postsStatus, users }) => {
         <Box
           display={"flex"}
           alignItems={"center"}
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/inicio")}
           sx={(theme) => ({
             cursor: "pointer",
             color: theme.palette.text.primary,
@@ -40,7 +41,11 @@ export const ForumPosts = ({ posts, postsStatus, users }) => {
         <Button
           disabled={postsStatus !== "succesful"}
           variant="contained"
-          onClick={() => navigate("/crear-post")}
+          onClick={() =>
+            navigate("/crear-post", {
+              state: { forumId: location.pathname.split("/")[2] },
+            })
+          }
           sx={(theme) => ({
             display: "flex",
             alignItems: "center",

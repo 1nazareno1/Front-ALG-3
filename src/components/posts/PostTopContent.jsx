@@ -5,6 +5,7 @@ import { getTimeAgoFromString } from "../../utils/Commons";
 
 export const PostTopContent = ({
   handleReport,
+  navigate,
   postData,
   setUserModalOpen,
   upLg,
@@ -24,12 +25,14 @@ export const PostTopContent = ({
                 career={"Tec. Sup. en Alimentos"}
                 likeCount={4}
                 messageCount={32}
+                navigate={navigate}
                 open={userModalOpen}
                 postCount={1}
+                registerDate={userData.createdAt}
                 setOpen={setUserModalOpen}
                 title={userData.rol}
+                userId={userData.id}
                 username={userData.nombre_apellido}
-                registerDate={userData.createdAt}
               />
             ) : null}
           </Box>

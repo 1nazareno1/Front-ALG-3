@@ -1,5 +1,6 @@
 import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { CreatePostPage } from "./pages/createPost/CreatePostPage";
 import { ForumPage } from "./pages/forum/ForumPage";
 import { ForumPostPage } from "./pages/post/ForumPostPage";
 import { HomePage } from "./pages/home/HomePage";
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/registro" element={<RegisterPage />} />
                 <Route path="/buscar" element={<SearchPage />} />
                 <Route path="/perfil/:id" element={<ProfilePage />} />
+                <Route path="/crear-post" element={<CreatePostPage />} />
                 {/* <Route path="/calendario" element={<Calendario />} /> */}
               </Routes>
             </Interface>

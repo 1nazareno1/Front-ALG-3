@@ -1,37 +1,37 @@
-import { Box, Typography } from '@mui/material'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Box, Typography } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
 
-export const Logo = ({ color = 'main' }) => {
-  const location = useLocation()
-  const navigate = useNavigate()
+export const Logo = ({ color = "main" }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    if (location.pathname !== '/') {
-      navigate('/')
+    if (location.pathname !== "/inicio") {
+      navigate("/inicio");
     }
-  }
+  };
 
   return (
     <Box
       sx={{
-        display: 'flex',
-        alignItems: 'center',
+        display: "flex",
+        alignItems: "center",
         gap: 1,
-        cursor: location.pathname !== '/' ? 'pointer' : 'default',
-        userSelect: 'none',
-        textDecoration: 'none',
-        outline: 'none',
-        '&:focus-visible': {
-          outline: '2px solid',
+        cursor: location.pathname !== "/" ? "pointer" : "default",
+        userSelect: "none",
+        textDecoration: "none",
+        outline: "none",
+        "&:focus-visible": {
+          outline: "2px solid",
         },
       }}
       role="button"
       tabIndex={0}
       onClick={() => {
-        handleClick()
+        handleClick();
       }}
       onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') handleClick()
+        if (e.key === "Enter" || e.key === " ") handleClick();
       }}
     >
       <Box
@@ -46,7 +46,7 @@ export const Logo = ({ color = 'main' }) => {
         variant="h4"
         sx={(theme) => ({
           color:
-            color === 'main'
+            color === "main"
               ? theme.palette.primary.main
               : theme.palette.primary.light,
           fontWeight: 700,
@@ -55,5 +55,5 @@ export const Logo = ({ color = 'main' }) => {
         IZnianos
       </Typography>
     </Box>
-  )
-}
+  );
+};

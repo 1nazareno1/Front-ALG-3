@@ -42,12 +42,12 @@ export const MenuLinks = [
     link: "/buscar",
     logged: false,
   },
-  {
-    title: "Calendario",
-    icon: <CalendarMonth />,
-    link: "/calendario",
-    logged: false,
-  },
+  // {
+  //   title: "Calendario",
+  //   icon: <CalendarMonth />,
+  //   link: "/calendario",
+  //   logged: false,
+  // },
   {
     title: "Mi perfil",
     link: "/perfil",
