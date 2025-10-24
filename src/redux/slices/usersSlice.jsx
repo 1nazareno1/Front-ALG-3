@@ -6,6 +6,7 @@ import { toast } from "sonner";
 const initialState = {
   users: [],
   searchedUser: null,
+  status: "idle",
 };
 
 export const createUser = createAsyncThunk("users/createUser", async (id) => {
@@ -51,7 +52,7 @@ const usersSlice = createSlice({
     //* getUserById
     builder.addCase(getUserById.fulfilled, (state, { payload }) => {
       state.searchedUser = payload;
-      state.status = "succesful";
+      state.status = "succesfull";
     });
     builder.addCase(getUserById.rejected, (state) => {
       state.status = "rejected";
@@ -62,7 +63,7 @@ const usersSlice = createSlice({
     //* getAllUsers
     builder.addCase(getAllUsers.fulfilled, (state, { payload }) => {
       state.users = payload;
-      state.status = "succesful";
+      state.status = "succesfull";
     });
     builder.addCase(getAllUsers.rejected, (state) => {
       state.status = "rejected";

@@ -22,7 +22,7 @@ export const ForumPostPage = () => {
     userLike,
     userModalOpen,
   } = useForumPostPage();
-  
+
   return (
     <Box
       sx={(theme) => ({
@@ -65,11 +65,12 @@ export const ForumPostPage = () => {
           >
             <PostTopContent
               handleReport={handleReportModal}
+              navigate={navigate}
               postData={postData}
               setUserModalOpen={setUserModalOpen}
               upLg={upLg}
-              userModalOpen={userModalOpen}
               userData={postData.user}
+              userModalOpen={userModalOpen}
             />
             <PostBodyContent
               handleUserLike={handleUserLike}
@@ -83,9 +84,11 @@ export const ForumPostPage = () => {
               likeCount={4}
               messageCount={32}
               postCount={1}
-              title={postData.user.rol}
-              username={postData.user.nombre_apellido}
+              navigate={navigate}
               registerDate={postData.user.createdAt}
+              title={postData.user.rol}
+              userId={searchedUser.id}
+              username={postData.user.nombre_apellido}
             />
           ) : null}
         </>
