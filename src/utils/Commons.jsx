@@ -33,7 +33,7 @@ export const MenuLinks = [
   {
     title: "Inicio",
     icon: <Home />,
-    link: "/home",
+    link: "/inicio",
     logged: false,
   },
   {
@@ -42,12 +42,12 @@ export const MenuLinks = [
     link: "/buscar",
     logged: false,
   },
-  {
-    title: "Calendario",
-    icon: <CalendarMonth />,
-    link: "/calendario",
-    logged: false,
-  },
+  // {
+  //   title: "Calendario",
+  //   icon: <CalendarMonth />,
+  //   link: "/calendario",
+  //   logged: false,
+  // },
   {
     title: "Mi perfil",
     link: "/perfil",

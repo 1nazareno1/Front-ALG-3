@@ -6,32 +6,63 @@ import {
   FormControlLabel,
   Checkbox,
   Divider,
+  CircularProgress,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CheckBoxOutlineBlankRoundedIcon from "@mui/icons-material/CheckBoxOutlineBlankRounded";
 import CheckBoxRoundedIcon from "@mui/icons-material/CheckBoxRounded";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { RulesText } from "../../utils/Rules";
+import { registerUser } from "../../redux/slices/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { UserRegisteredModal } from "../../components/modals/UserRegisteredModal";
 
 export const RegisterPage = () => {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
-  useState(false);
   const { isLg, downMd } = useWindowSize();
-  const [nombre, setNombre] = useState('');
-  const [apellido, setApellido] = useState('');
-  const [carrera, setCarrera] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
+  const [formData, setFormData] = useState({
+    lastName: "",
+    email: "",
+    name: "",
+    password: "",
+  });
+  const [isValid, setIsValid] = useState(false);
+  const { registerStatus } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
-  const handleRegister = () => {
-  if (!nombre || !apellido || !carrera || !email || !password) {
-    setErrorMsg('*Por favor, rellena todos los campos.');
-    return;
-  }
-  setErrorMsg('');
-  // Aquí iría la lógica de registro real
-};
+  useEffect(() => {
+    const { name, lastName, email, password } = formData;
+    //? Validaciòn de email con regex
+    const validateEmail = (email) => {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(String(email).toLowerCase());
+    };
+
+    if (
+      name.trim().length > 3 &&
+      lastName.trim().length > 3 &&
+      email.trim().length > 3 &&
+      password.trim().length > 7 &&
+      acceptedTerms &&
+      validateEmail(email)
+    ) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+  }, [formData, acceptedTerms]);
+
+  const handleRegister = async () => {
+    const { name, lastName, email, password } = formData;
+    const fullname = `${name} ${lastName}`;
+    try {
+      dispatch(registerUser({ fullname, password, email }));
+    } catch (error) {
+      console.log(error);
+      console.error("Error al registrar el usuario:", error);
+    }
+  };
+
   return (
     <>
       <Box
@@ -137,8 +168,10 @@ export const RegisterPage = () => {
               fullWidth
               sx={{ mb: 1 }}
               InputProps={{ sx: { height: 35, fontSize: 15 } }}
-              value={nombre}
-              onChange={e => setNombre(e.target.value)}
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
             />
           </Box>
           <Box
@@ -162,33 +195,10 @@ export const RegisterPage = () => {
               fullWidth
               sx={{ mb: 1 }}
               InputProps={{ sx: { height: 35, fontSize: 15 } }}
-              value={apellido}
-              onChange={e => setApellido(e.target.value)}
-            />
-          </Box>
-          <Box
-            display={"flex"}
-            flexDirection={"column"}
-            width={downMd ? "100%" : "48%"}
-          >
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: 18,
-                color: "grey.700",
-                letterSpacing: 0.5,
-                mb: 0.5,
-              }}
-            >
-              CARRERA
-            </Typography>
-            <TextField
-              variant="outlined"
-              fullWidth
-              sx={{ mb: 1 }}
-              InputProps={{ sx: { height: 35, fontSize: 15 } }}
-              value={carrera}
-              onChange={e => setCarrera(e.target.value)}
+              value={formData.lastName}
+              onChange={(e) =>
+                setFormData({ ...formData, lastName: e.target.value })
+              }
             />
           </Box>
           <Box
@@ -209,17 +219,19 @@ export const RegisterPage = () => {
             </Typography>
             <TextField
               variant="outlined"
+              type="email"
               fullWidth
               sx={{ mb: 1 }}
               InputProps={{ sx: { height: 35, fontSize: 15 } }}
-              value={email}
-              onChange={e => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
             />
           </Box>
           <Box
             display={"flex"}
             flexDirection={"column"}
-            margin={"auto"}
             width={downMd ? "100%" : "48%"}
           >
             <Typography
@@ -239,8 +251,10 @@ export const RegisterPage = () => {
               fullWidth
               sx={{ mb: 1 }}
               InputProps={{ sx: { height: 35, fontSize: 15 } }}
-              value={password}
-              onChange={e => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
             />
           </Box>
         </Box>
@@ -262,18 +276,17 @@ export const RegisterPage = () => {
               bgcolor: "#002f86",
             },
           }}
-          disabled={!acceptedTerms}
+          disabled={!isValid || registerStatus === "loading"}
           onClick={handleRegister}
         >
-          Registrarse
+          {registerStatus === "loading" ? (
+            <CircularProgress size={20} sx={{ mt: 0.5 }} />
+          ) : (
+            "Registrar"
+          )}
         </Button>
-        {errorMsg && (
-          <Typography color="error" sx={{ textAlign: 'center', mt: 1 }}>
-            {errorMsg}
-          </Typography>
-        )}
       </Box>
-    
+      <UserRegisteredModal open={registerStatus == "succesfull"} />
     </>
   );
 };

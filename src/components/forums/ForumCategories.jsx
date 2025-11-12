@@ -48,7 +48,7 @@ export const ForumCategories = ({ categories }) => {
       </Box>
       <Box display={"flex"}>
         <Box
-          width={downMd ? "70%" : "80%"}
+          width={"100%"}
           sx={(theme) => ({
             backgroundColor: theme.palette.secondary.main,
             borderBottomLeftRadius: downMd
@@ -67,38 +67,35 @@ export const ForumCategories = ({ categories }) => {
             Categoria
           </Typography>
         </Box>
-        <Box
-          sx={(theme) => ({
-            backgroundColor: theme.palette.secondary.main,
-            borderBottomLeftRadius: downMd
-              ? theme.spacing(0)
-              : theme.spacing(1),
-            borderBottomRightRadius: downMd
-              ? theme.spacing(0)
-              : theme.spacing(1),
-            height: theme.spacing(3),
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            paddingInline: theme.spacing(1),
-            width: downMd ? "30%" : "20%",
-          })}
-        >
-          <Typography fontSize={10} color="primary.contrastText">
-            Última actualización
-          </Typography>
-        </Box>
       </Box>
       {categories.length == 0 ? (
-        <></>
+        <Box
+          width={"100%"}
+          display={"flex"}
+          justifyContent={"center"}
+          p={3}
+          sx={(theme) => ({
+            display: "flex",
+            flexDirection: "column",
+            backgroundColor: theme.palette.primary.light,
+            border: `1px solid ${theme.palette.secondary.dark}`,
+            borderTop: `none`,
+            marginTop: theme.spacing(-0.5),
+            borderBottomLeftRadius: theme.spacing(1),
+            borderBottomRightRadius: theme.spacing(1),
+          })}
+        >
+          <Typography fontSize={14} textAlign={"center"}>
+            Hubo un error al cargar las categorias
+          </Typography>
+        </Box>
       ) : (
         categories.map((category, index) => {
-          const { titulo, contenido, id, updatedAt } = category;
-          const date = new Date(updatedAt);
+          const { titulo, contenido, id } = category;
           return (
             <Box width={"100%"} display={"flex"} key={`category-${id}`}>
               <Box
-                width={downMd ? "70%" : "80%"}
+                width={"100%"}
                 height={"80px"}
                 sx={(theme) => ({
                   display: "flex",
@@ -146,29 +143,6 @@ export const ForumCategories = ({ categories }) => {
                     {contenido}
                   </Typography>
                 </Box>
-              </Box>
-              <Box
-                width={downMd ? "30%" : "20%"}
-                height={"80px"}
-                sx={(theme) => ({
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor:
-                    index % 2 == 0
-                      ? theme.palette.primary.light
-                      : theme.palette.secondary.dark,
-                  borderBottomRightRadius:
-                    index == categories.length - 1 ? 8 : 0,
-                })}
-              >
-                <Typography fontSize={12}>
-                  {date.toLocaleDateString()}
-                </Typography>
-                <Typography fontSize={12}>
-                  {date.toLocaleTimeString()} hs
-                </Typography>
               </Box>
             </Box>
           );

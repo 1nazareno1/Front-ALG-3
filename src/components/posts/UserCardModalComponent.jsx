@@ -1,27 +1,29 @@
-import { AdminPanelSettings, Close } from '@mui/icons-material'
-import { Box, capitalize, Dialog, Tooltip, Typography } from '@mui/material'
-import { processRegisterDate } from '../../utils/Commons'
+import { AdminPanelSettings, Close } from "@mui/icons-material";
+import { Box, capitalize, Dialog, Tooltip, Typography } from "@mui/material";
+import { processRegisterDate } from "../../utils/Commons";
 
 export const UserCardModalComponent = ({
   career,
   likeCount,
   messageCount,
+  navigate,
   open,
   postCount,
   registerDate,
   setOpen,
-  title,
+  title = "USUARIO",
+  userId,
   username,
 }) => {
-  const registerDateStandarized = processRegisterDate(registerDate)
+  const registerDateStandarized = processRegisterDate(registerDate);
 
   return (
     <>
       <Typography
         sx={(theme) => ({
-          cursor: 'pointer',
-          width: 'fit-content',
-          '&:hover': { color: theme.palette.primary.main, fontWeight: 600 },
+          cursor: "pointer",
+          width: "fit-content",
+          "&:hover": { color: theme.palette.primary.main, fontWeight: 600 },
         })}
         onClick={() => setOpen(true)}
       >
@@ -30,39 +32,42 @@ export const UserCardModalComponent = ({
       <Dialog open={open} setOpen={setOpen} onClose={() => setOpen(false)}>
         <Box
           sx={(theme) => ({
-            display: 'flex',
-            height: 'fit-content',
-            flexDirection: 'column',
+            display: "flex",
+            height: "fit-content",
+            flexDirection: "column",
             padding: theme.spacing(2),
-            minWidth: '300px',
+            minWidth: "300px",
           })}
         >
-          <Box display={'flex'} justifyContent={'space-between'}>
+          <Box display={"flex"} justifyContent={"space-between"}>
             <Typography
               fontSize={20}
+              onClick={() => {
+                navigate("/perfil/" + userId);
+              }}
               sx={(theme) => ({
                 color: theme.palette.common.black,
-                cursor: 'pointer',
+                cursor: "pointer",
               })}
               fontWeight={600}
             >
               {username}
             </Typography>
             <Box onClick={() => setOpen(false)}>
-              <Close sx={{ cursor: 'pointer' }} />
+              <Close sx={{ cursor: "pointer" }} />
             </Box>
           </Box>
-          <Box display={'flex'} my={1} gap={0.5} alignItems={'center'}>
-            {title == 'ADMIN' || title == 'MODERADOR' ? (
+          <Box display={"flex"} my={1} gap={0.5} alignItems={"center"}>
+            {title == "ADMIN" || title == "MODERADOR" ? (
               <Tooltip
-                placement={'top'}
+                placement={"top"}
                 title={`Este usuario es ${capitalize(title.toLowerCase())}`}
               >
                 <AdminPanelSettings
                   sx={(theme) => ({
                     color: theme.palette.common.black,
-                    height: '18px',
-                    width: '18px',
+                    height: "18px",
+                    width: "18px",
                   })}
                 />
               </Tooltip>
@@ -79,8 +84,8 @@ export const UserCardModalComponent = ({
             fontSize={12}
             sx={(theme) => ({ color: theme.palette.common.black })}
           >
-            Estudiando{' '}
-            <Typography component={'span'} fontSize={12} fontWeight={600}>
+            Estudiando{" "}
+            <Typography component={"span"} fontSize={12} fontWeight={600}>
               {career}
             </Typography>
           </Typography>
@@ -88,39 +93,45 @@ export const UserCardModalComponent = ({
             fontSize={12}
             sx={(theme) => ({ color: theme.palette.common.black })}
           >
-            Registrado el{' '}
-            <Typography component={'span'} fontSize={12} fontWeight={600}>
+            Registrado el{" "}
+            <Typography component={"span"} fontSize={12} fontWeight={600}>
               {registerDateStandarized}
             </Typography>
           </Typography>
           <Typography
+            onClick={() => {
+              navigate("/perfil/" + userId);
+            }}
             mt={2}
             fontSize={12}
             sx={(theme) => ({
               color: theme.palette.common.black,
-              cursor: 'pointer',
+              cursor: "pointer",
             })}
           >
             {messageCount} mensajes
           </Typography>
           <Typography
+            onClick={() => {
+              navigate("/perfil/" + userId);
+            }}
             fontSize={12}
             sx={(theme) => ({ color: theme.palette.common.black })}
           >
             <Typography
-              component={'span'}
+              component={"span"}
               fontSize={12}
               fontWeight={600}
-              sx={{ cursor: 'pointer' }}
+              sx={{ cursor: "pointer" }}
             >
               {likeCount} me gustas
-            </Typography>{' '}
-            en{' '}
+            </Typography>{" "}
+            en{" "}
             <Typography
-              component={'span'}
+              component={"span"}
               fontSize={12}
               fontWeight={600}
-              sx={{ cursor: 'pointer' }}
+              sx={{ cursor: "pointer" }}
             >
               {postCount} temas
             </Typography>
@@ -128,5 +139,5 @@ export const UserCardModalComponent = ({
         </Box>
       </Dialog>
     </>
-  )
-}
+  );
+};

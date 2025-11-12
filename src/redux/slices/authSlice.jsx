@@ -6,6 +6,7 @@ import { toast } from "sonner";
 const initialState = {
   email: null,
   isLogged: false,
+  registerStatus: "idle",
   status: "idle",
   token: null,
   userID: null,
@@ -14,20 +15,47 @@ const initialState = {
 
 export const getUserSession = createAsyncThunk(
   "users/getUserSession",
-  async () => {
+  async ({ email, password }) => {
     try {
-      const res = await axios.get(
-        `https://backend-algiii.onrender.com/api/user/1`
-        // {
-        //   headers: {
-        //     Accept: '*/*',
-        //     'User-Agent': 'Thunder Client (https://www.thunderclient.com)',
-        //   },
-        // }
+      const res = await axios.post(
+        `https://backend-algiii.onrender.com/api/guest/login`,
+        {
+          email: email,
+          contrasenia: password,
+        }
       );
       return res.data;
     } catch {
       toast.error(`ERROR: No se pudo conectar el usuario`);
+    }
+  }
+);
+
+export const registerUser = createAsyncThunk(
+  "users/registerUser",
+  async ({ fullname, password, email }) => {
+    try {
+      const res = await axios.post(
+        `https://backend-algiii.onrender.com/api/guest/register`,
+        {
+          nombre_apellido: fullname,
+          contrasenia: password,
+          email: email,
+        }
+      );
+      return res.data;
+    } catch (err) {
+      if (
+        err.response.data.message.includes(
+          "Unique constraint failed on the fields: (`email`)"
+        )
+      ) {
+        toast.error(`ERROR: El email ya se encuentra registrado`);
+      } else {
+        toast.error(
+          `Error al registrar el usuario, inténtalo de nuevo más tarde`
+        );
+      }
     }
   }
 );
@@ -58,13 +86,25 @@ const authSlice = createSlice({
         state.status = "rejected";
       }),
       builder.addCase(getUserSession.fulfilled, (state, { payload }) => {
-        const { id, nombre_apellido, email } = payload;
-        state.email = email;
-        state.isLogged = true;
-        state.status = "succesful";
-        state.token = Math.random() * 1000000;
-        state.userID = id;
-        state.username = nombre_apellido;
+        console.log(payload);
+        // const { id, nombre_apellido, email } = payload;
+        // state.email = email;
+        // state.isLogged = true;
+        state.status = "succesfull";
+        // state.token = Math.random() * 1000000;
+        // state.userID = id;
+        // state.username = nombre_apellido;
+      }),
+      // registerUser
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      builder.addCase(registerUser.pending, (state) => {
+        state.registerStatus = "loading";
+      }),
+      builder.addCase(registerUser.rejected, (state, { payload }) => {
+        state.registerStatus = "rejected";
+      }),
+      builder.addCase(registerUser.fulfilled, (state, { payload }) => {
+        state.registerStatus = "succesfull";
       });
   },
 });

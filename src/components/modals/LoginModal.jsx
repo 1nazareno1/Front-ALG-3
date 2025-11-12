@@ -21,18 +21,17 @@ export const LoginModal = ({ open, onClose }) => {
 
   const handleLogin = async () => {
     try {
-      await dispatch(getUserSession({ username: nombre, password })).unwrap();
-      toast.success("Usuario logueado con éxito");
+      await dispatch(getUserSession({ email: nombre, password })).unwrap();
     } catch {
       toast.error("Error al iniciar sesión");
     }
   };
 
   // condición de validación: ambos campos llenos
-  const isFormValid = nombre.trim() !== "" && password.trim() !== "";
+  const isFormValid = nombre.trim().length > 3 && password.trim().length > 7;
 
   useEffect(() => {
-    if (status === "succesful") onClose();
+    if (status === "succesfull") onClose();
   }, [status, onClose]);
 
   return (

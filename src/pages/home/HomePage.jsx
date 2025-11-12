@@ -34,7 +34,9 @@ export const HomePage = () => {
         })}
       >
         {categoriesStatus == "succesful" ? (
-          <ForumCategories categories={postsCategories} />
+          <ForumCategories
+            categories={postsCategories}
+          />
         ) : (
           <Box
             width={"100%"}

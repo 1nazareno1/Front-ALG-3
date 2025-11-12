@@ -83,10 +83,11 @@ const postsSlice = createSlice({
     }),
       builder.addCase(getPosts.rejected, (state) => {
         state.postsStatus = "rejected";
+        state.posts = [];
       }),
       builder.addCase(getPosts.fulfilled, (state, { payload }) => {
         state.postsStatus = "succesful";
-        state.posts = payload;
+        state.posts = payload == undefined ? [] : payload;
       }),
       // getPostCategories
       builder.addCase(getPostCategories.pending, (state) => {
@@ -94,10 +95,11 @@ const postsSlice = createSlice({
       }),
       builder.addCase(getPostCategories.rejected, (state) => {
         state.categoriesStatus = "rejected";
+        state.postsCategories = [];
       }),
       builder.addCase(getPostCategories.fulfilled, (state, { payload }) => {
         state.categoriesStatus = "succesful";
-        state.postsCategories = payload;
+        state.postsCategories = payload == undefined ? [] : payload;
       }),
       // getPostById
       builder.addCase(getPostById.pending, (state) => {
@@ -105,10 +107,11 @@ const postsSlice = createSlice({
       }),
       builder.addCase(getPostById.rejected, (state) => {
         state.postsStatus = "rejected";
+        state.searchedPost = {};
       }),
       builder.addCase(getPostById.fulfilled, (state, { payload }) => {
         state.postsStatus = "succesful";
-        state.searchedPost = payload;
+        state.searchedPost = payload == undefined ? {} : payload;
       }),
       // getPostByTitle
       builder.addCase(getPostByTitle.pending, (state) => {
@@ -116,10 +119,11 @@ const postsSlice = createSlice({
       }),
       builder.addCase(getPostByTitle.rejected, (state) => {
         state.searchStatus = "rejected";
+        state.results = [];
       }),
       builder.addCase(getPostByTitle.fulfilled, (state, { payload }) => {
         state.searchStatus = "succesful";
-        state.results = payload;
+        state.results = payload == undefined ? [] : payload;
       });
   },
 });
