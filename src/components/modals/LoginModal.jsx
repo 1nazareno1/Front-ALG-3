@@ -12,6 +12,10 @@ import { getUserSession } from "../../redux/slices/authSlice";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
+
+
+
+
 export const LoginModal = ({ open, onClose }) => {
   const { status } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -80,7 +84,7 @@ export const LoginModal = ({ open, onClose }) => {
           </Box>
         </Box>
 
-        {/* Usuario */}
+        {/* Email */}
         <Typography
           sx={{
             fontWeight: 400,
@@ -90,7 +94,7 @@ export const LoginModal = ({ open, onClose }) => {
             mb: 0.5,
           }}
         >
-          USUARIO
+          EMAIL
         </Typography>
         <TextField
           variant="outlined"
@@ -129,11 +133,11 @@ export const LoginModal = ({ open, onClose }) => {
 
         {/* Botón ingresar */}
         <Button
-          variant="contained"
-          alignItems="center"
           onClick={handleLogin}
           disabled={!isFormValid || status === "loading"} // 🔹 bloqueo dinámico
           sx={(theme) => ({
+            alignItems: "center",
+            variant: "contained",
             backgroundColor: !isFormValid
               ? "grey.400"
               : status === "loading"
