@@ -18,7 +18,7 @@ export const getUserSession = createAsyncThunk(
   async ({ email, password }) => {
     try {
       const res = await axios.post(
-        `https://backend-algiii.onrender.com/api/guest/login`,
+        `http://localhost:5000/api/guest/register`,
         {
           email: email,
           contrasenia: password,
@@ -33,14 +33,17 @@ export const getUserSession = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   "users/registerUser",
-  async ({ fullname, password, email }) => {
+  async ({ fullname, password, email, alias }) => {
     try {
       const res = await axios.post(
-        `https://backend-algiii.onrender.com/api/guest/register`,
+        `http://localhost:5000/api/guest/register`,
         {
           nombre_apellido: fullname,
-          contrasenia: password,
+          alias: alias,
+          alumno_iseta: false,
+          carrera_iseta: "No especificada",
           email: email,
+          contrasenia: password,
         }
       );
       return res.data;
