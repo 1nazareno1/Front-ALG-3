@@ -48,7 +48,7 @@ export const LoginPage = () => {
             mb: 0.5,
           }}
         >
-          NOMBRE DE USUARIO
+          EMAIL
         </Typography>
         <TextField
           variant="outlined"
