@@ -14,6 +14,10 @@ import { theme } from "./theme/Theme";
 import { ThemeProvider } from "@mui/material";
 import { Toaster } from "sonner";
 
+import CurriculumForm from './pages/profile/CurriculumForm';
+
+
+
 //* Este archivo contiene toda la aplicación
 function App() {
   return (
@@ -31,6 +35,8 @@ function App() {
                 <Route path="/buscar" element={<SearchPage />} />
                 <Route path="/perfil/:id" element={<ProfilePage />} />
                 <Route path="/crear-post" element={<CreatePostPage />} />
+                <Route path="/CurriculumForm" element={<CurriculumForm />} />
+
                 {/* <Route path="/calendario" element={<Calendario />} /> */}
               </Routes>
             </Interface>
