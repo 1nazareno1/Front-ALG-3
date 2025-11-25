@@ -27,7 +27,7 @@ function App() {
           <ThemeProvider theme={theme}>
             <Interface>
               <Routes>
-                <Route path="/inicio" index element={<HomePage />} />
+                <Route path="/" index element={<HomePage />} />
                 <Route path="/foro/:id" element={<ForumPage />} />
                 <Route path="/post/:id" element={<ForumPostPage />} />
                 <Route path="/login" element={<LoginPage />} />

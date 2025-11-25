@@ -141,8 +141,8 @@ export const LoginModal = ({ open, onClose }) => {
             backgroundColor: !isFormValid
               ? "grey.400"
               : status === "loading"
-              ? theme.palette.secondary.dark
-              : theme.palette.primary.main,
+                ? theme.palette.secondary.dark
+                : theme.palette.primary.main,
             mx: "auto",
             display: "flex",
             borderRadius: 2,
@@ -153,7 +153,7 @@ export const LoginModal = ({ open, onClose }) => {
             fontWeight: 400,
             fontsize: 18,
             textTransform: "none",
-            transition: "background-color 0.3s ease", // 🔹 animación suave
+            transition: "background-color 0.3s ease", color: "white", // 🔹 animación suave
           })}
         >
           {status === "loading" ? (
