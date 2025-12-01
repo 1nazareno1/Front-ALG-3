@@ -1,11 +1,10 @@
 import { Box, Tooltip, Typography } from '@mui/material'
-import { logout } from '../../../../redux/slices/authSlice'
+import { resetAuthState } from '../../../../redux/slices/authSlice'
 import { Logout } from '@mui/icons-material'
 import { NotificationMock } from '../../../../utils/Commons'
 import { NotificationsMenu } from './NotificationsMenu'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 export const LoggedDesktop = ({ username }) => {
   const dispatch = useDispatch()
@@ -34,7 +33,7 @@ export const LoggedDesktop = ({ username }) => {
         <Box
           height={24}
           onClick={() => {
-            dispatch(logout())
+            dispatch(resetAuthState())
             location.reload()
           }}
         >

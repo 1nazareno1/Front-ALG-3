@@ -286,7 +286,7 @@ export const RegisterPage = () => {
           )}
         </Button>
       </Box>
-      <UserRegisteredModal open={registerStatus == "succesfull"} />
+      <UserRegisteredModal open={registerStatus == "succesful"} />
     </>
   );
 };

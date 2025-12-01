@@ -7,6 +7,7 @@ const initialState = {
   email: null,
   isLogged: false,
   registerStatus: "idle",
+  rol: null,
   status: "idle",
   token: null,
   userID: null,
@@ -27,6 +28,23 @@ export const getUserSession = createAsyncThunk(
       return res.data;
     } catch {
       toast.error(`ERROR: No se pudo conectar el usuario`);
+    }
+  }
+);
+
+export const getCurrentUser = createAsyncThunk(
+  "users/getCurrentUser",
+  async () => {
+    try {
+      const res = await axios.get(
+        `https://backend-algiii.onrender.com/api/user/actualAuthUser`,
+        {
+          withCredentials: true,
+        }
+      );
+      return res.data;
+    } catch {
+      toast.error(`ERROR: No se pudo obtener la información del usuario`);
     }
   }
 );
@@ -65,13 +83,12 @@ const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     // Declare a logout action and export it
-    logout: (state) => {
+    resetAuthState: (state) => {
       state.email = null;
       state.isLogged = false;
       state.token = null;
       state.userID = null;
       state.username = null;
-      toast.success("Sesión cerrada con éxito");
     },
   },
   extraReducers: (builder) => {
@@ -85,15 +102,14 @@ const authSlice = createSlice({
         state.token = null;
         state.status = "rejected";
       }),
-      builder.addCase(getUserSession.fulfilled, (state, { payload }) => {
-        console.log(payload);
-        // const { id, nombre_apellido, email } = payload;
-        // state.email = email;
-        // state.isLogged = true;
-        state.status = "succesfull";
-        // state.token = Math.random() * 1000000;
-        // state.userID = id;
-        // state.username = nombre_apellido;
+      // getCurrentUser
+      builder.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
+        state.isLogged = true;
+        state.email = payload.email;
+        state.userID = payload.id;
+        state.username = payload.nombre_apellido;
+        state.rol = payload.rol;
+        state.status = "succesful";
       }),
       // registerUser
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -104,10 +120,10 @@ const authSlice = createSlice({
         state.registerStatus = "rejected";
       }),
       builder.addCase(registerUser.fulfilled, (state, { payload }) => {
-        state.registerStatus = "succesfull";
+        state.registerStatus = "succesful";
       });
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { resetAuthState } = authSlice.actions;
 export default authSlice.reducer;

@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserSession } from "../../redux/slices/authSlice";
+import { getCurrentUser, getUserSession } from "../../redux/slices/authSlice";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -21,8 +21,13 @@ export const LoginModal = ({ open, onClose }) => {
 
   const handleLogin = async () => {
     try {
-      await dispatch(getUserSession({ email: nombre, password })).unwrap();
-    } catch {
+      const logueo = await dispatch(
+        getUserSession({ email: nombre, password })
+      ).unwrap();
+      const userInfo = await dispatch(getCurrentUser()).unwrap();
+      console.log(userInfo);
+    } catch (err) {
+      console.log(err);
       toast.error("Error al iniciar sesión");
     }
   };
@@ -31,7 +36,7 @@ export const LoginModal = ({ open, onClose }) => {
   const isFormValid = nombre.trim().length > 3 && password.trim().length > 7;
 
   useEffect(() => {
-    if (status === "succesfull") onClose();
+    if (status === "succesful") onClose();
   }, [status, onClose]);
 
   return (
