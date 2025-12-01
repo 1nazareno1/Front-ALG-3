@@ -18,7 +18,7 @@ export const getPostCategories = createAsyncThunk(
   async () => {
     try {
       const res = await axios.get(
-        `https://backend-algiii.onrender.com/api/Tema/findAll`
+        `http://localhost:5000/api/Tema/findAll`
       );
       return res.data;
     } catch {
@@ -30,7 +30,7 @@ export const getPostCategories = createAsyncThunk(
 export const getPosts = createAsyncThunk("posts/getPosts", async () => {
   try {
     const res = await axios.get(
-      `https://backend-algiii.onrender.com/api/post/findAll`
+      `http://localhost:5000/api/post/findAll`
     );
     return res.data;
   } catch {
@@ -43,7 +43,7 @@ export const getPostById = createAsyncThunk(
   async (postId) => {
     try {
       const res = await axios.get(
-        `https://backend-algiii.onrender.com/api/post/findById/${postId}`
+        `http://localhost:5000/api/post/findById/${postId}`
       );
       return res.data;
     } catch {
@@ -57,7 +57,7 @@ export const getPostByTitle = createAsyncThunk(
   async (title) => {
     try {
       const res = await axios.get(
-        `https://backend-algiii.onrender.com/api/post/findByTitle/${title}`
+        `http://localhost:5000/api/post/findByTitle/${title}`
       );
       return res.data;
     } catch {

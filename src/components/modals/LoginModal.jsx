@@ -12,6 +12,10 @@ import { getUserSession } from "../../redux/slices/authSlice";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
+
+
+
+
 export const LoginModal = ({ open, onClose }) => {
   const { status } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -80,7 +84,7 @@ export const LoginModal = ({ open, onClose }) => {
           </Box>
         </Box>
 
-        {/* Usuario */}
+        {/* Email */}
         <Typography
           sx={{
             fontWeight: 400,
@@ -90,7 +94,7 @@ export const LoginModal = ({ open, onClose }) => {
             mb: 0.5,
           }}
         >
-          USUARIO
+          EMAIL
         </Typography>
         <TextField
           variant="outlined"
@@ -129,16 +133,16 @@ export const LoginModal = ({ open, onClose }) => {
 
         {/* Botón ingresar */}
         <Button
-          variant="contained"
-          alignItems="center"
           onClick={handleLogin}
           disabled={!isFormValid || status === "loading"} // 🔹 bloqueo dinámico
           sx={(theme) => ({
+            alignItems: "center",
+            variant: "contained",
             backgroundColor: !isFormValid
               ? "grey.400"
               : status === "loading"
-              ? theme.palette.secondary.dark
-              : theme.palette.primary.main,
+                ? theme.palette.secondary.dark
+                : theme.palette.primary.main,
             mx: "auto",
             display: "flex",
             borderRadius: 2,
@@ -149,7 +153,7 @@ export const LoginModal = ({ open, onClose }) => {
             fontWeight: 400,
             fontsize: 18,
             textTransform: "none",
-            transition: "background-color 0.3s ease", // 🔹 animación suave
+            transition: "background-color 0.3s ease", color: "white", // 🔹 animación suave
           })}
         >
           {status === "loading" ? (
