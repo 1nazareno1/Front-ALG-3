@@ -14,7 +14,6 @@ const initialState = {
   username: null,
 };
 
-
 export const getUserSession = createAsyncThunk(
   "users/getUserSession",
   async ({ email, password }) => {
@@ -23,8 +22,9 @@ export const getUserSession = createAsyncThunk(
         `http://localhost:5000/api/guest/login`,
         {
           email: email,
-          contrasenia: password, 
-        }
+          contrasenia: password,
+        },
+        { withCredentials: true }
       );
       return res.data;
     } catch {
@@ -33,38 +33,18 @@ export const getUserSession = createAsyncThunk(
   }
 );
 
-export const getCurrentUser = createAsyncThunk(
-  "users/getCurrentUser",
-  async () => {
-    try {
-      const res = await axios.get(
-        `https://backend-algiii.onrender.com/api/user/actualAuthUser`,
-        {
-          withCredentials: true,
-        }
-      );
-      return res.data;
-    } catch {
-      toast.error(`ERROR: No se pudo obtener la información del usuario`);
-    }
-  }
-);
-
 export const registerUser = createAsyncThunk(
   "users/registerUser",
   async ({ fullname, password, email, alias }) => {
     try {
-      const res = await axios.post(
-        `http://localhost:5000/api/guest/register`,
-        {
-          nombre_apellido: fullname,
-          alias: alias,
-          alumno_iseta: false,
-          carrera_iseta: "No especificada",
-          email: email,
-          contrasenia: password,
-        }
-      );
+      const res = await axios.post(`http://localhost:5000/api/guest/register`, {
+        nombre_apellido: fullname,
+        alias: alias,
+        alumno_iseta: false,
+        carrera_iseta: "No especificada",
+        email: email,
+        contrasenia: password,
+      });
       return res.data;
     } catch (err) {
       if (
@@ -87,7 +67,8 @@ const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     // Declare a logout action and export it
-    resetAuthState: (state) => {state.email = null;
+    resetAuthState: (state) => {
+      state.email = null;
       state.isLogged = false;
       state.token = null;
       state.userID = null;
@@ -102,7 +83,6 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-
     builder.addCase(getUserSession.pending, (state) => {
       state.status = "loading";
     }),
@@ -111,25 +91,16 @@ const authSlice = createSlice({
         state.token = null;
         state.status = "rejected";
       }),
-     builder.addCase(getUserSession.fulfilled, (state, { payload }) => {
-      console.log(payload);
-      const { id, nombre_apellido, email } = payload;
-      state.email = email;
-      state.isLogged = true;
-      state.status = "successful";
-      state.token = Math.random() * 1000000; 
-      state.userID = id;
-      state.username = nombre_apellido;
-    });
-      // getCurrentUser
-      builder.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
+      builder.addCase(getUserSession.fulfilled, (state, { payload }) => {
+        console.log(payload);
+        const { id, nombre_apellido, email } = payload;
+        state.email = email;
         state.isLogged = true;
-        state.email = payload.email;
-        state.userID = payload.id;
-        state.username = payload.nombre_apellido;
-        state.rol = payload.rol;
-        state.status = "succesful";
-      }),
+        state.status = "successful";
+        state.token = Math.random() * 1000000;
+        state.userID = id;
+        state.username = nombre_apellido;
+      });
       // registerUser
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       builder.addCase(registerUser.pending, (state) => {
@@ -144,3 +115,5 @@ const authSlice = createSlice({
   },
 });
 
+export const { logout, resetAuthState } = authSlice.actions;
+export default authSlice.reducer;

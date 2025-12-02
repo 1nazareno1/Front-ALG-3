@@ -17,9 +17,7 @@ export const getPostCategories = createAsyncThunk(
   "posts/getPostCategories",
   async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:5000/api/Tema/findAll`
-      );
+      const res = await axios.get(`http://localhost:5000/api/Tema/findAll`);
       return res.data;
     } catch {
       toast.error(`ERROR: No se pudo obtener las categorias de los posts`);
@@ -29,9 +27,7 @@ export const getPostCategories = createAsyncThunk(
 
 export const getPosts = createAsyncThunk("posts/getPosts", async () => {
   try {
-    const res = await axios.get(
-      `http://localhost:5000/api/post/findAll`
-    );
+    const res = await axios.get(`http://localhost:5000/api/post/findAll`);
     return res.data;
   } catch {
     toast.error(`ERROR: No se pudo obtener los posts`);
