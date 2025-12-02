@@ -11,6 +11,7 @@ const initialState = {
   token: null,
   userID: null,
   username: null,
+  rol: null,
 };
 
 
@@ -93,10 +94,10 @@ const authSlice = createSlice({
       state.status = "rejected";
     });
     builder.addCase(getUserSession.fulfilled, (state, { payload }) => {
-      console.log(payload);
-      const { id, nombre_apellido, email } = payload;
+      const { id, nombre_apellido, email, rol } = payload;
       state.email = email;
       state.isLogged = true;
+      state.rol = rol;
       state.status = "successful";
       state.token = Math.random() * 1000000; 
       state.userID = id;
