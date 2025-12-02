@@ -14,15 +14,16 @@ const initialState = {
   username: null,
 };
 
+
 export const getUserSession = createAsyncThunk(
   "users/getUserSession",
   async ({ email, password }) => {
     try {
       const res = await axios.post(
-        `https://backend-algiii.onrender.com/api/guest/login`,
+        `http://localhost:5000/api/guest/login`,
         {
           email: email,
-          contrasenia: password,
+          contrasenia: password, 
         }
       );
       return res.data;
@@ -51,20 +52,23 @@ export const getCurrentUser = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   "users/registerUser",
-  async ({ fullname, password, email }) => {
+  async ({ fullname, password, email, alias }) => {
     try {
       const res = await axios.post(
-        `https://backend-algiii.onrender.com/api/guest/register`,
+        `http://localhost:5000/api/guest/register`,
         {
           nombre_apellido: fullname,
-          contrasenia: password,
+          alias: alias,
+          alumno_iseta: false,
+          carrera_iseta: "No especificada",
           email: email,
+          contrasenia: password,
         }
       );
       return res.data;
     } catch (err) {
       if (
-        err.response.data.message.includes(
+        err.response?.data?.message?.includes(
           "Unique constraint failed on the fields: (`email`)"
         )
       ) {
@@ -83,7 +87,13 @@ const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     // Declare a logout action and export it
-    resetAuthState: (state) => {
+    resetAuthState: (state) => {state.email = null;
+      state.isLogged = false;
+      state.token = null;
+      state.userID = null;
+      state.username = null;
+    },
+    logout: (state) => {
       state.email = null;
       state.isLogged = false;
       state.token = null;
@@ -92,8 +102,7 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // getUserSession
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+
     builder.addCase(getUserSession.pending, (state) => {
       state.status = "loading";
     }),
@@ -102,6 +111,16 @@ const authSlice = createSlice({
         state.token = null;
         state.status = "rejected";
       }),
+     builder.addCase(getUserSession.fulfilled, (state, { payload }) => {
+      console.log(payload);
+      const { id, nombre_apellido, email } = payload;
+      state.email = email;
+      state.isLogged = true;
+      state.status = "successful";
+      state.token = Math.random() * 1000000; 
+      state.userID = id;
+      state.username = nombre_apellido;
+    });
       // getCurrentUser
       builder.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
         state.isLogged = true;
@@ -125,5 +144,3 @@ const authSlice = createSlice({
   },
 });
 
-export const { resetAuthState } = authSlice.actions;
-export default authSlice.reducer;

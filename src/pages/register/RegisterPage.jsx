@@ -16,14 +16,22 @@ import { RulesText } from "../../utils/Rules";
 import { registerUser } from "../../redux/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { UserRegisteredModal } from "../../components/modals/UserRegisteredModal";
+import { FieldHelpContent } from "../../utils/FieldHelpContent";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { Modal, IconButton } from "@mui/material";
+import { InputAdornment } from "@mui/material";
+
+
 
 export const RegisterPage = () => {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [helpField, setHelpField] = useState(null);
   const { isLg, downMd } = useWindowSize();
   const [formData, setFormData] = useState({
     lastName: "",
     email: "",
     name: "",
+    alias: "",
     password: "",
   });
   const [isValid, setIsValid] = useState(false);
@@ -31,7 +39,7 @@ export const RegisterPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const { name, lastName, email, password } = formData;
+    const { name, lastName, email, alias,password } = formData;
     //? Validaciòn de email con regex
     const validateEmail = (email) => {
       const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -42,6 +50,7 @@ export const RegisterPage = () => {
       name.trim().length > 3 &&
       lastName.trim().length > 3 &&
       email.trim().length > 3 &&
+      alias.trim().length >3 &&
       password.trim().length > 7 &&
       acceptedTerms &&
       validateEmail(email)
@@ -53,10 +62,10 @@ export const RegisterPage = () => {
   }, [formData, acceptedTerms]);
 
   const handleRegister = async () => {
-    const { name, lastName, email, password } = formData;
+    const { name, lastName, email, alias, password } = formData;
     const fullname = `${name} ${lastName}`;
     try {
-      dispatch(registerUser({ fullname, password, email }));
+      dispatch(registerUser({ fullname, password, email, alias }));
     } catch (error) {
       console.log(error);
       console.error("Error al registrar el usuario:", error);
@@ -106,11 +115,14 @@ export const RegisterPage = () => {
           </Typography>
           {/* Checkbox Términos */}
           <Box
-            display={"flex"}
-            flexDirection={"column"}
-            justifyContent={"center"}
-            alignItems={"center"}
-            width={"100%"}
+            sx={{
+              display:"flex",
+              flexDirection:"column",
+              justifyContent:"center",
+              alignItems: "center",
+              width:"100%",
+            }}
+            
           >
             <FormControlLabel
               control={
@@ -163,15 +175,24 @@ export const RegisterPage = () => {
             >
               NOMBRE
             </Typography>
+              
+
             <TextField
               variant="outlined"
               fullWidth
               sx={{ mb: 1 }}
-              InputProps={{ sx: { height: 35, fontSize: 15 } }}
+              InputProps={{
+                sx: { height: 35, fontSize: 15 },
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton size="small" onClick={() => setHelpField("name")}>
+                      <InfoOutlinedIcon fontSize="small" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
               value={formData.name}
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             />
           </Box>
           <Box
@@ -194,13 +215,61 @@ export const RegisterPage = () => {
               variant="outlined"
               fullWidth
               sx={{ mb: 1 }}
-              InputProps={{ sx: { height: 35, fontSize: 15 } }}
+              InputProps={{
+                sx: { height: 35, fontSize: 15 },
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton size="small" onClick={() => setHelpField("lastName")}>
+                      <InfoOutlinedIcon fontSize="small" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
               value={formData.lastName}
-              onChange={(e) =>
-                setFormData({ ...formData, lastName: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
             />
           </Box>
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
+            width={downMd ? "100%" : "48%"}
+          >
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: 18,
+                color: "grey.700",
+                letterSpacing: 0.5,
+                mb: 0.5,
+              }}
+            >
+              ALIAS
+            </Typography>
+            <TextField
+               variant="outlined"
+              fullWidth
+              sx={{ mb: 1 }}
+              InputProps={{
+                sx: { height: 35, fontSize: 15 },
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton size="small" onClick={() => setHelpField("alias")}>
+                      <InfoOutlinedIcon fontSize="small" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              value={formData.alias}
+              onChange={(e) => setFormData({ ...formData, alias: e.target.value })}
+            />
+          </Box>
+
+
+
+
+
+
+
           <Box
             display={"flex"}
             flexDirection={"column"}
@@ -218,15 +287,21 @@ export const RegisterPage = () => {
               EMAIL
             </Typography>
             <TextField
-              variant="outlined"
-              type="email"
+               variant="outlined"
               fullWidth
               sx={{ mb: 1 }}
-              InputProps={{ sx: { height: 35, fontSize: 15 } }}
+              InputProps={{
+                sx: { height: 35, fontSize: 15 },
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton size="small" onClick={() => setHelpField("email")}>
+                      <InfoOutlinedIcon fontSize="small" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
               value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             />
           </Box>
           <Box
@@ -250,11 +325,18 @@ export const RegisterPage = () => {
               variant="outlined"
               fullWidth
               sx={{ mb: 1 }}
-              InputProps={{ sx: { height: 35, fontSize: 15 } }}
+              InputProps={{
+                sx: { height: 35, fontSize: 15 },
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton size="small" onClick={() => setHelpField("password")}>
+                      <InfoOutlinedIcon fontSize="small" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
               value={formData.password}
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             />
           </Box>
         </Box>
@@ -287,6 +369,33 @@ export const RegisterPage = () => {
         </Button>
       </Box>
       <UserRegisteredModal open={registerStatus == "succesful"} />
+      <Modal open={!!helpField} onClose={() => setHelpField(null)}>
+  <Box
+    sx={{
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      bgcolor: "background.paper",
+      boxShadow: 24,
+      p: 4,
+      borderRadius: 2,
+      maxWidth: 400,
+    }}
+  >
+    <Typography variant="h6" mb={2}>
+      Ayuda para el campo
+    </Typography>
+    {FieldHelpContent[helpField]}
+    <Button
+      variant="outlined"
+      sx={{ mt: 2 }}
+      onClick={() => setHelpField(null)}
+    >
+      Cerrar
+    </Button>
+  </Box>
+</Modal>
     </>
   );
 };

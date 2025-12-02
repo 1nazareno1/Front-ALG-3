@@ -12,7 +12,7 @@ const initialState = {
 export const createUser = createAsyncThunk("users/createUser", async (id) => {
   try {
     const res = await axios.put(
-      `https://backend-algiii.onrender.com/api/user/${id}`
+      `localhost:5000/api/user/${id}`
     );
     return res.data;
   } catch {
@@ -23,7 +23,7 @@ export const createUser = createAsyncThunk("users/createUser", async (id) => {
 export const getUserById = createAsyncThunk("users/getUserById", async (id) => {
   try {
     const res = await axios.get(
-      `https://backend-algiii.onrender.com/api/user/${id}`
+      `localhost:5000/api/user/${id}`
     );
     return res.data;
   } catch {
@@ -33,7 +33,7 @@ export const getUserById = createAsyncThunk("users/getUserById", async (id) => {
 
 export const getAllUsers = createAsyncThunk("users/getAllUsers", async () => {
   try {
-    const res = await axios.get(`https://backend-algiii.onrender.com/api/user`);
+    const res = await axios.get(`localhost:5000/api/user`);
     return res.data;
   } catch {
     toast.error(`ERROR: No se pudieron obtener los usuarios`);
