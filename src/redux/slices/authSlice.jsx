@@ -9,21 +9,25 @@ const initialState = {
   registerStatus: "idle",
   rol: null,
   status: "idle",
-  token: null,
   userID: null,
   username: null,
+  rol: null,
 };
 
 export const getUserSession = createAsyncThunk(
   "users/getUserSession",
   async ({ email, password }) => {
     try {
-      const res = await axios.post(
-        `http://localhost:5000/api/guest/login`,
+      const logueo = await axios.post(
+        "http://localhost:5000/api/guest/login",
         {
           email: email,
           contrasenia: password,
         },
+        { withCredentials: true }
+      );
+      const res = await axios.get(
+        "http://localhost:5000/api/user/actualAuthUser",
         { withCredentials: true }
       );
       return res.data;
@@ -77,7 +81,6 @@ const authSlice = createSlice({
     logout: (state) => {
       state.email = null;
       state.isLogged = false;
-      state.token = null;
       state.userID = null;
       state.username = null;
     },
@@ -85,33 +88,29 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getUserSession.pending, (state) => {
       state.status = "loading";
-    }),
-      builder.addCase(getUserSession.rejected, (state) => {
-        state.isLogged = false;
-        state.token = null;
-        state.status = "rejected";
-      }),
-      builder.addCase(getUserSession.fulfilled, (state, { payload }) => {
-        console.log(payload);
-        const { id, nombre_apellido, email } = payload;
-        state.email = email;
-        state.isLogged = true;
-        state.status = "successful";
-        state.token = Math.random() * 1000000;
-        state.userID = id;
-        state.username = nombre_apellido;
-      });
-      // registerUser
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      builder.addCase(registerUser.pending, (state) => {
-        state.registerStatus = "loading";
-      }),
-      builder.addCase(registerUser.rejected, (state, { payload }) => {
-        state.registerStatus = "rejected";
-      }),
-      builder.addCase(registerUser.fulfilled, (state, { payload }) => {
-        state.registerStatus = "succesful";
-      });
+    });
+    builder.addCase(getUserSession.rejected, (state) => {
+      state.isLogged = false;
+      state.status = "rejected";
+    });
+    builder.addCase(getUserSession.fulfilled, (state, { payload }) => {
+      const { id, nombre_apellido, email, rol } = payload;
+      state.email = email;
+      state.isLogged = true;
+      state.rol = rol;
+      state.status = "successful";
+      state.userID = id;
+      state.username = nombre_apellido;
+    });
+    builder.addCase(registerUser.pending, (state) => {
+      state.registerStatus = "loading";
+    });
+    builder.addCase(registerUser.rejected, (state) => {
+      state.registerStatus = "rejected";
+    });
+    builder.addCase(registerUser.fulfilled, (state, { payload }) => {
+      state.registerStatus = "successful";
+    });
   },
 });
 

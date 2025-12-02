@@ -84,7 +84,7 @@ export const ProfilePage = () => {
                 overflow={"hidden"}
                 textOverflow={"ellipsis"}
               >
-                {searchedUser.email || "Email no proporcionado"}
+                {searchedUser?.email|| "Email no proporcionado"}
               </Typography>
             </Box>
             <Box>
@@ -94,7 +94,7 @@ export const ProfilePage = () => {
                 overflow={"hidden"}
                 textOverflow={"ellipsis"}
               >
-                {getRegistrationDate(searchedUser.createdAt)}
+                {getRegistrationDate(searchedUser?.createdAt)}
               </Typography>
             </Box>
           </Box>

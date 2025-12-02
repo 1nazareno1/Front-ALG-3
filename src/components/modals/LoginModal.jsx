@@ -21,12 +21,8 @@ export const LoginModal = ({ open, onClose }) => {
 
   const handleLogin = async () => {
     try {
-      const userInfo = await dispatch(
-        getUserSession({ email: nombre, password })
-      ).unwrap();
-      console.log(userInfo);
-    } catch (err) {
-      console.log(err);
+      const response = await dispatch(getUserSession({ email: nombre, password })).unwrap();
+    } catch {
       toast.error("Error al iniciar sesión");
     }
   };
