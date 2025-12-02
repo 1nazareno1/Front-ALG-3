@@ -8,7 +8,6 @@ const initialState = {
   isLogged: false,
   registerStatus: "idle",
   status: "idle",
-  token: null,
   userID: null,
   username: null,
   rol: null,
@@ -72,7 +71,6 @@ const authSlice = createSlice({
     logout: (state) => {
       state.email = null;
       state.isLogged = false;
-      state.token = null;
       state.userID = null;
       state.username = null;
       toast.success("Sesión cerrada con éxito");
@@ -85,7 +83,6 @@ const authSlice = createSlice({
     });
     builder.addCase(getUserSession.rejected, (state) => {
       state.isLogged = false;
-      state.token = null;
       state.status = "rejected";
     });
     builder.addCase(getUserSession.fulfilled, (state, { payload }) => {
@@ -94,7 +91,6 @@ const authSlice = createSlice({
       state.isLogged = true;
       state.rol = rol;
       state.status = "successful";
-      state.token = Math.random() * 1000000; 
       state.userID = id;
       state.username = nombre_apellido;
     });
