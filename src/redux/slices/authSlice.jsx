@@ -18,12 +18,17 @@ export const getUserSession = createAsyncThunk(
   "users/getUserSession",
   async ({ email, password }) => {
     try {
-      const res = await axios.post(
-        `http://localhost:5000/api/guest/login`,
+      const logueo = await axios.post(
+        "http://localhost:5000/api/guest/login",
         {
           email: email,
-          contrasenia: password, 
-        }
+          contrasenia: password,
+        },
+        { withCredentials: true }
+      );
+      const res = await axios.get(
+        "http://localhost:5000/api/user/actualAuthUser",
+        { withCredentials: true }
       );
       return res.data;
     } catch {

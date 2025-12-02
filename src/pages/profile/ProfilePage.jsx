@@ -75,7 +75,7 @@ export const ProfilePage = () => {
                 overflow={"hidden"}
                 textOverflow={"ellipsis"}
               >
-                {searchedUser.email || "Email no proporcionado"}
+                {searchedUser?.email|| "Email no proporcionado"}
               </Typography>
             </Box>
             <Box>
@@ -85,7 +85,7 @@ export const ProfilePage = () => {
                 overflow={"hidden"}
                 textOverflow={"ellipsis"}
               >
-                {getRegistrationDate(searchedUser.createdAt)}
+                {getRegistrationDate(searchedUser?.createdAt)}
               </Typography>
             </Box>
           </Box>
@@ -93,7 +93,7 @@ export const ProfilePage = () => {
           <Box display={"flex"} flexDirection={"column"} gap={2}>
             <Box>
               <Typography variant="h4" fontWeight={700} mb={1}>
-                {searchedUser.nombre_apellido || "Nombre de usuario"}
+                {searchedUser?.nombre_apellido || "Nombre de usuario"}
               </Typography>
             </Box>
             <Box>
@@ -105,7 +105,7 @@ export const ProfilePage = () => {
                   <Box key={post.id} mb={2}>
                     <Typography fontWeight={500}>{post.titulo}</Typography>
                     <Typography fontSize={14} color="text.secondary">
-                      {new Date(post.createdAt).toLocaleDateString("es-ES", {
+                      {new Date(post?.createdAt).toLocaleDateString("es-ES", {
                         year: "numeric",
                         month: "long",
                         day: "numeric",
