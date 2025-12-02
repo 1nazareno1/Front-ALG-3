@@ -7,12 +7,12 @@ const initialState = {
   email: null,
   isLogged: false,
   registerStatus: "idle",
+  rol: null,
   status: "idle",
   userID: null,
   username: null,
   rol: null,
 };
-
 
 export const getUserSession = createAsyncThunk(
   "users/getUserSession",
@@ -41,17 +41,14 @@ export const registerUser = createAsyncThunk(
   "users/registerUser",
   async ({ fullname, password, email, alias }) => {
     try {
-      const res = await axios.post(
-        `http://localhost:5000/api/guest/register`,
-        {
-          nombre_apellido: fullname,
-          alias: alias,
-          alumno_iseta: false,
-          carrera_iseta: "No especificada",
-          email: email,
-          contrasenia: password,
-        }
-      );
+      const res = await axios.post(`http://localhost:5000/api/guest/register`, {
+        nombre_apellido: fullname,
+        alias: alias,
+        alumno_iseta: false,
+        carrera_iseta: "No especificada",
+        email: email,
+        contrasenia: password,
+      });
       return res.data;
     } catch (err) {
       if (
@@ -73,16 +70,22 @@ const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
   reducers: {
+    // Declare a logout action and export it
+    resetAuthState: (state) => {
+      state.email = null;
+      state.isLogged = false;
+      state.token = null;
+      state.userID = null;
+      state.username = null;
+    },
     logout: (state) => {
       state.email = null;
       state.isLogged = false;
       state.userID = null;
       state.username = null;
-      toast.success("Sesión cerrada con éxito");
     },
   },
   extraReducers: (builder) => {
-
     builder.addCase(getUserSession.pending, (state) => {
       state.status = "loading";
     });
@@ -111,5 +114,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, resetAuthState } = authSlice.actions;
 export default authSlice.reducer;
