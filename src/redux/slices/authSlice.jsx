@@ -7,12 +7,12 @@ const initialState = {
   email: null,
   isLogged: false,
   registerStatus: "idle",
+  rol: null,
   status: "idle",
   token: null,
   userID: null,
   username: null,
 };
-
 
 export const getUserSession = createAsyncThunk(
   "users/getUserSession",
@@ -22,8 +22,9 @@ export const getUserSession = createAsyncThunk(
         `http://localhost:5000/api/guest/login`,
         {
           email: email,
-          contrasenia: password, 
-        }
+          contrasenia: password,
+        },
+        { withCredentials: true }
       );
       return res.data;
     } catch {
@@ -36,17 +37,14 @@ export const registerUser = createAsyncThunk(
   "users/registerUser",
   async ({ fullname, password, email, alias }) => {
     try {
-      const res = await axios.post(
-        `http://localhost:5000/api/guest/register`,
-        {
-          nombre_apellido: fullname,
-          alias: alias,
-          alumno_iseta: false,
-          carrera_iseta: "No especificada",
-          email: email,
-          contrasenia: password,
-        }
-      );
+      const res = await axios.post(`http://localhost:5000/api/guest/register`, {
+        nombre_apellido: fullname,
+        alias: alias,
+        alumno_iseta: false,
+        carrera_iseta: "No especificada",
+        email: email,
+        contrasenia: password,
+      });
       return res.data;
     } catch (err) {
       if (
@@ -68,46 +66,54 @@ const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
   reducers: {
+    // Declare a logout action and export it
+    resetAuthState: (state) => {
+      state.email = null;
+      state.isLogged = false;
+      state.token = null;
+      state.userID = null;
+      state.username = null;
+    },
     logout: (state) => {
       state.email = null;
       state.isLogged = false;
       state.token = null;
       state.userID = null;
       state.username = null;
-      toast.success("Sesión cerrada con éxito");
     },
   },
   extraReducers: (builder) => {
-
     builder.addCase(getUserSession.pending, (state) => {
       state.status = "loading";
-    });
-    builder.addCase(getUserSession.rejected, (state) => {
-      state.isLogged = false;
-      state.token = null;
-      state.status = "rejected";
-    });
-    builder.addCase(getUserSession.fulfilled, (state, { payload }) => {
-      console.log(payload);
-      const { id, nombre_apellido, email } = payload;
-      state.email = email;
-      state.isLogged = true;
-      state.status = "successful";
-      state.token = Math.random() * 1000000; 
-      state.userID = id;
-      state.username = nombre_apellido;
-    });
-    builder.addCase(registerUser.pending, (state) => {
-      state.registerStatus = "loading";
-    });
-    builder.addCase(registerUser.rejected, (state) => {
-      state.registerStatus = "rejected";
-    });
-    builder.addCase(registerUser.fulfilled, (state, { payload }) => {
-      state.registerStatus = "successful";
-    });
+    }),
+      builder.addCase(getUserSession.rejected, (state) => {
+        state.isLogged = false;
+        state.token = null;
+        state.status = "rejected";
+      }),
+      builder.addCase(getUserSession.fulfilled, (state, { payload }) => {
+        console.log(payload);
+        const { id, nombre_apellido, email } = payload;
+        state.email = email;
+        state.isLogged = true;
+        state.status = "successful";
+        state.token = Math.random() * 1000000;
+        state.userID = id;
+        state.username = nombre_apellido;
+      });
+      // registerUser
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      builder.addCase(registerUser.pending, (state) => {
+        state.registerStatus = "loading";
+      }),
+      builder.addCase(registerUser.rejected, (state, { payload }) => {
+        state.registerStatus = "rejected";
+      }),
+      builder.addCase(registerUser.fulfilled, (state, { payload }) => {
+        state.registerStatus = "succesful";
+      });
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, resetAuthState } = authSlice.actions;
 export default authSlice.reducer;

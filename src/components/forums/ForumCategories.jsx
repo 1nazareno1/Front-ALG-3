@@ -2,10 +2,12 @@ import { Add } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const ForumCategories = ({ categories }) => {
   const { downMd } = useWindowSize();
   const navigate = useNavigate();
+  const { rol } = useSelector((state) => state.auth);
 
   return (
     <Box
@@ -15,24 +17,29 @@ export const ForumCategories = ({ categories }) => {
         maxWidth: "850px",
       })}
     >
-      <Box display={"flex"} justifyContent={downMd ? "flex-start" : "flex-end"}>
-        <Button
-          variant="contained"
-          onClick={() => navigate("/crear-post")}
-          sx={(theme) => ({
-            display: "flex",
-            alignItems: "center",
-            gap: theme.spacing(1),
-            height: "40px",
-            marginLeft: downMd ? theme.spacing(2) : theme.spacing(0),
-            marginBottom: theme.spacing(2),
-          })}
+      {rol === "ADMIN" && (
+        <Box
+          display={"flex"}
+          justifyContent={downMd ? "flex-start" : "flex-end"}
         >
-          {" "}
-          <Add />
-          Crear categoria
-        </Button>
-      </Box>
+          <Button
+            variant="contained"
+            onClick={() => navigate("/crear-post")}
+            sx={(theme) => ({
+              display: "flex",
+              alignItems: "center",
+              gap: theme.spacing(1),
+              height: "40px",
+              marginLeft: downMd ? theme.spacing(2) : theme.spacing(0),
+              marginBottom: theme.spacing(2),
+            })}
+          >
+            {" "}
+            <Add />
+            Crear categoria
+          </Button>
+        </Box>
+      )}
       <Box
         sx={(theme) => ({
           backgroundColor: theme.palette.primary.main,

@@ -368,7 +368,7 @@ export const RegisterPage = () => {
           )}
         </Button>
       </Box>
-      <UserRegisteredModal open={registerStatus == "succesfull"} />
+      <UserRegisteredModal open={registerStatus == "succesful"} />
       <Modal open={!!helpField} onClose={() => setHelpField(null)}>
   <Box
     sx={{

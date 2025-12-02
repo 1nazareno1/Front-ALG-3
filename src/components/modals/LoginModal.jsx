@@ -12,10 +12,6 @@ import { getUserSession } from "../../redux/slices/authSlice";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-
-
-
-
 export const LoginModal = ({ open, onClose }) => {
   const { status } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -25,8 +21,12 @@ export const LoginModal = ({ open, onClose }) => {
 
   const handleLogin = async () => {
     try {
-      await dispatch(getUserSession({ email: nombre, password })).unwrap();
-    } catch {
+      const userInfo = await dispatch(
+        getUserSession({ email: nombre, password })
+      ).unwrap();
+      console.log(userInfo);
+    } catch (err) {
+      console.log(err);
       toast.error("Error al iniciar sesión");
     }
   };
@@ -35,7 +35,7 @@ export const LoginModal = ({ open, onClose }) => {
   const isFormValid = nombre.trim().length > 3 && password.trim().length > 7;
 
   useEffect(() => {
-    if (status === "succesfull") onClose();
+    if (status === "succesful") onClose();
   }, [status, onClose]);
 
   return (
@@ -141,8 +141,8 @@ export const LoginModal = ({ open, onClose }) => {
             backgroundColor: !isFormValid
               ? "grey.400"
               : status === "loading"
-                ? theme.palette.secondary.dark
-                : theme.palette.primary.main,
+              ? theme.palette.secondary.dark
+              : theme.palette.primary.main,
             mx: "auto",
             display: "flex",
             borderRadius: 2,
@@ -153,7 +153,8 @@ export const LoginModal = ({ open, onClose }) => {
             fontWeight: 400,
             fontsize: 18,
             textTransform: "none",
-            transition: "background-color 0.3s ease", color: "white", // 🔹 animación suave
+            transition: "background-color 0.3s ease",
+            color: "white", // 🔹 animación suave
           })}
         >
           {status === "loading" ? (

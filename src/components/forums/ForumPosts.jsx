@@ -7,11 +7,13 @@ import {
 import { Box, Button, Tooltip, Typography } from "@mui/material";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const ForumPosts = ({ posts, postsStatus, users }) => {
   const { downMd } = useWindowSize();
   const navigate = useNavigate();
   const location = useLocation();
+  const { isLogged } = useSelector((state) => state.auth);
 
   return (
     <Box
@@ -38,26 +40,28 @@ export const ForumPosts = ({ posts, postsStatus, users }) => {
             Volver al foro
           </Typography>
         </Box>
-        <Button
-          disabled={postsStatus !== "succesful"}
-          variant="contained"
-          onClick={() =>
-            navigate("/crear-post", {
-              state: { forumId: location.pathname.split("/")[2] },
-            })
-          }
-          sx={(theme) => ({
-            display: "flex",
-            alignItems: "center",
-            gap: theme.spacing(1),
-            height: "40px",
-            marginLeft: downMd ? theme.spacing(2) : theme.spacing(0),
-          })}
-        >
-          {" "}
-          <Add />
-          Crear post
-        </Button>
+        {isLogged && (
+          <Button
+            disabled={postsStatus !== "succesful"}
+            variant="contained"
+            onClick={() =>
+              navigate("/crear-post", {
+                state: { forumId: location.pathname.split("/")[2] },
+              })
+            }
+            sx={(theme) => ({
+              display: "flex",
+              alignItems: "center",
+              gap: theme.spacing(1),
+              height: "40px",
+              marginLeft: downMd ? theme.spacing(2) : theme.spacing(0),
+            })}
+          >
+            {" "}
+            <Add />
+            Crear post
+          </Button>
+        )}
       </Box>
       <Box
         sx={(theme) => ({
@@ -156,7 +160,7 @@ export const ForumPosts = ({ posts, postsStatus, users }) => {
           <Typography fontSize={14} textAlign={"center"}>
             {posts == undefined
               ? ""
-              : "No existen posts dentro de esta categoria. ¡Se el primero en crear            uno!"}
+              : "No existen posts dentro de esta categoria. ¡Se el primero en crear uno!"}
           </Typography>
         </Box>
       ) : (
