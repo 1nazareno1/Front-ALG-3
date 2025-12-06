@@ -34,6 +34,28 @@ export const getPosts = createAsyncThunk("posts/getPosts", async () => {
   }
 });
 
+export const createPost = createAsyncThunk(
+  "posts/postPost",
+  async ({ title, body, authorId, categoryId }) => {
+    try {
+      const res = await axios.post(
+        `http://localhost:5000/api/post/create`,
+        {
+          titulo: title,
+          contenido: body,
+          published: true,
+          id_autor: Number(authorId),
+          id_tema: Number(categoryId),
+        },
+        { withCredentials: true }
+      );
+      return res.data;
+    } catch (err) {
+      console.error(`ERROR: No se pudo crear el post`, err);
+    }
+  }
+);
+
 export const getPostById = createAsyncThunk(
   "posts/getPostById",
   async (postId) => {
@@ -120,6 +142,15 @@ const postsSlice = createSlice({
       builder.addCase(getPostByTitle.fulfilled, (state, { payload }) => {
         state.searchStatus = "succesful";
         state.results = payload == undefined ? [] : payload;
+      }),
+      builder.addCase(createPost.pending, (state) => {
+        state.postsStatus = "loading";
+      }),
+      builder.addCase(createPost.rejected, (state) => {
+        state.postsStatus = "rejected";
+      }),
+      builder.addCase(createPost.fulfilled, (state, { payload }) => {
+        state.postsStatus = "succesful";
       });
   },
 });

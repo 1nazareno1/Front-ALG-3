@@ -7,28 +7,19 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserSession } from "../../redux/slices/authSlice";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
+import { useAuth } from "../../hooks/contexts/AuthenticationContext";
 
 export const LoginModal = ({ open, onClose }) => {
   const { status } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  const { handleLogin } = useAuth();
 
-  const [nombre, setNombre] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
-    try {
-      const response = await dispatch(getUserSession({ email: nombre, password })).unwrap();
-    } catch {
-      toast.error("Error al iniciar sesión");
-    }
-  };
-
   // condición de validación: ambos campos llenos
-  const isFormValid = nombre.trim().length > 3 && password.trim().length > 7;
+  const isFormValid = email.trim().length > 3 && password.trim().length > 7;
 
   useEffect(() => {
     if (status === "succesful") onClose();
@@ -95,8 +86,8 @@ export const LoginModal = ({ open, onClose }) => {
         <TextField
           variant="outlined"
           fullWidth
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           sx={{ mb: 2 }}
           InputProps={{
             sx: { height: 35, fontsize: 15 },
@@ -129,7 +120,7 @@ export const LoginModal = ({ open, onClose }) => {
 
         {/* Botón ingresar */}
         <Button
-          onClick={handleLogin}
+          onClick={() => handleLogin({ email, password })}
           disabled={!isFormValid || status === "loading"} // 🔹 bloqueo dinámico
           sx={(theme) => ({
             alignItems: "center",

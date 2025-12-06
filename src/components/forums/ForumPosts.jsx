@@ -8,6 +8,7 @@ import { Box, Button, Tooltip, Typography } from "@mui/material";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { CreateButton } from "../commons/CreateButton";
 
 export const ForumPosts = ({ posts, postsStatus, users }) => {
   const { downMd } = useWindowSize();
@@ -41,26 +42,15 @@ export const ForumPosts = ({ posts, postsStatus, users }) => {
           </Typography>
         </Box>
         {isLogged && (
-          <Button
+          <CreateButton
             disabled={postsStatus !== "succesful"}
-            variant="contained"
-            onClick={() =>
+            onClick={() => {
               navigate("/crear-post", {
                 state: { forumId: location.pathname.split("/")[2] },
-              })
-            }
-            sx={(theme) => ({
-              display: "flex",
-              alignItems: "center",
-              gap: theme.spacing(1),
-              height: "40px",
-              marginLeft: downMd ? theme.spacing(2) : theme.spacing(0),
-            })}
-          >
-            {" "}
-            <Add />
-            Crear post
-          </Button>
+              });
+            }}
+            text="Crear post"
+          />
         )}
       </Box>
       <Box

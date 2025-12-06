@@ -11,7 +11,6 @@ const initialState = {
   status: "idle",
   userID: null,
   username: null,
-  rol: null,
 };
 
 export const getUserSession = createAsyncThunk(
@@ -34,6 +33,19 @@ export const getUserSession = createAsyncThunk(
     } catch {
       toast.error(`ERROR: No se pudo conectar el usuario`);
     }
+  }
+);
+
+export const getCurrentSession = createAsyncThunk(
+  "users/getCurrentSession",
+  async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:5000/api/user/actualAuthUser",
+        { withCredentials: true }
+      );
+      return res.data;
+    } catch {}
   }
 );
 
@@ -94,6 +106,26 @@ const authSlice = createSlice({
       state.status = "rejected";
     });
     builder.addCase(getUserSession.fulfilled, (state, { payload }) => {
+      const { id, nombre_apellido, email, rol } = payload;
+      state.email = email;
+      state.isLogged = true;
+      state.rol = rol;
+      state.status = "successful";
+      state.userID = id;
+      state.username = nombre_apellido;
+    });
+    builder.addCase(getCurrentSession.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(getCurrentSession.rejected, (state) => {
+      state.isLogged = false;
+      state.status = "rejected";
+    });
+    builder.addCase(getCurrentSession.fulfilled, (state, { payload }) => {
+      if (!payload) {
+        state.status = "idle";
+        return;
+      }
       const { id, nombre_apellido, email, rol } = payload;
       state.email = email;
       state.isLogged = true;
