@@ -1,5 +1,7 @@
 const CharacterCounter = ({ current, max }) => (
-  <p>{current}/{max} caracteres</p>
+  <span>
+    {current}/{max} caracteres
+  </span>
 );
 
 export default CharacterCounter;
