@@ -85,7 +85,8 @@ const CurriculumForm = () => {
 
         <div style={styles.buttonRow}>
           <button type="submit" style={styles.primaryButton}>Guardar CV</button>
-          <button type="button" style={styles.secondaryButton}>Cancelar</button>
+          <button type="button" style={styles.secondaryButton} onClick={() => window.history.back()}
+          >Cancelar</button>
         </div>
       </form>
     </div>
