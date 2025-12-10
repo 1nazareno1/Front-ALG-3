@@ -6,7 +6,7 @@ import { getPostCategories, getPosts } from "../../redux/slices/postsSlice";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { getAllUsers } from "../../redux/slices/usersSlice";
 import { Header } from "../../components/commons/Header";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export const ForumPage = () => {
   const { upLg } = useWindowSize();
@@ -18,10 +18,11 @@ export const ForumPage = () => {
 
   useEffect(() => {
     dispatch(getPosts());
+    dispatch(getPostCategories());
     dispatch(getAllUsers());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  let windowWidth = window.innerWidth;
+  const windowWidth = window.innerWidth;
 
   return (
     <Box>

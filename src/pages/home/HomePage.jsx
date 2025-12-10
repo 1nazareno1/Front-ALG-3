@@ -17,7 +17,7 @@ export const HomePage = () => {
     dispatch(getPostCategories());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  let windowWidth = window.innerWidth;
+  const windowWidth = window.innerWidth;
 
   return (
     <Box>

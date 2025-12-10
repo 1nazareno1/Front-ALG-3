@@ -5,19 +5,24 @@ import {
   Modal,
   Typography,
 } from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export const ReportModal = ({
+export const DeletePostModal = ({
+  handleDelete,
   open,
-  setOpen,
-  handleReport,
+  postId,
   postTitle,
   postsStatus,
+  setOpen,
 }) => {
+  const navigate = useNavigate();
   const handleClose = () => setOpen(false);
+  const handleDeleteClose = () => navigate("/inicio");
+  const [succesfullyDeleted, setSuccesfullyDeleted] = useState(false);
 
   return (
     <>
-      {" "}
       <Modal open={open} onClose={handleClose}>
         <Box
           sx={{
@@ -35,16 +40,23 @@ export const ReportModal = ({
           }}
         >
           <Typography sx={{ fontWeight: 400 }}>
-            Estas a punto de reportar el post{" "}
+            Estas a punto de eliminar el post{" "}
             <Typography component="span" sx={{ fontWeight: 600 }}>
               "{postTitle}"
             </Typography>
+            . Esta acción es irreversible.
           </Typography>
           <Button
-            variant="contained"
             alignItems="center"
             color="error"
-            onClick={() => handleReport()}
+            disabled={postsStatus === "loading"}
+            onClick={() =>
+              handleDelete({
+                postId,
+                afterAction: () => setSuccesfullyDeleted(true),
+              })
+            }
+            variant="contained"
             sx={{
               alignSelf: "flex-end",
               display: "flex",
@@ -60,12 +72,12 @@ export const ReportModal = ({
             {postsStatus === "loading" ? (
               <CircularProgress size={20} sx={{ mt: 0.5 }} />
             ) : (
-              "Reportar"
+              "Eliminar"
             )}
           </Button>
         </Box>
-      </Modal>
-      <Modal open={false} onClose={handleClose}>
+      </Modal>{" "}
+      <Modal open={succesfullyDeleted} onClose={handleDeleteClose}>
         <Box
           sx={{
             display: "flex",
@@ -82,16 +94,17 @@ export const ReportModal = ({
           }}
         >
           <Typography sx={{ fontWeight: 400 }}>
-            Estas a punto de reportar el post{" "}
+            Se borro el post{" "}
             <Typography component="span" sx={{ fontWeight: 600 }}>
               "{postTitle}"
-            </Typography>
+            </Typography>{" "}
+            con exito
           </Typography>
           <Button
             variant="contained"
             alignItems="center"
             color="error"
-            onClick={() => handleReport()}
+            onClick={handleDeleteClose}
             sx={{
               alignSelf: "flex-end",
               display: "flex",
@@ -104,11 +117,7 @@ export const ReportModal = ({
               textTransform: "none",
             }}
           >
-            {postsStatus === "loading" ? (
-              <CircularProgress size={20} sx={{ mt: 0.5 }} />
-            ) : (
-              "Reportar"
-            )}
+            Cerrar
           </Button>
         </Box>
       </Modal>

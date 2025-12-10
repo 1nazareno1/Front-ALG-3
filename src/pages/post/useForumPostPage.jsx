@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { getUserById, setSearchedUser } from "../../redux/slices/usersSlice";
 import { toast } from "sonner";
-import { getPostById } from "../../redux/slices/postsSlice";
+import { deletePost, getPostById } from "../../redux/slices/postsSlice";
 
 export const useForumPostPage = () => {
   const location = useLocation();
@@ -15,8 +15,10 @@ export const useForumPostPage = () => {
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [userLike, setUserLike] = useState(false);
   const [reportModalOpen, setReportModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const { userID } = useSelector((state) => state.auth);
   const { users, searchedUser } = useSelector((state) => state.usuarios);
+  const { postsStatus } = useSelector((state) => state.posts);
   const { upLg } = useWindowSize();
   const dispatch = useDispatch();
 
@@ -30,8 +32,7 @@ export const useForumPostPage = () => {
           const fetchedPost = postAction.payload;
 
           if (!fetchedPost) {
-            toast.error("No se pudo hallar el post solicitado");
-            return navigate("/");
+            return navigate("/inicio");
           }
 
           const user = await dispatch(getUserById(fetchedPost.id_autor));
@@ -101,20 +102,41 @@ export const useForumPostPage = () => {
     } else setReportModalOpen(true);
   };
 
-  const handleReport = () => {
-    toast.success("Se ha reportado el post con exito");
+  const handleReport = async () => {
     setReportModalOpen(false);
   };
 
+  const handleDeleteModal = () => {
+    if (!userID) {
+      toast.error("Debes estar logueado para eliminar un post");
+      return;
+    } else setDeleteModalOpen(true);
+  };
+
+  const handleDelete = async ({ postId, afterAction = () => {} }) => {
+    try {
+      await dispatch(deletePost(postId));
+      setDeleteModalOpen(false);
+      afterAction();
+    } catch {
+      console.error("Ocurrió un error al eliminar el post");
+    }
+  };
+
   return {
+    deleteModalOpen,
+    handleDelete,
+    handleDeleteModal,
     handleReport,
     handleReportModal,
     handleUserLike,
     loading,
     navigate,
     postData,
+    postsStatus,
     reportModalOpen,
     searchedUser,
+    setDeleteModalOpen,
     setReportModalOpen,
     setUserModalOpen,
     upLg,

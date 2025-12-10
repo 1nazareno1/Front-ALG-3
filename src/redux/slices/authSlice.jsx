@@ -17,7 +17,7 @@ export const getUserSession = createAsyncThunk(
   "users/getUserSession",
   async ({ email, password }) => {
     try {
-      const logueo = await axios.post(
+      await axios.post(
         "http://localhost:5000/api/guest/login",
         {
           email: email,
@@ -45,7 +45,9 @@ export const getCurrentSession = createAsyncThunk(
         { withCredentials: true }
       );
       return res.data;
-    } catch {}
+    } catch {
+      return null;
+    }
   }
 );
 
@@ -64,11 +66,11 @@ export const registerUser = createAsyncThunk(
       return res.data;
     } catch (err) {
       if (
-        err.response?.data?.message?.includes(
+        err.response?.data?.includes(
           "Unique constraint failed on the fields: (`email`)"
         )
       ) {
-        toast.error(`ERROR: El email ya se encuentra registrado`);
+        toast.error(`Ya existe un usuario registrado con ese email`);
       } else {
         toast.error(
           `Error al registrar el usuario, inténtalo de nuevo más tarde`
@@ -86,7 +88,6 @@ const authSlice = createSlice({
     resetAuthState: (state) => {
       state.email = null;
       state.isLogged = false;
-      state.token = null;
       state.userID = null;
       state.username = null;
     },
@@ -127,8 +128,8 @@ const authSlice = createSlice({
         return;
       }
       const { id, nombre_apellido, email, rol } = payload;
-      state.email = email;
       state.isLogged = true;
+      state.email = email;
       state.rol = rol;
       state.status = "successful";
       state.userID = id;
@@ -140,7 +141,7 @@ const authSlice = createSlice({
     builder.addCase(registerUser.rejected, (state) => {
       state.registerStatus = "rejected";
     });
-    builder.addCase(registerUser.fulfilled, (state, { payload }) => {
+    builder.addCase(registerUser.fulfilled, (state) => {
       state.registerStatus = "successful";
     });
   },

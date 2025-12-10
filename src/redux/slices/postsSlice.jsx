@@ -20,7 +20,7 @@ export const getPostCategories = createAsyncThunk(
       const res = await axios.get(`http://localhost:5000/api/Tema/findAll`);
       return res.data;
     } catch {
-      toast.error(`ERROR: No se pudo obtener las categorias de los posts`);
+      toast.error(`No se pudo obtener las categorias de los posts`);
     }
   }
 );
@@ -30,9 +30,24 @@ export const getPosts = createAsyncThunk("posts/getPosts", async () => {
     const res = await axios.get(`http://localhost:5000/api/post/findAll`);
     return res.data;
   } catch {
-    toast.error(`ERROR: No se pudo obtener los posts`);
+    toast.error(`No se pudo obtener los posts`);
   }
 });
+
+export const deletePost = createAsyncThunk(
+  "posts/deletePost",
+  async (postId) => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:5000/api/post/delete/${postId}`,
+        { withCredentials: true }
+      );
+      return res.data;
+    } catch {
+      toast.error(`No se pudo eliminar el post de id #${postId}`);
+    }
+  }
+);
 
 export const createPost = createAsyncThunk(
   "posts/postPost",
@@ -51,7 +66,7 @@ export const createPost = createAsyncThunk(
       );
       return res.data;
     } catch (err) {
-      console.error(`ERROR: No se pudo crear el post`, err);
+      console.error(`No se pudo crear el post`, err);
     }
   }
 );
@@ -65,7 +80,7 @@ export const getPostById = createAsyncThunk(
       );
       return res.data;
     } catch {
-      toast.error(`ERROR: No se pudo obtener el post #${postId}`);
+      toast.error(`No se pudo obtener el post de id #${postId}`);
     }
   }
 );
@@ -79,7 +94,7 @@ export const getPostByTitle = createAsyncThunk(
       );
       return res.data;
     } catch {
-      toast.error(`ERROR: No se pudo obtener el post con titulo ${title}`);
+      toast.error(`No se pudo obtener el post con titulo ${title}`);
     }
   }
 );
@@ -149,7 +164,16 @@ const postsSlice = createSlice({
       builder.addCase(createPost.rejected, (state) => {
         state.postsStatus = "rejected";
       }),
-      builder.addCase(createPost.fulfilled, (state, { payload }) => {
+      builder.addCase(createPost.fulfilled, (state) => {
+        state.postsStatus = "succesful";
+      }),
+      builder.addCase(deletePost.pending, (state) => {
+        state.postsStatus = "loading";
+      }),
+      builder.addCase(deletePost.rejected, (state) => {
+        state.postsStatus = "rejected";
+      }),
+      builder.addCase(deletePost.fulfilled, (state) => {
         state.postsStatus = "succesful";
       });
   },

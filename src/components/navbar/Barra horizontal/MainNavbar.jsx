@@ -15,7 +15,7 @@ import { SearchComponent } from "./components/SearchComponent";
 export const MainNavbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setLoginOpen] = useState(false);
-  const { isLogged, username } = useSelector((state) => state.auth);
+  const { isLogged, username, userID } = useSelector((state) => state.auth);
   const { upLg } = useWindowSize();
 
   return (
@@ -42,7 +42,7 @@ export const MainNavbar = () => {
           >
             <SearchComponent />
             {isLogged ? (
-              <LoggedDesktop username={username} />
+              <LoggedDesktop username={username} userID={userID}/>
             ) : (
               <NotLoggedDesktop
                 modalOpen={modalOpen}

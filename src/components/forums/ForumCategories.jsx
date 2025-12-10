@@ -1,5 +1,4 @@
-import { Add } from "@mui/icons-material";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -111,6 +110,7 @@ export const ForumCategories = ({ categories }) => {
                   <Typography
                     fontSize={14}
                     sx={(theme) => ({
+                      fontWeight: 500,
                       cursor: "pointer",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -127,14 +127,14 @@ export const ForumCategories = ({ categories }) => {
                   </Typography>
                   <Typography
                     fontSize={12}
-                    sx={(theme) => ({
+                    sx={{
                       cursor: "pointer",
                       height: "36px",
                       overflow: "hidden",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "wrap",
-                    })}
+                    }}
                     onClick={() => navigate(`/foro/${id}`)}
                   >
                     {contenido}
