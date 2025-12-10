@@ -5,17 +5,23 @@ import { UserCardComponent } from "../../components/posts/UserCardComponent";
 import { PostBodyContent } from "../../components/posts/PostBodyContent";
 import { ReportModal } from "../../components/modals/ReportModal";
 import { useForumPostPage } from "./useForumPostPage";
+import { DeletePostModal } from "../../components/modals/DeletePostModal";
 
 export const ForumPostPage = () => {
   const {
+    deleteModalOpen,
+    handleDelete,
+    handleDeleteModal,
     handleReport,
     handleReportModal,
     handleUserLike,
     loading,
     navigate,
     postData,
+    postsStatus,
     reportModalOpen,
     searchedUser,
+    setDeleteModalOpen,
     setReportModalOpen,
     setUserModalOpen,
     upLg,
@@ -64,7 +70,8 @@ export const ForumPostPage = () => {
             })}
           >
             <PostTopContent
-              handleReport={handleReportModal}
+              handleDeleteModal={handleDeleteModal}
+              handleReportModal={handleReportModal}
               navigate={navigate}
               postData={postData}
               setUserModalOpen={setUserModalOpen}
@@ -94,12 +101,24 @@ export const ForumPostPage = () => {
         </>
       )}
       {postData ? (
-        <ReportModal
-          handleReport={handleReport}
-          open={reportModalOpen}
-          postTitle={postData.titulo}
-          setOpen={setReportModalOpen}
-        />
+        <>
+          <DeletePostModal
+            handleDelete={handleDelete}
+            open={deleteModalOpen}
+            postId={postData.id}
+            postTitle={postData.titulo}
+            setOpen={setDeleteModalOpen}
+            postsStatus={postsStatus}
+          />
+          <ReportModal
+            handleReport={handleReport}
+            open={reportModalOpen}
+            postId={postData.id}
+            postTitle={postData.titulo}
+            setOpen={setReportModalOpen}
+            postsStatus={postsStatus}
+          />
+        </>
       ) : null}
     </Box>
   );

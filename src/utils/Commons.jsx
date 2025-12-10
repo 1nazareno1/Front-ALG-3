@@ -1,4 +1,4 @@
-import { CalendarMonth, Home, Link, Person, Search } from "@mui/icons-material";
+import { Home, Link, Search } from "@mui/icons-material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export const NotificationMock = [
@@ -65,7 +65,7 @@ export const MenuLinks = [
 /**
  * Calcula y formatea el tiempo transcurrido desde una fecha en formato string.
  * @param {string} dateString - La fecha de creación en formato string (ej: "2024-12-17T03:24:00").
- * @returns {string} Una cadena de texto formateada como "Creado hace X tiempo".
+ * @returns {string} Una cadena de texto formateada como "Creado Hace X tiempo".
  */
 export function getTimeAgoFromString(dateString) {
   const dateInMillis = new Date(dateString).getTime();
@@ -82,19 +82,19 @@ export function getTimeAgoFromString(dateString) {
   const years = Math.floor(days / 365.25);
 
   if (years > 0) {
-    return `hace ${years} ${years === 1 ? "año" : "años"}`;
+    return `Hace ${years} ${years === 1 ? "año" : "años"}`;
   } else if (months > 0) {
-    return `hace ${months} ${months === 1 ? "mes" : "meses"}`;
+    return `Hace ${months} ${months === 1 ? "mes" : "meses"}`;
   } else if (weeks > 0) {
-    return `hace ${weeks} ${weeks === 1 ? "semana" : "semanas"}`;
+    return `Hace ${weeks} ${weeks === 1 ? "semana" : "semanas"}`;
   } else if (days > 0) {
-    return `hace ${days} ${days === 1 ? "día" : "días"}`;
+    return `Hace ${days} ${days === 1 ? "día" : "días"}`;
   } else if (hours > 0) {
-    return `hace ${hours} ${hours === 1 ? "hora" : "horas"}`;
+    return `Hace ${hours} ${hours === 1 ? "hora" : "horas"}`;
   } else if (minutes > 0) {
-    return `hace ${minutes} ${minutes === 1 ? "minuto" : "minutos"}`;
+    return `Hace ${minutes} ${minutes === 1 ? "minuto" : "minutos"}`;
   } else {
-    return "hace un momento";
+    return "Hace un momento";
   }
 }
 

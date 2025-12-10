@@ -1,10 +1,12 @@
 import { Box, Tooltip, Typography } from "@mui/material";
-import { Flag } from "@mui/icons-material";
+import { Delete, Flag } from "@mui/icons-material";
 import { UserCardModalComponent } from "./UserCardModalComponent";
 import { getTimeAgoFromString } from "../../utils/Commons";
+import { useAuth } from "../../hooks/contexts/AuthenticationContext";
 
 export const PostTopContent = ({
-  handleReport,
+  handleDeleteModal,
+  handleReportModal,
   navigate,
   postData,
   setUserModalOpen,
@@ -12,12 +14,13 @@ export const PostTopContent = ({
   userData,
   userModalOpen,
 }) => {
+  const { userInfo } = useAuth();
   return (
     <>
       {userData ? (
         <>
           <Box>
-            <Typography>{`General > Noticias • ${getTimeAgoFromString(
+            <Typography>{`${getTimeAgoFromString(
               postData.createdAt
             )}`}</Typography>{" "}
             {!upLg ? (
@@ -54,21 +57,42 @@ export const PostTopContent = ({
             >
               {postData.titulo}
             </Typography>{" "}
-            <Tooltip placement={"top"} title="Denunciar post">
-              <Box
-                sx={(theme) => ({
-                  cursor: "pointer",
-                  transition: "ease-in .1s",
-                  "&:hover": {
-                    color: theme.palette.error.main,
-                    transform: "translateY(-2.5px)",
-                  },
-                })}
-                onClick={() => handleReport(postData.id)}
-              >
-                <Flag />
-              </Box>
-            </Tooltip>
+            <Box display={"flex"} gap={1}>
+              <Tooltip placement={"top"} title="Denunciar post">
+                <Box
+                  sx={(theme) => ({
+                    cursor: "pointer",
+                    transition: "ease-in .1s",
+                    "&:hover": {
+                      color: theme.palette.error.main,
+                      transform: "translateY(-2.5px)",
+                    },
+                  })}
+                  onClick={() => handleReportModal()}
+                >
+                  <Flag />
+                </Box>
+              </Tooltip>
+              {userInfo?.userID == postData.id_autor ||
+              userInfo.rol == "ADMIN" ||
+              userInfo.rol == "MODERADOR" ? (
+                <Tooltip placement={"top"} title="Eliminar post">
+                  <Box
+                    sx={(theme) => ({
+                      cursor: "pointer",
+                      transition: "ease-in .1s",
+                      "&:hover": {
+                        color: theme.palette.error.main,
+                        transform: "translateY(-2.5px)",
+                      },
+                    })}
+                    onClick={() => handleDeleteModal()}
+                  >
+                    <Delete />
+                  </Box>
+                </Tooltip>
+              ) : null}
+            </Box>
           </Box>
         </>
       ) : null}

@@ -84,7 +84,6 @@ export const CreatePostPage = () => {
     } catch (error) {
       console.error("Error al crear el post:", error);
     }
-    console.log("Datos del posteo a enviar:", postData);
   };
 
   return (

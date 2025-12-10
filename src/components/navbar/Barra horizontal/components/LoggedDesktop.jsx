@@ -5,9 +5,11 @@ import { NotificationMock } from "../../../../utils/Commons";
 import { NotificationsMenu } from "./NotificationsMenu";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export const LoggedDesktop = ({ username }) => {
+export const LoggedDesktop = ({ username, userID }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [notifications, setNotifications] = useState(NotificationMock);
 
   const closeNotification = (id) => {
@@ -29,7 +31,12 @@ export const LoggedDesktop = ({ username }) => {
         }}
       >
         Hola{" "}
-        <Typography component={"span"} fontWeight={500}>
+        <Typography
+          component={"span"}
+          fontWeight={500}
+          onClick={() => navigate(`/perfil/${userID}`)}
+          sx={{ cursor: "pointer" }}
+        >
           {username}
         </Typography>
       </Typography>
