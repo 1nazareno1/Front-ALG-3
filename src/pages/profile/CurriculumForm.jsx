@@ -1,14 +1,18 @@
 import Section from './components/Section';
 import FieldWithHelp from './components/FieldWithHelp';
+import { Box, Paper, Typography, Stack, Button } from '@mui/material';
 
 const CurriculumForm = () => {
   return (
-    <div style={styles.page}>
-      <form style={styles.form}>
-        <h1 style={styles.title}>Crear Currículum Vitae</h1>
-        <p style={styles.subtitle}>
+    <Box sx={styles.page}>
+      <Paper component="form" sx={styles.form} elevation={2}>
+        <Typography variant="h4" component="h1" sx={styles.title}>
+          Crear Currículum Vitae
+        </Typography>
+
+        <Typography variant="body2" sx={styles.subtitle}>
           Consejo: Recuerda ser conciso/a. Cada sección tiene un límite de caracteres.
-        </p>
+        </Typography>
 
         <Section title="Datos Básicos">
           <FieldWithHelp
@@ -83,13 +87,16 @@ const CurriculumForm = () => {
           />
         </Section>
 
-        <div style={styles.buttonRow}>
-          <button type="submit" style={styles.primaryButton}>Guardar CV</button>
-          <button type="button" style={styles.secondaryButton} onClick={() => window.history.back()}
-          >Cancelar</button>
-        </div>
-      </form>
-    </div>
+        <Stack direction="row" justifyContent="flex-end" spacing={2} sx={styles.buttonRow}>
+          <Button type="submit" variant="contained" color="primary">
+            Guardar CV
+          </Button>
+          <Button type="button" variant="outlined" onClick={() => window.history.back()}>
+            Cancelar
+          </Button>
+        </Stack>
+      </Paper>
+    </Box>
   );
 };
 
@@ -97,53 +104,32 @@ export default CurriculumForm;
 
 const styles = {
   page: {
-    background: "#f5f5f5",
-    minHeight: "100vh",
-    padding: "30px 0",
-    display: "flex",
-    justifyContent: "center",
+    background: '#f5f5f5',
+    minHeight: '100vh',
+    padding: '30px 0',
+    display: 'flex',
+    justifyContent: 'center',
   },
   form: {
-    width: "90%",
-    maxWidth: "850px",
-    background: "#fff",
-    padding: "30px",
-    borderRadius: "12px",
-    boxShadow: "0 4px 12px rgba(24, 12, 12, 0.08)",
+    width: '90%',
+    maxWidth: '850px',
+    background: '#fff',
+    padding: '30px',
+    borderRadius: '12px',
   },
   title: {
     margin: 0,
-    fontSize: "28px",
-    color: "#190888ff",
-    fontWeight: "700",
+    fontSize: '28px',
+    color: '#190888ff',
+    fontWeight: 700,
+    mb: 1,
   },
   subtitle: {
-    fontSize: "14px",
-    marginBottom: "20px",
-    color: "#555",
+    fontSize: '14px',
+    marginBottom: '20px',
+    color: '#555',
   },
   buttonRow: {
-    display: "flex",
-    justifyContent: "flex-end",
-    gap: "12px",
-    marginTop: "25px",
-  },
-  primaryButton: {
-    background: "#2414d7ff",
-    color: "white",
-    padding: "10px 18px",
-    border: "none",
-    borderRadius: "8px",
-    cursor: "pointer",
-    fontWeight: "600",
-  },
-  secondaryButton: {
-    background: "#e0e0e0",
-    color: "#2711eaff",
-    padding: "10px 18px",
-    border: "none",
-    borderRadius: "8px",
-    cursor: "pointer",
-    fontWeight: "600",
+    marginTop: '20px',
   },
 };
