@@ -34,6 +34,7 @@ function App() {
                 <Route path="/perfil/:id" element={<ProfilePage />} />
                 <Route path="/crear-post" element={<CreatePostPage />} />
                 <Route path="/crear-cv" element={<CurriculumForm />} />
+                <Route path="/editar-cv/:id" element={<CurriculumForm />} />
 
                 {/* <Route path="/calendario" element={<Calendario />} /> */}
               </Routes>

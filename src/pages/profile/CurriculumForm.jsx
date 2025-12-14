@@ -1,13 +1,65 @@
 import Section from './components/Section';
 import FieldWithHelp from './components/FieldWithHelp';
 import { Box, Paper, Typography, Stack, Button } from '@mui/material';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
-const CurriculumForm = () => {
+const CurriculumForm = ({ cvData = null }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const pathParts = location.pathname.split('/');
+  const isEditing = pathParts[1] === 'editar-cv';
+  
+  const [formData, setFormData] = useState({
+    nombre_completo: cvData?.nombre_completo || '',
+    fecha_nacimiento: cvData?.fecha_nacimiento || '',
+    telefono: cvData?.telefono || '',
+    email: cvData?.email || '',
+    formacion: cvData?.formacion || '',
+    experiencia: cvData?.experiencia || '',
+    habilidades_tecnicas: cvData?.habilidades_tecnicas || '',
+    habilidades_blandas: cvData?.habilidades_blandas || '',
+    sobre_mi: cvData?.sobre_mi || '',
+    disponibilidad: cvData?.disponibilidad || '',
+    linkedin: cvData?.linkedin || '',
+  });
+
+  // Cargar datos del CV cuando entra en modo edición (sin prop de cvData)
+  useEffect(() => {
+    if (isEditing && !cvData) {
+      const storedCV = localStorage.getItem('curriculumData');
+      if (storedCV) {
+        try {
+          const parsed = JSON.parse(storedCV);
+          setFormData(parsed);
+        } catch (e) {
+          console.error('Error al cargar CV:', e);
+        }
+      }
+    }
+  }, [isEditing, cvData]);
+
+  const handleChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Cuando tengamos la API, hacer POST/PUT a /api/curriculum
+    // Por ahora guardamos en localStorage
+    localStorage.setItem('curriculumData', JSON.stringify(formData));
+    console.log('CV guardado:', formData);
+    navigate(-1);
+  };
+
   return (
     <Box sx={styles.page}>
-      <Paper component="form" sx={styles.form} elevation={2}>
+      <Paper component="form" onSubmit={handleSubmit} sx={styles.form} elevation={2}>
         <Typography variant="h4" component="h1" sx={styles.title}>
-          Crear Currículum Vitae
+          {isEditing ? 'Editar' : 'Crear'} Currículum Vitae
         </Typography>
 
         <Typography variant="body2" sx={styles.subtitle}>
@@ -20,17 +72,32 @@ const CurriculumForm = () => {
             placeholder="Juan Pérez González"
             maxLength={150}
             helpText="Recuerda escribir tu nombre completo"
+            value={formData.nombre_completo}
+            onChange={(e) => handleChange('nombre_completo', e.target.value)}
           />
           <FieldWithHelp
             label="Fecha de nacimiento"
             placeholder="dd/mm/aaaa"
             type="date"
+            value={formData.fecha_nacimiento}
+            onChange={(e) => handleChange('fecha_nacimiento', e.target.value)}
           />
         </Section>
 
         <Section title="Contacto">
-          <FieldWithHelp label="Teléfono" placeholder="+54 9 381 234-5678" />
-          <FieldWithHelp label="Email" placeholder="tu.email@ejemplo.com" type="email" />
+          <FieldWithHelp 
+            label="Teléfono" 
+            placeholder="+54 9 381 234-5678"
+            value={formData.telefono}
+            onChange={(e) => handleChange('telefono', e.target.value)}
+          />
+          <FieldWithHelp 
+            label="Email" 
+            placeholder="tu.email@ejemplo.com" 
+            type="email"
+            value={formData.email}
+            onChange={(e) => handleChange('email', e.target.value)}
+          />
         </Section>
 
         <Section title="Formación">
@@ -38,6 +105,8 @@ const CurriculumForm = () => {
             label="Formación"
             placeholder="Ej: Secundario, Tecnicatura en Informática, Ingeniería"
             maxLength={255}
+            value={formData.formacion}
+            onChange={(e) => handleChange('formacion', e.target.value)}
           />
         </Section>
 
@@ -46,6 +115,8 @@ const CurriculumForm = () => {
             label="Experiencia"
             placeholder='Ej: "Empresa X – Analista Jr. (Abr 2020 – Actualidad). Ref: 3812345678"'
             maxLength={1000}
+            value={formData.experiencia}
+            onChange={(e) => handleChange('experiencia', e.target.value)}
           />
         </Section>
 
@@ -54,6 +125,8 @@ const CurriculumForm = () => {
             label="Habilidades"
             placeholder="Ej: Python, Excel avanzado, SQL, Diseño CAD"
             maxLength={300}
+            value={formData.habilidades_tecnicas}
+            onChange={(e) => handleChange('habilidades_tecnicas', e.target.value)}
           />
         </Section>
 
@@ -62,6 +135,8 @@ const CurriculumForm = () => {
             label="Habilidades blandas"
             placeholder="Ej: trabajo en equipo, comunicación, liderazgo"
             maxLength={300}
+            value={formData.habilidades_blandas}
+            onChange={(e) => handleChange('habilidades_blandas', e.target.value)}
           />
         </Section>
 
@@ -70,6 +145,8 @@ const CurriculumForm = () => {
             label="Sobre mí"
             placeholder="Preséntate en pocas palabras..."
             maxLength={500}
+            value={formData.sobre_mi}
+            onChange={(e) => handleChange('sobre_mi', e.target.value)}
           />
         </Section>
 
@@ -78,20 +155,24 @@ const CurriculumForm = () => {
             label="Disponibilidad"
             placeholder="Ej: Full time, Part time"
             maxLength={30}
+            value={formData.disponibilidad}
+            onChange={(e) => handleChange('disponibilidad', e.target.value)}
           />
           <FieldWithHelp
             label="LinkedIn"
             placeholder="https://www.linkedin.com/in/tu-perfil"
             maxLength={100}
             type="url"
+            value={formData.linkedin}
+            onChange={(e) => handleChange('linkedin', e.target.value)}
           />
         </Section>
 
         <Stack direction="row" justifyContent="flex-end" spacing={2} sx={styles.buttonRow}>
           <Button type="submit" variant="contained" color="primary">
-            Guardar CV
+            {isEditing ? 'Guardar cambios' : 'Guardar CV'}
           </Button>
-          <Button type="button" variant="outlined" onClick={() => window.history.back()}>
+          <Button type="button" variant="outlined" onClick={() => navigate(-1)}>
             Cancelar
           </Button>
         </Stack>

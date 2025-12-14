@@ -18,6 +18,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 export const ProfilePage = () => {
   const { searchedUser, status } = useSelector((state) => state.usuarios);
   const [userPosts, setUserPosts] = React.useState([]);
+  const [userCV, setUserCV] = React.useState(null);
   const { downMd } = useWindowSize();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -40,6 +41,19 @@ export const ProfilePage = () => {
     };
     fetchData();
   }, [searchedUser, userId, navigate]);
+
+  // Cuando tengamos la API, reemplazar esto con una llamada real a /api/curriculum/:userId
+  useEffect(() => {
+    // Por ahora, busca en localStorage como placeholder
+    const storedCV = localStorage.getItem('curriculumData');
+    if (storedCV) {
+      try {
+        setUserCV(JSON.parse(storedCV));
+      } catch (e) {
+        console.error('Error al parsear CV de localStorage:', e);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const fetchPostData = async () => {
@@ -321,11 +335,14 @@ export const ProfilePage = () => {
               >
                 <Box display={"flex"} justifyContent={"space-between"}>
                   <Typography fontSize={"14px"} fontWeight={500}>
-                    Crea tu CV para la bolsa de trabajo
+                    {userCV ? 'CV creado' : 'Crea tu CV para la bolsa de trabajo'}
                   </Typography>
-                  <Button onClick={() => navigate("/crear-cv")}
-                    variant="contained" startIcon={<DescriptionIcon />} >
-                    Crear CV
+                  <Button 
+                    onClick={() => navigate(userCV ? `/editar-cv/${userId}` : "/crear-cv")}
+                    variant="contained" 
+                    startIcon={<DescriptionIcon />} 
+                  >
+                    {userCV ? 'Editar CV' : 'Crear CV'}
                   </Button>
                 </Box>
               </Box>
