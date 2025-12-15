@@ -7,13 +7,17 @@ import { ReportPostModal } from "../../components/modals/ReportPostModal";
 import { useForumPostPage } from "./useForumPostPage";
 import { UserCardComponent } from "../../components/posts/UserCardComponent";
 import { ReportMessageModal } from "../../components/modals/ReportMessageModal";
+import { DeleteMessageModal } from "../../components/modals/DeleteMessageModal";
 
 export const ForumPostPage = () => {
   const {
-    deleteModalOpen,
+    deleteMessageData,
+    deleteMessageModalOpen,
     handleDelete,
+    handleDeleteMessage,
     handleDeleteModal,
     handleMessageReport,
+    handleOpenMessageDeleteModal,
     handleOpenMessageReportModal,
     handleReport,
     handleReportModal,
@@ -27,7 +31,7 @@ export const ForumPostPage = () => {
     reportMessageModalOpen,
     reportModalOpen,
     searchedUser,
-    setDeleteModalOpen,
+    setDeleteMessageModalOpen,
     setPostData,
     setReportMessageModalOpen,
     setReportModalOpen,
@@ -89,13 +93,14 @@ export const ForumPostPage = () => {
               userModalOpen={userModalOpen}
             />
             <PostBodyContent
+              handleOpenMessageDeleteModal={handleOpenMessageDeleteModal}
+              handleOpenMessageReportModal={handleOpenMessageReportModal}
               handleUserLike={handleUserLike}
               messagesStatus={messagesStatus}
               navigate={navigate}
               postData={postData}
               setPostData={setPostData}
               userLike={userLike}
-              handleOpenMessageReportModal={handleOpenMessageReportModal}
             />
           </Box>
           {upLg && searchedUser ? (
@@ -117,10 +122,10 @@ export const ForumPostPage = () => {
         <>
           <DeletePostModal
             handleDelete={handleDelete}
-            open={deleteModalOpen}
+            open={deleteMessageModalOpen}
             postId={postData.id}
             postTitle={postData.titulo}
-            setOpen={setDeleteModalOpen}
+            setOpen={setDeleteMessageModalOpen}
             postsStatus={postsStatus}
           />
           <ReportPostModal
@@ -136,6 +141,12 @@ export const ForumPostPage = () => {
             setOpen={setReportMessageModalOpen}
             handleMessageReport={handleMessageReport}
             reportMessageData={reportMessageData}
+          />
+          <DeleteMessageModal
+            open={deleteMessageModalOpen}
+            setOpen={setDeleteMessageModalOpen}
+            handleDeleteMessage={handleDeleteMessage}
+            deleteMessageData={deleteMessageData}
           />
         </>
       ) : null}

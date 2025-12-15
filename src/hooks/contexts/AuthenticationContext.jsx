@@ -22,6 +22,7 @@ const AuthContext = createContext({
 });
 
 export const AuthProvider = ({ children }) => {
+  const [lastActionTimestamp, setLastActionTimestamp] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [userInfo, setUserInfo] = useState({
@@ -56,7 +57,7 @@ export const AuthProvider = ({ children }) => {
       }
     };
     checkSession();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleLogin = async ({ email, password }) => {
@@ -89,7 +90,22 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
   };
 
+  const checkLastAction = () => {
+    // Permitir acción si no hay acción previa o si pasó más de 30 segundos
+    if (lastActionTimestamp) {
+      const now = Date.now();
+      const diff = now - lastActionTimestamp;
+      if (diff < 30000) {
+        toast.error("Espera unos minutos antes de realizar otra acción.");
+        return true;
+      }
+    }
+    setLastActionTimestamp(Date.now());
+    return false;
+  };
+
   const value = {
+    checkLastAction,
     handleLogin,
     isAuthenticated,
     isLoading,
