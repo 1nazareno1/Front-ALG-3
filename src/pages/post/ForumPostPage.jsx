@@ -1,27 +1,35 @@
 import { ArrowBack } from "@mui/icons-material";
 import { Box, CircularProgress } from "@mui/material";
-import { PostTopContent } from "../../components/posts/PostTopContent";
-import { UserCardComponent } from "../../components/posts/UserCardComponent";
-import { PostBodyContent } from "../../components/posts/PostBodyContent";
-import { ReportModal } from "../../components/modals/ReportModal";
-import { useForumPostPage } from "./useForumPostPage";
 import { DeletePostModal } from "../../components/modals/DeletePostModal";
+import { PostBodyContent } from "../../components/posts/PostBodyContent";
+import { PostTopContent } from "../../components/posts/PostTopContent";
+import { ReportPostModal } from "../../components/modals/ReportPostModal";
+import { useForumPostPage } from "./useForumPostPage";
+import { UserCardComponent } from "../../components/posts/UserCardComponent";
+import { ReportMessageModal } from "../../components/modals/ReportMessageModal";
 
 export const ForumPostPage = () => {
   const {
     deleteModalOpen,
     handleDelete,
     handleDeleteModal,
+    handleMessageReport,
+    handleOpenMessageReportModal,
     handleReport,
     handleReportModal,
     handleUserLike,
     loading,
+    messagesStatus,
     navigate,
     postData,
     postsStatus,
+    reportMessageData,
+    reportMessageModalOpen,
     reportModalOpen,
     searchedUser,
     setDeleteModalOpen,
+    setPostData,
+    setReportMessageModalOpen,
     setReportModalOpen,
     setUserModalOpen,
     upLg,
@@ -35,6 +43,7 @@ export const ForumPostPage = () => {
         display: "flex",
         gap: theme.spacing(3),
         margin: theme.spacing(3),
+        paddingTop: theme.spacing(3),
         [theme.breakpoints.down("lg")]: {
           gap: theme.spacing(6),
           margin: theme.spacing(2),
@@ -81,8 +90,12 @@ export const ForumPostPage = () => {
             />
             <PostBodyContent
               handleUserLike={handleUserLike}
+              messagesStatus={messagesStatus}
+              navigate={navigate}
               postData={postData}
+              setPostData={setPostData}
               userLike={userLike}
+              handleOpenMessageReportModal={handleOpenMessageReportModal}
             />
           </Box>
           {upLg && searchedUser ? (
@@ -110,13 +123,19 @@ export const ForumPostPage = () => {
             setOpen={setDeleteModalOpen}
             postsStatus={postsStatus}
           />
-          <ReportModal
+          <ReportPostModal
             handleReport={handleReport}
             open={reportModalOpen}
             postId={postData.id}
             postTitle={postData.titulo}
             setOpen={setReportModalOpen}
             postsStatus={postsStatus}
+          />
+          <ReportMessageModal
+            open={reportMessageModalOpen}
+            setOpen={setReportMessageModalOpen}
+            handleMessageReport={handleMessageReport}
+            reportMessageData={reportMessageData}
           />
         </>
       ) : null}

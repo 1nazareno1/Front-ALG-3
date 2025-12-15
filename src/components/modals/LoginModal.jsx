@@ -88,6 +88,7 @@ export const LoginModal = ({ open, onClose }) => {
           fullWidth
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          type="email"
           sx={{ mb: 2 }}
           InputProps={{
             sx: { height: 35, fontsize: 15 },

@@ -4,12 +4,15 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "sonner";
 
 const initialState = {
+  categoriesStatus: "idle",
+  messages: [],
+  messagesStatus: "idle",
   posts: [],
   postsCategories: [],
+  postsStatus: "idle",
+  reportStatus: "idle",
   results: [],
   searchedPost: {},
-  categoriesStatus: "idle",
-  postsStatus: "idle",
   searchStatus: "idle",
 };
 
@@ -99,6 +102,64 @@ export const getPostByTitle = createAsyncThunk(
   }
 );
 
+export const getMessagesByPostId = createAsyncThunk(
+  "posts/getMessagesByPostId",
+  async (postId) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/api/mensajes/findAllInPost/${postId}`
+      );
+      return res.data;
+    } catch {
+      toast.error(`No se pudo obtener los mensajes del post de id #${postId}`);
+    }
+  }
+);
+
+export const postMessageInPost = createAsyncThunk(
+  "posts/postMessageInPost",
+  async ({ body, postId, userId }) => {
+    try {
+      const res = await axios.post(
+        `http://localhost:5000/api/mensajes/create`,
+        {
+          contenido: body,
+          id_autor: userId,
+          id_post: postId,
+          id_mensaje: null,
+        },
+        { withCredentials: true }
+      );
+      return res.data;
+    } catch (err) {
+      toast.error(`No se pudo crear el mensaje`);
+      console.error(err);
+    }
+  }
+);
+
+export const report = createAsyncThunk(
+  "posts/report",
+  async ({ description, reporterId, reportTypeId, type }) => {
+    try {
+      const res = await axios.post(
+        `http://localhost:5000/api/reporte/create`,
+        {
+          descripcion: description,
+          id_reportador: reporterId,
+          id_type: reportTypeId,
+          type: type,
+        },
+        { withCredentials: true }
+      );
+      return res.data;
+    } catch (err) {
+      toast.error(`No se pudo enviar el reporte`);
+      console.error(err);
+    }
+  }
+);
+
 const postsSlice = createSlice({
   name: "posts",
   initialState: initialState,
@@ -158,6 +219,7 @@ const postsSlice = createSlice({
         state.searchStatus = "succesful";
         state.results = payload == undefined ? [] : payload;
       }),
+      // createPost
       builder.addCase(createPost.pending, (state) => {
         state.postsStatus = "loading";
       }),
@@ -167,6 +229,7 @@ const postsSlice = createSlice({
       builder.addCase(createPost.fulfilled, (state) => {
         state.postsStatus = "succesful";
       }),
+      // deletePost
       builder.addCase(deletePost.pending, (state) => {
         state.postsStatus = "loading";
       }),
@@ -175,6 +238,37 @@ const postsSlice = createSlice({
       }),
       builder.addCase(deletePost.fulfilled, (state) => {
         state.postsStatus = "succesful";
+      }),
+      // getMessagesByPostId
+      builder.addCase(getMessagesByPostId.pending, (state) => {
+        state.messagesStatus = "loading";
+      }),
+      builder.addCase(getMessagesByPostId.rejected, (state) => {
+        state.messagesStatus = "rejected";
+      }),
+      builder.addCase(getMessagesByPostId.fulfilled, (state, { payload }) => {
+        state.messagesStatus = "succesful";
+        state.messages = payload == undefined ? [] : payload;
+      }),
+      // postMessageInPost
+      builder.addCase(postMessageInPost.pending, (state) => {
+        state.messagesStatus = "loading";
+      }),
+      builder.addCase(postMessageInPost.rejected, (state) => {
+        state.messagesStatus = "rejected";
+      }),
+      builder.addCase(postMessageInPost.fulfilled, (state) => {
+        state.messagesStatus = "succesful";
+      }),
+      // report
+      builder.addCase(report.pending, (state) => {
+        state.reportStatus = "loading";
+      }),
+      builder.addCase(report.rejected, (state) => {
+        state.reportStatus = "rejected";
+      }),
+      builder.addCase(report.fulfilled, (state) => {
+        state.reportStatus = "succesful";
       });
   },
 });

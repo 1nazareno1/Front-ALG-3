@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 
-export const ReportModal = ({
+export const ReportPostModal = ({
   open,
   setOpen,
   handleReport,

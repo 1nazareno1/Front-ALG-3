@@ -22,6 +22,10 @@ export const MainNavbar = () => {
     <>
       <Box
         sx={(theme) => ({
+          position: "fixed",
+          width: "100%",
+          top: 0,
+          zIndex: 1300,
           alignItems: "center",
           background: theme.palette.primary.light,
           borderBottom: `1px solid ${theme.palette.secondary.light}`,
@@ -42,7 +46,7 @@ export const MainNavbar = () => {
           >
             <SearchComponent />
             {isLogged ? (
-              <LoggedDesktop username={username} userID={userID}/>
+              <LoggedDesktop username={username} userID={userID} />
             ) : (
               <NotLoggedDesktop
                 modalOpen={modalOpen}

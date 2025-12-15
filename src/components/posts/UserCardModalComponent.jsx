@@ -27,7 +27,7 @@ export const UserCardModalComponent = ({
         })}
         onClick={() => setOpen(true)}
       >
-        {username}
+        Creado por {username}
       </Typography>
       <Dialog open={open} setOpen={setOpen} onClose={() => setOpen(false)}>
         <Box

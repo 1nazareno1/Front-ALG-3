@@ -4,7 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { getUserById, setSearchedUser } from "../../redux/slices/usersSlice";
 import { toast } from "sonner";
-import { deletePost, getPostById } from "../../redux/slices/postsSlice";
+import {
+  deletePost,
+  getMessagesByPostId,
+  getPostById,
+  report,
+} from "../../redux/slices/postsSlice";
 
 export const useForumPostPage = () => {
   const location = useLocation();
@@ -15,10 +20,12 @@ export const useForumPostPage = () => {
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [userLike, setUserLike] = useState(false);
   const [reportModalOpen, setReportModalOpen] = useState(false);
+  const [reportMessageModalOpen, setReportMessageModalOpen] = useState(false);
+  const [reportMessageData, setReportMessageData] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const { userID } = useSelector((state) => state.auth);
   const { users, searchedUser } = useSelector((state) => state.usuarios);
-  const { postsStatus } = useSelector((state) => state.posts);
+  const { postsStatus, messagesStatus } = useSelector((state) => state.posts);
   const { upLg } = useWindowSize();
   const dispatch = useDispatch();
 
@@ -36,7 +43,13 @@ export const useForumPostPage = () => {
           }
 
           const user = await dispatch(getUserById(fetchedPost.id_autor));
-          setPostData({ ...fetchedPost, user: user.payload, likes: userLikes });
+          const messages = await dispatch(getMessagesByPostId(postId));
+          setPostData({
+            ...fetchedPost,
+            user: user.payload,
+            likes: userLikes,
+            comments: messages.payload,
+          });
           setLoading(false);
         } else {
           if (state.id_autor) {
@@ -48,10 +61,12 @@ export const useForumPostPage = () => {
               user = fetchedUser.payload;
               dispatch(setSearchedUser(user));
             }
+            const messages = await dispatch(getMessagesByPostId(state.id));
             setPostData({
               ...state,
               user: user,
               likes: userLikes,
+              comments: messages.payload,
             });
             setLoading(false);
           }
@@ -123,20 +138,55 @@ export const useForumPostPage = () => {
     }
   };
 
+  const handleOpenMessageReportModal = ({ messageData }) => {
+    if (!userID) {
+      toast.error("Debes estar logueado para reportar un mensaje");
+      return;
+    } else {
+      setReportMessageData(messageData);
+      setReportMessageModalOpen(true);
+    }
+  };
+
+  const handleMessageReport = async ({ id, reportMotive }) => {
+    try {
+      await dispatch(
+        report({
+          description: reportMotive,
+          reporterId: userID,
+          reportTypeId: id,
+          type: "mensaje",
+        })
+      );
+    } catch {
+      console.error("Ocurrió un error al reportar el mensaje");
+    } finally {
+      setReportMessageModalOpen(false);
+      setReportMessageData(null);
+    }
+  };
+
   return {
     deleteModalOpen,
     handleDelete,
     handleDeleteModal,
+    handleMessageReport,
+    handleOpenMessageReportModal,
     handleReport,
     handleReportModal,
     handleUserLike,
     loading,
+    messagesStatus,
     navigate,
     postData,
     postsStatus,
+    reportMessageData,
+    reportMessageModalOpen,
     reportModalOpen,
     searchedUser,
     setDeleteModalOpen,
+    setPostData,
+    setReportMessageModalOpen,
     setReportModalOpen,
     setUserModalOpen,
     upLg,
