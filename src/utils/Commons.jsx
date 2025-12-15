@@ -106,6 +106,16 @@ export function processRegisterDate(registerDate) {
   return `${day}-${month}-${year}`;
 }
 
+export function validateEmail(value) {
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailPattern.test(value);
+}
+
+export function validatePassword(value) {
+  const passwordPattern = /^.{8,}$/;
+  return passwordPattern.test(value);
+}
+
 export class DebounceClass {
   constructor(debounce = 1000) {
     this.delay = debounce;

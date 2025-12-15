@@ -6,6 +6,7 @@ import { useAuth } from "../../hooks/contexts/AuthenticationContext";
 
 export const PostComment = ({
   comment,
+  handleOpenMessageDeleteModal,
   handleOpenMessageReportModal,
   navigate,
 }) => {
@@ -23,8 +24,7 @@ export const PostComment = ({
         sx={{
           display: "flex",
           flexDirection: "column",
-          gap: 0.5,
-          mb: 2,
+          mb: .5,
         }}
       >
         <Box display={"flex"} gap={1}>
@@ -72,7 +72,9 @@ export const PostComment = ({
                     transform: "translateY(-2px)",
                   },
                 }}
-                onClick={() => handleOpenMessageReportModal({ messageData: comment })}
+                onClick={() =>
+                  handleOpenMessageReportModal({ messageData: comment })
+                }
               >
                 <Flag sx={{ width: "14px", height: "14px" }} />
               </Typography>
@@ -92,6 +94,9 @@ export const PostComment = ({
                       transform: "translateY(-2px)",
                     },
                   }}
+                  onClick={() =>
+                    handleOpenMessageDeleteModal({ messageData: comment })
+                  }
                 >
                   <Delete sx={{ width: "14px", height: "14px" }} />
                 </Typography>
@@ -100,7 +105,7 @@ export const PostComment = ({
           </Box>
         </Box>
         <Box display={"flex"} gap={1}>
-          <Typography>{contenido}</Typography>
+          <Typography fontSize={15}>{contenido}</Typography>
         </Box>
       </Box>
     </Box>

@@ -6,6 +6,7 @@ import {
   getMessagesByPostId,
   postMessageInPost,
 } from "../../redux/slices/postsSlice";
+import { toast } from "sonner";
 
 export const CommentBox = ({
   comments = [1],
@@ -13,7 +14,7 @@ export const CommentBox = ({
   postData,
   setPostData,
 }) => {
-  const { isAuthenticated, userInfo } = useAuth();
+  const { checkLastAction, isAuthenticated, userInfo } = useAuth();
   const [commentForm, setCommentForm] = useState({
     body: "",
     postId: postData ? postData.id : null,
@@ -31,6 +32,9 @@ export const CommentBox = ({
   }, [commentForm.body, setValidForm, isAuthenticated]);
 
   const handleCommentChange = (e) => {
+    if (e.target.value.length > 280) {
+      return;
+    }
     setCommentForm({
       ...commentForm,
       body: e.target.value,
@@ -40,6 +44,9 @@ export const CommentBox = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validForm || messageStatus == "loading") return;
+    if (checkLastAction()) {
+      return;
+    }
     try {
       await dispatch(
         postMessageInPost({
@@ -66,6 +73,7 @@ export const CommentBox = ({
     <Box>
       <TextField
         disabled={!isAuthenticated}
+        helperText={!isAuthenticated ? null : `${commentForm.body.length}/280`}
         placeholder={
           !isAuthenticated
             ? "Debes iniciar sesión para comentar"
@@ -84,6 +92,7 @@ export const CommentBox = ({
           }
         }}
         InputProps={{
+          maxLength: 280,
           style: {
             cursor: isAuthenticated ? "text" : "not-allowed",
             padding: "8px 16px",

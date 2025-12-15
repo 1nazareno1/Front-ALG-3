@@ -5,16 +5,19 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { getUserById, setSearchedUser } from "../../redux/slices/usersSlice";
 import { toast } from "sonner";
 import {
+  deleteMessageInPost,
   deletePost,
   getMessagesByPostId,
   getPostById,
   report,
 } from "../../redux/slices/postsSlice";
+import { useAuth } from "../../hooks/contexts/AuthenticationContext";
 
 export const useForumPostPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;
+
   const [loading, setLoading] = useState(true);
   const [postData, setPostData] = useState({});
   const [userModalOpen, setUserModalOpen] = useState(false);
@@ -22,10 +25,15 @@ export const useForumPostPage = () => {
   const [reportModalOpen, setReportModalOpen] = useState(false);
   const [reportMessageModalOpen, setReportMessageModalOpen] = useState(false);
   const [reportMessageData, setReportMessageData] = useState(null);
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deleteMessageModalOpen, setDeleteMessageModalOpen] = useState(false);
+  const [deleteMessageData, setDeleteMessageData] = useState(null);
+
   const { userID } = useSelector((state) => state.auth);
   const { users, searchedUser } = useSelector((state) => state.usuarios);
-  const { postsStatus, messagesStatus } = useSelector((state) => state.posts);
+  const { postsStatus, messages, messagesStatus } = useSelector(
+    (state) => state.posts
+  );
+  const { checkLastAction } = useAuth();
   const { upLg } = useWindowSize();
   const dispatch = useDispatch();
 
@@ -88,6 +96,14 @@ export const useForumPostPage = () => {
     }
   }, [userID, postData]);
 
+  useEffect(() => {
+    // Despues de eliminar un mensaje, recargar los mensajes del post
+    setPostData((prevPostData) => ({
+      ...prevPostData,
+      comments: messages,
+    }));
+  }, [messages]);
+
   const handleUserLike = () => {
     if (!userID) {
       toast.error("Debes estar logueado para dar me gusta");
@@ -125,17 +141,34 @@ export const useForumPostPage = () => {
     if (!userID) {
       toast.error("Debes estar logueado para eliminar un post");
       return;
-    } else setDeleteModalOpen(true);
+    } else setDeleteMessageModalOpen(true);
   };
 
   const handleDelete = async ({ postId, afterAction = () => {} }) => {
     try {
       await dispatch(deletePost(postId));
-      setDeleteModalOpen(false);
+      setDeleteMessageModalOpen(false);
       afterAction();
     } catch {
       console.error("Ocurrió un error al eliminar el post");
     }
+  };
+
+  const handleDeleteMessage = async ({ messageId, afterAction = () => {} }) => {
+    if (checkLastAction()) return;
+    try {
+      await dispatch(deleteMessageInPost({ messageId }));
+      setDeleteMessageModalOpen(false);
+      afterAction();
+      await dispatch(getMessagesByPostId(postData.id));
+    } catch {
+      console.error("Ocurrió un error al eliminar el mensaje");
+    }
+  };
+
+  const handleOpenMessageDeleteModal = ({ messageData }) => {
+    setDeleteMessageModalOpen(true);
+    setDeleteMessageData(messageData);
   };
 
   const handleOpenMessageReportModal = ({ messageData }) => {
@@ -167,10 +200,13 @@ export const useForumPostPage = () => {
   };
 
   return {
-    deleteModalOpen,
+    deleteMessageData,
+    deleteMessageModalOpen,
     handleDelete,
+    handleDeleteMessage,
     handleDeleteModal,
     handleMessageReport,
+    handleOpenMessageDeleteModal,
     handleOpenMessageReportModal,
     handleReport,
     handleReportModal,
@@ -184,7 +220,7 @@ export const useForumPostPage = () => {
     reportMessageModalOpen,
     reportModalOpen,
     searchedUser,
-    setDeleteModalOpen,
+    setDeleteMessageModalOpen,
     setPostData,
     setReportMessageModalOpen,
     setReportModalOpen,

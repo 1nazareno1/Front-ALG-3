@@ -6,31 +6,25 @@ import {
   CardContent,
   CircularProgress,
   Modal,
-  TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-export const ReportMessageModal = ({
+export const DeleteMessageModal = ({
   open,
   setOpen,
-  handleMessageReport,
-  reportMessageData,
+  handleDeleteMessage,
+  deleteMessageData,
 }) => {
-  const [reportMotive, setReportMotive] = useState("");
-  const { reportStatus } = useSelector((state) => state.posts);
+  const { messagesStatus } = useSelector((state) => state.posts);
+  const { userID } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    if (!open) setReportMotive("");
-  }, [open]);
-
-  if (!reportMessageData) {
+  if (!deleteMessageData) {
     return null;
   }
 
   const handleClose = () => setOpen(false);
-  const { autor, contenido, id } = reportMessageData;
+  const { autor, contenido, id } = deleteMessageData;
 
   return (
     <>
@@ -53,10 +47,17 @@ export const ReportMessageModal = ({
           }}
         >
           <Typography sx={{ fontWeight: 400 }}>
-            Estas a punto de reportar el siguiente mensaje de{" "}
-            <Typography component={"span"} sx={{ fontWeight: 600 }}>
-              {autor.nombre_apellido}
-            </Typography>
+            Estas a punto de borrar el siguiente mensaje{" "}
+            {userID == autor.id ? (
+              ""
+            ) : (
+              <>
+                de{" "}
+                <Typography component={"span"} sx={{ fontWeight: 600 }}>
+                  {autor.nombre_apellido}
+                </Typography>
+              </>
+            )}
           </Typography>
           <Box>
             <Card variant="outlined">
@@ -67,22 +68,14 @@ export const ReportMessageModal = ({
               </CardActionArea>
             </Card>
           </Box>
-          <Typography sx={{ fontWeight: 400 }}>
-            Por favor, indícanos el motivo del reporte:
+          <Typography sx={{ fontWeight: 400, textAlign: "end" }}>
+            Esta acción es irreversible. ¿Deseas continuar?
           </Typography>
-          <TextField
-            multiline
-            minRows={1}
-            placeholder="Minimo 10 caracteres"
-            value={reportMotive}
-            onChange={(e) => setReportMotive(e.target.value)}
-          />
           <Button
-            disabled={reportMotive.trim().length < 10}
             variant="contained"
             alignItems="center"
             color="error"
-            onClick={() => handleMessageReport({ id, reportMotive })}
+            onClick={() => handleDeleteMessage({ messageId: id })}
             sx={{
               alignSelf: "flex-end",
               display: "flex",
@@ -96,10 +89,10 @@ export const ReportMessageModal = ({
               "&:hover": { backgroundColor: "error.dark" },
             }}
           >
-            {reportStatus === "loading" ? (
+            {messagesStatus === "loading" ? (
               <CircularProgress size={20} sx={{ mt: 0.5 }} />
             ) : (
-              "Reportar"
+              "Borrar"
             )}
           </Button>
         </Box>

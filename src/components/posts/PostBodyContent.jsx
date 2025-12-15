@@ -2,21 +2,28 @@ import { Message } from "@mui/icons-material";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { PostComment } from "./PostComment";
 import { CommentBox } from "./CommentBox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const PostBodyContent = ({
   // handleUserLike,
   messagesStatus,
   navigate,
   postData,
+  handleOpenMessageDeleteModal,
   handleOpenMessageReportModal,
   // userLike,
   setPostData,
 }) => {
   const [pagination, setPagination] = useState(1);
+
+  useEffect(() => {
+    setPagination(1);
+  }, [postData]);
+
   if (!postData) {
     return null;
   }
+
   const { comments, contenido, createdAt } = postData;
 
   return (
@@ -73,7 +80,6 @@ export const PostBodyContent = ({
             flexDirection={"column"}
             alignItems={"center"}
             marginTop={8}
-            gap={3}
           >
             <CircularProgress size={20} />
             <Typography fontSize={12}>Cargando posts...</Typography>
@@ -83,6 +89,7 @@ export const PostBodyContent = ({
             {comments.slice(0, pagination * 5).map((comment) => (
               <PostComment
                 comment={comment}
+                handleOpenMessageDeleteModal={handleOpenMessageDeleteModal}
                 handleOpenMessageReportModal={handleOpenMessageReportModal}
                 key={comment.id}
                 navigate={navigate}
@@ -92,7 +99,6 @@ export const PostBodyContent = ({
             {comments.length > pagination * 5 ? (
               <Box mx={"auto"} width={"fit-content"}>
                 <Button
-                  mt={2}
                   display={"flex"}
                   justifyContent={"center"}
                   variant="outlined"

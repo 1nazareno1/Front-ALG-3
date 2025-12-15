@@ -138,6 +138,22 @@ export const postMessageInPost = createAsyncThunk(
   }
 );
 
+export const deleteMessageInPost = createAsyncThunk(
+  "posts/deleteMessageInPost",
+  async ({ messageId }) => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:5000/api/mensajes/delete/${messageId}`,
+        { withCredentials: true }
+      );
+      return res.data;
+    } catch (err) {
+      toast.error(`No se pudo eliminar el mensaje de id #${messageId}`);
+      console.error(err);
+    }
+  }
+);
+
 export const report = createAsyncThunk(
   "posts/report",
   async ({ description, reporterId, reportTypeId, type }) => {
@@ -258,6 +274,16 @@ const postsSlice = createSlice({
         state.messagesStatus = "rejected";
       }),
       builder.addCase(postMessageInPost.fulfilled, (state) => {
+        state.messagesStatus = "succesful";
+      }),
+      // deleteMessageInPost
+      builder.addCase(deleteMessageInPost.pending, (state) => {
+        state.messagesStatus = "loading";
+      }),
+      builder.addCase(deleteMessageInPost.rejected, (state) => {
+        state.messagesStatus = "rejected";
+      }),
+      builder.addCase(deleteMessageInPost.fulfilled, (state) => {
         state.messagesStatus = "succesful";
       }),
       // report
