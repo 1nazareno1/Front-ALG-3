@@ -24,7 +24,7 @@ export const PostComment = ({
         sx={{
           display: "flex",
           flexDirection: "column",
-          mb: .5,
+          mb: 0.5,
         }}
       >
         <Box display={"flex"} gap={1}>
@@ -43,7 +43,11 @@ export const PostComment = ({
               onClick={() => navigate(`/perfil/${autor.id}`)}
             >
               {autor.nombre_apellido}
-            </Typography>{" "}
+            </Typography>
+            {autor.nombre_apellido == "ADMIN" ||
+            autor.nombre_apellido == "MODERADOR" ? (
+              <RoleTooltip title={autor.nombre_apellido} />
+            ) : null}{" "}
             •{" "}
             <Tooltip
               placement={"top"}

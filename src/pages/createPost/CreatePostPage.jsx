@@ -151,6 +151,7 @@ export const CreatePostPage = () => {
             onChange={handleChange}
             placeholder="Título del post"
             value={postData.title}
+            inputProps={{ maxLength: 48 }}
           />
           <Typography fontWeight={500} fontSize={16} my={1}>
             Categoria
@@ -184,6 +185,8 @@ export const CreatePostPage = () => {
             placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             rows={6}
             value={postData.body}
+            inputProps={{ maxLength: 2500 }}
+            helperText={`${postData.body.length}/2500`}
           />
           <Button
             color="primary"
