@@ -3,7 +3,7 @@ import { Delete, Flag } from "@mui/icons-material";
 import { UserCardModalComponent } from "./UserCardModalComponent";
 import { getTimeAgoFromString } from "../../utils/Commons";
 import { useAuth } from "../../hooks/contexts/AuthenticationContext";
-import { ShareButton } from "../commons/ShareURL";
+import { ShareButton } from "../commons/ShareButton";
 
 export const PostTopContent = ({
   handleDeleteModal,

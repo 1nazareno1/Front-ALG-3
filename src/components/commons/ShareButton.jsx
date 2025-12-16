@@ -3,7 +3,7 @@ import { Share } from "@mui/icons-material";
 import { toast } from "sonner";
 import React from "react";
 
-export const ShareButton = ({ title, text, url }) => {
+export const ShareButton = ({ title, text, url, size = "24px" }) => {
   const handleShare = async () => {
     if (navigator.share) {
       try {
@@ -32,6 +32,7 @@ export const ShareButton = ({ title, text, url }) => {
       sx={(theme) => ({
         cursor: "pointer",
         transition: "ease-in .1s",
+        height: size,
         "&:hover": {
           color: theme.palette.info.main,
           transform: "translateY(-2.5px)",
@@ -39,7 +40,7 @@ export const ShareButton = ({ title, text, url }) => {
       })}
     >
       <Tooltip placement="top" title="Compartir enlace">
-        <Share />
+        <Share sx={{ fontSize: size }} />
       </Tooltip>
     </Box>
   );
