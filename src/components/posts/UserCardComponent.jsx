@@ -1,12 +1,6 @@
-import { AdminPanelSettings } from "@mui/icons-material";
-import {
-  Box,
-  capitalize,
-  CircularProgress,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Box, capitalize, CircularProgress, Typography } from "@mui/material";
 import { processRegisterDate } from "../../utils/Commons";
+import { RoleTooltip } from "../commons/RoleTooltip";
 
 export const UserCardComponent = ({
   career,
@@ -51,18 +45,7 @@ export const UserCardComponent = ({
           </Typography>
           <Box display={"flex"} my={1} gap={0.5} alignItems={"center"}>
             {title == "ADMIN" || title == "MODERADOR" ? (
-              <Tooltip
-                placement={"top"}
-                title={`Este usuario es ${capitalize(title.toLowerCase())}`}
-              >
-                <AdminPanelSettings
-                  sx={(theme) => ({
-                    color: theme.palette.common.white,
-                    height: "18px",
-                    width: "18px",
-                  })}
-                />
-              </Tooltip>
+              <RoleTooltip title={title} />
             ) : null}
             <Typography
               fontSize={12}

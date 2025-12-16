@@ -23,7 +23,6 @@ export const LoginModal = ({ open, onClose }) => {
     if (status === "succesful") onClose();
   }, [status, onClose]);
 
-  // Validaciones y submit: email y contraseña
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const debounce = useMemo(() => new DebounceClass(500), []);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Avatar, Box, Tooltip, Typography } from "@mui/material";
 import { getTimeAgoFromString } from "../../utils/Commons";
 import { Delete, Flag } from "@mui/icons-material";
@@ -24,7 +24,7 @@ export const PostComment = ({
         sx={{
           display: "flex",
           flexDirection: "column",
-          mb: .5,
+          mb: 0.5,
         }}
       >
         <Box display={"flex"} gap={1}>
@@ -43,7 +43,11 @@ export const PostComment = ({
               onClick={() => navigate(`/perfil/${autor.id}`)}
             >
               {autor.nombre_apellido}
-            </Typography>{" "}
+            </Typography>
+            {autor.nombre_apellido == "ADMIN" ||
+            autor.nombre_apellido == "MODERADOR" ? (
+              <RoleTooltip title={autor.nombre_apellido} />
+            ) : null}{" "}
             •{" "}
             <Tooltip
               placement={"top"}
@@ -105,7 +109,14 @@ export const PostComment = ({
           </Box>
         </Box>
         <Box display={"flex"} gap={1}>
-          <Typography fontSize={15}>{contenido}</Typography>
+          <Typography fontSize={15}>
+            {contenido.split("<br/>").map((line, index) => (
+              <Fragment key={index}>
+                {line}
+                <br />
+              </Fragment>
+            ))}
+          </Typography>
         </Box>
       </Box>
     </Box>

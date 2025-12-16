@@ -5,7 +5,7 @@ import { ForumPage } from "./pages/forum/ForumPage";
 import { ForumPostPage } from "./pages/post/ForumPostPage";
 import { HomePage } from "./pages/home/HomePage";
 import { Interface } from "./components/interfaces/Interface";
-import { LoginPage } from "./pages/inicio/inicioPage";
+import { LoginPage } from "./pages/login/LoginPage";
 import { ProfilePage } from "./pages/profile/ProfilePage";
 import { Providers } from "./redux/Providers";
 import { RegisterPage } from "./pages/register/RegisterPage";

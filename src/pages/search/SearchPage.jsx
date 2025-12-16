@@ -32,7 +32,7 @@ export const SearchPage = () => {
   }, []);
 
   return (
-    <Box mx={upLg ? 10 : 4} my={upLg ? 5 : 4}>
+    <Box mx={upLg ? 10 : 4} my={upLg ? 5 : 4} pt={upLg ? 3 : 0}>
       <Typography variant="h5" gutterBottom mb={5}>
         Busqueda de Posts
       </Typography>
@@ -98,8 +98,14 @@ export const SearchPage = () => {
       {searchStatus === "succesful" && results.length > 0 ? (
         <Box mt={5}>
           <Box>
-            <Typography fontWeight={400} fontSize={14} color="textSecondary" mb={1}>
-              Se ha{results.length > 1 ? "n" : ""} encontrado {results.length} resultado{results.length > 1 ? "s" : ""}:
+            <Typography
+              fontWeight={400}
+              fontSize={14}
+              color="textSecondary"
+              mb={1}
+            >
+              Se ha{results.length > 1 ? "n" : ""} encontrado {results.length}{" "}
+              resultado{results.length > 1 ? "s" : ""}:
             </Typography>
           </Box>
           {results.map((post) => {

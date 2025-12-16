@@ -25,6 +25,7 @@ export const useForumPostPage = () => {
   const [reportModalOpen, setReportModalOpen] = useState(false);
   const [reportMessageModalOpen, setReportMessageModalOpen] = useState(false);
   const [reportMessageData, setReportMessageData] = useState(null);
+  const [reportPostData, setReportPostData] = useState(null);
   const [deleteMessageModalOpen, setDeleteMessageModalOpen] = useState(false);
   const [deleteMessageData, setDeleteMessageData] = useState(null);
 
@@ -126,15 +127,32 @@ export const useForumPostPage = () => {
     setUserLike(!userLike);
   };
 
-  const handleReportModal = () => {
+  const handleOpenReportPostModal = () => {
     if (!userID) {
       toast.error("Debes estar logueado para reportar un post");
       return;
-    } else setReportModalOpen(true);
+    } else {
+      setReportPostData(postData);
+      setReportModalOpen(true);
+    }
   };
 
-  const handleReport = async () => {
-    setReportModalOpen(false);
+  const handlePostReport = async ({ postId, reportMotive }) => {
+    try {
+      await dispatch(
+        report({
+          description: reportMotive,
+          reporterId: userID,
+          reportTypeId: postId,
+          type: "post",
+        })
+      );
+    } catch {
+      console.error("Ocurrió un error al reportar el post");
+    } finally {
+      setReportModalOpen(false);
+      setReportPostData(null);
+    }
   };
 
   const handleDeleteModal = () => {
@@ -208,8 +226,8 @@ export const useForumPostPage = () => {
     handleMessageReport,
     handleOpenMessageDeleteModal,
     handleOpenMessageReportModal,
-    handleReport,
-    handleReportModal,
+    handlePostReport,
+    handleOpenReportPostModal,
     handleUserLike,
     loading,
     messagesStatus,
@@ -219,6 +237,7 @@ export const useForumPostPage = () => {
     reportMessageData,
     reportMessageModalOpen,
     reportModalOpen,
+    reportPostData,
     searchedUser,
     setDeleteMessageModalOpen,
     setPostData,

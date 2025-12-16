@@ -8,6 +8,7 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { CreateButton } from "../commons/CreateButton";
+import { RoleTooltip } from "../commons/RoleTooltip";
 
 export const ForumPosts = ({ posts, postsStatus, users }) => {
   const { downMd } = useWindowSize();
@@ -213,37 +214,47 @@ export const ForumPosts = ({ posts, postsStatus, users }) => {
                     </Tooltip>
                   ) : null}
                 </Box>
-
-                <Typography
-                  fontSize={12}
-                  fontWeight={600}
-                  sx={{
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                >
-                  Por{" "}
-                  <Box
-                    component={"span"}
-                    onClick={() => navigate(`/perfil/${id_autor}`)}
+                <Box display={"flex"}>
+                  <Typography component={"span"} fontSize={12} fontWeight={500}>
+                    Por&nbsp;
+                  </Typography>
+                  <Typography
+                    display={"flex"}
+                    fontSize={12}
+                    fontWeight={600}
+                    gap={0.25}
+                    sx={(theme) => ({
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      cursor: "pointer",
+                      "&:hover": {
+                        color: theme.palette.primary.main,
+                      },
+                    })}
+                    alignItems={"center"}
                   >
-                    <Typography
+                    <Box
                       component={"span"}
-                      fontSize={12}
-                      fontWeight={600}
-                      sx={(theme) => ({
-                        cursor: "pointer",
-                        "&:hover": {
-                          color: theme.palette.primary.main,
-                          textDecoration: "underline",
-                        },
-                      })}
+                      onClick={() => navigate(`/perfil/${id_autor}`)}
                     >
-                      {user ? user.nombre_apellido : `#${id_autor}`}
-                    </Typography>
-                  </Box>
-                </Typography>
+                      <Typography
+                        component={"span"}
+                        fontSize={12}
+                        fontWeight={600}
+                      >
+                        {user ? user.nombre_apellido : `#${id_autor}`}
+                      </Typography>
+                    </Box>
+                    {user.rol == "ADMIN" || user.rol == "MODERADOR" ? (
+                      <RoleTooltip
+                        color="inherit"
+                        title={user.rol}
+                        size="14px"
+                      />
+                    ) : null}
+                  </Typography>
+                </Box>
               </Box>
               <Box
                 width={downMd ? "30%" : "20%"}

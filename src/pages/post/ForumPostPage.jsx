@@ -19,8 +19,8 @@ export const ForumPostPage = () => {
     handleMessageReport,
     handleOpenMessageDeleteModal,
     handleOpenMessageReportModal,
-    handleReport,
-    handleReportModal,
+    handlePostReport,
+    handleOpenReportPostModal,
     handleUserLike,
     loading,
     messagesStatus,
@@ -30,6 +30,7 @@ export const ForumPostPage = () => {
     reportMessageData,
     reportMessageModalOpen,
     reportModalOpen,
+    reportPostData,
     searchedUser,
     setDeleteMessageModalOpen,
     setPostData,
@@ -79,12 +80,12 @@ export const ForumPostPage = () => {
               display: "flex",
               flexDirection: "column",
               gap: theme.spacing(3),
-              minWidth: "55%",
+              width: "100%",
             })}
           >
             <PostTopContent
               handleDeleteModal={handleDeleteModal}
-              handleReportModal={handleReportModal}
+              handleOpenReportPostModal={handleOpenReportPostModal}
               navigate={navigate}
               postData={postData}
               setUserModalOpen={setUserModalOpen}
@@ -129,24 +130,22 @@ export const ForumPostPage = () => {
             postsStatus={postsStatus}
           />
           <ReportPostModal
-            handleReport={handleReport}
+            handlePostReport={handlePostReport}
             open={reportModalOpen}
-            postId={postData.id}
-            postTitle={postData.titulo}
             setOpen={setReportModalOpen}
-            postsStatus={postsStatus}
-          />
-          <ReportMessageModal
-            open={reportMessageModalOpen}
-            setOpen={setReportMessageModalOpen}
-            handleMessageReport={handleMessageReport}
-            reportMessageData={reportMessageData}
+            reportPostData={reportPostData}
           />
           <DeleteMessageModal
             open={deleteMessageModalOpen}
             setOpen={setDeleteMessageModalOpen}
             handleDeleteMessage={handleDeleteMessage}
             deleteMessageData={deleteMessageData}
+          />
+          <ReportMessageModal
+            open={reportMessageModalOpen}
+            setOpen={setReportMessageModalOpen}
+            handleMessageReport={handleMessageReport}
+            reportMessageData={reportMessageData}
           />
         </>
       ) : null}

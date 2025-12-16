@@ -12,6 +12,8 @@ import { getUserById } from "../../redux/slices/usersSlice";
 import { getPosts } from "../../redux/slices/postsSlice";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import EditIcon from "@mui/icons-material/Edit";
+import { ShareButton } from "../../components/commons/ShareButton";
+import { EmailButton } from "../../components/commons/EmailButton";
 
 export const ProfilePage = () => {
   const { searchedUser, status } = useSelector((state) => state.usuarios);
@@ -97,6 +99,12 @@ export const ProfilePage = () => {
               >
                 {getRegistrationDate(searchedUser?.createdAt)}
               </Typography>
+            </Box>
+            <Box display={"flex"} gap={1} alignItems={"center"}>
+              <ShareButton size="20px" />
+              {searchedUser?.email ? (
+                <EmailButton email={searchedUser.email} size="20px" />
+              ) : null}
             </Box>
           </Box>
           <Divider orientation="vertical" flexItem sx={{ mx: 3 }} />
