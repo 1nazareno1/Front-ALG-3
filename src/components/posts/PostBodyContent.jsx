@@ -2,7 +2,7 @@ import { Message } from "@mui/icons-material";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { PostComment } from "./PostComment";
 import { CommentBox } from "./CommentBox";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 export const PostBodyContent = ({
   // handleUserLike,
@@ -28,7 +28,14 @@ export const PostBodyContent = ({
 
   return (
     <>
-      <Typography>{contenido}</Typography>
+      <Typography>
+        {contenido.split("<br/>").map((line, index) => (
+          <Fragment key={"post-content" + index}>
+            {line}
+            <br />
+          </Fragment>
+        ))}
+      </Typography>
       <Box display={"flex"} gap={2} flexDirection={"column"}>
         {/* <Box
               display={"flex"}
@@ -84,7 +91,7 @@ export const PostBodyContent = ({
             <CircularProgress size={20} />
             <Typography fontSize={12}>Cargando posts...</Typography>
           </Box>
-        ) : comments.length > 0 ? (
+        ) : comments?.length > 0 ? (
           <>
             {comments.slice(0, pagination * 5).map((comment) => (
               <PostComment

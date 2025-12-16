@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Avatar, Box, Tooltip, Typography } from "@mui/material";
 import { getTimeAgoFromString } from "../../utils/Commons";
 import { Delete, Flag } from "@mui/icons-material";
@@ -109,7 +109,14 @@ export const PostComment = ({
           </Box>
         </Box>
         <Box display={"flex"} gap={1}>
-          <Typography fontSize={15}>{contenido}</Typography>
+          <Typography fontSize={15}>
+            {contenido.split("<br/>").map((line, index) => (
+              <Fragment key={index}>
+                {line}
+                <br />
+              </Fragment>
+            ))}
+          </Typography>
         </Box>
       </Box>
     </Box>

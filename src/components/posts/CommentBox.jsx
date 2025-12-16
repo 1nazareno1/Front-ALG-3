@@ -49,7 +49,7 @@ export const CommentBox = ({
     try {
       await dispatch(
         postMessageInPost({
-          body: commentForm.body,
+          body: commentForm.body.split("\n").filter(Boolean).join("<br/>"),
           postId: commentForm.postId,
           userId: commentForm.userId,
         })
@@ -86,7 +86,7 @@ export const CommentBox = ({
         value={commentForm.body}
         onChange={handleCommentChange}
         onKeyDown={(e) => {
-          if (e.key === "Enter" && !e.shiftKey && validForm) {
+          if (e.key === "Enter" && e.ctrlKey && validForm) {
             handleSubmit(e);
           }
         }}

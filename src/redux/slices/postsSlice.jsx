@@ -110,7 +110,12 @@ export const getMessagesByPostId = createAsyncThunk(
         `http://localhost:5000/api/mensajes/findAllInPost/${postId}`
       );
       return res.data;
-    } catch {
+    } catch (err) {
+      console.log(err);
+      if (String(err.status).startsWith("4")) {
+        toast.error(`Hubo un error al cargar los mensajes del post`);
+        return;
+      }
       toast.error(`No se pudo obtener los mensajes del post de id #${postId}`);
     }
   }

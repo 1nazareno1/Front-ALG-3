@@ -3,10 +3,11 @@ import { Delete, Flag } from "@mui/icons-material";
 import { UserCardModalComponent } from "./UserCardModalComponent";
 import { getTimeAgoFromString } from "../../utils/Commons";
 import { useAuth } from "../../hooks/contexts/AuthenticationContext";
+import { ShareButton } from "../commons/ShareURL";
 
 export const PostTopContent = ({
   handleDeleteModal,
-  handleReportModal,
+  handleOpenReportPostModal,
   navigate,
   postData,
   setUserModalOpen,
@@ -39,11 +40,7 @@ export const PostTopContent = ({
               />
             ) : null}
           </Box>
-          <Box
-            display={"flex"}
-            justifyContent={"space-between"}
-            alignItems={"center"}
-          >
+          <Box display={"flex"} justifyContent={"space-between"}>
             <Typography
               fontSize={"40px"}
               fontWeight={700}
@@ -57,7 +54,7 @@ export const PostTopContent = ({
             >
               {postData.titulo}
             </Typography>{" "}
-            <Box display={"flex"} gap={1}>
+            <Box display={"flex"}>
               <Tooltip placement={"top"} title="Denunciar post">
                 <Box
                   sx={(theme) => ({
@@ -68,7 +65,7 @@ export const PostTopContent = ({
                       transform: "translateY(-2.5px)",
                     },
                   })}
-                  onClick={() => handleReportModal()}
+                  onClick={() => handleOpenReportPostModal()}
                 >
                   <Flag />
                 </Box>
@@ -92,6 +89,7 @@ export const PostTopContent = ({
                   </Box>
                 </Tooltip>
               ) : null}
+              <ShareButton title={postData.titulo} />
             </Box>
           </Box>
         </>

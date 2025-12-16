@@ -77,7 +77,11 @@ export const CreatePostPage = () => {
     event.preventDefault();
     try {
       await dispatch(
-        createPost({ ...postData, authorId: userInfo.userID })
+        createPost({
+          ...postData,
+          body: postData.body.split("\n").filter(Boolean).join("<br/>"),
+          authorId: userInfo.userID,
+        })
       ).unwrap();
       toast.success("Post creado con éxito");
       navigate(`/foro/${postData.categoryId}`);
