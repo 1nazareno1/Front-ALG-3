@@ -26,11 +26,11 @@ export const Header = ({ upLg }) => {
       />
       <Box>
         <Typography fontSize={!upLg ? 18 : 32} fontWeight={500}>
-          Bienvenidos al foro de Iseta
+          Bienvenidos al foro de ISETA
         </Typography>
         <Typography fontSize={!upLg ? 11 : 13}>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt ipsa,
-          assumenda reiciendis eos accusantium expedita molestias!
+          Este es un espacio creado para compartir ideas, aprender juntos y fortalecer nuestra comunidad a través del respeto y la colaboración. 
+          Aquí todas las voces cuentan, así que los invitamos a participar, aportar y disfrutar de este lugar pensado para crecer y construir en conjunto. ¡Sean todos muy bienvenidos!
         </Typography>
       </Box>
     </Box>
