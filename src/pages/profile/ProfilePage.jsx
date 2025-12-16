@@ -12,11 +12,14 @@ import { getUserById } from "../../redux/slices/usersSlice";
 import { getPosts } from "../../redux/slices/postsSlice";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import EditIcon from "@mui/icons-material/Edit";
+import DescriptionIcon from '@mui/icons-material/Description';
+
 
 export const ProfilePage = () => {
   const { searchedUser, status } = useSelector((state) => state.usuarios);
   const { userID } = useSelector((state) => state.auth);
   const [userPosts, setUserPosts] = React.useState([]);
+  const [userCV, setUserCV] = React.useState(null);
   const { downMd } = useWindowSize();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -39,6 +42,19 @@ export const ProfilePage = () => {
     };
     fetchData();
   }, [dispatch, searchedUser, userId, navigate]);
+
+  // Cuando tengamos la API, reemplazar esto con una llamada real a /api/curriculum/:userId
+  useEffect(() => {
+    // Por ahora, busca en localStorage como placeholder
+    const storedCV = localStorage.getItem('curriculumData');
+    if (storedCV) {
+      try {
+        setUserCV(JSON.parse(storedCV));
+      } catch (e) {
+        console.error('Error al parsear CV de localStorage:', e);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const fetchPostData = async () => {
@@ -293,6 +309,60 @@ export const ProfilePage = () => {
                 </Box>
               </Box>
             </Box>
+
+            {/*Cargar CV*/}
+            <Box>
+              <Box
+                sx={(theme) => ({
+                  backgroundColor: theme.palette.primary.main,
+                  borderTopLeftRadius: downMd
+                    ? theme.spacing(0)
+                    : theme.spacing(1),
+                  borderTopRightRadius: downMd
+                    ? theme.spacing(0)
+                    : theme.spacing(1),
+                  color: theme.palette.primary.contrastText,
+                  height: "40px",
+                  padding: theme.spacing(1.25),
+                  width: "100%",
+                })}
+              >
+                <Typography fontSize={"14px"}>Currículum Vitae</Typography>
+              </Box>
+              <Box
+                p={1}
+                sx={(theme) => ({
+                  display: "flex",
+                  gap: 1.5,
+                  flexDirection: "column",
+                  paddingTop: theme.spacing(1.5),
+                  paddingInline: theme.spacing(1.5),
+                  backgroundColor: theme.palette.secondary.light,
+                  borderBottomLeftRadius: 8,
+                  borderBottomRightRadius: 8,
+                })}
+              >
+                <Box display={"flex"} justifyContent={"space-between"}>
+                  <Typography fontSize={"14px"} fontWeight={500}>
+                    {userCV ? 'CV creado' : 'Crea tu CV para la bolsa de trabajo'}
+                  </Typography>
+                  <Button 
+                    onClick={() => navigate(userCV ? `/editar-cv/${userId}` : "/crear-cv")}
+                    variant="contained" 
+                    startIcon={<DescriptionIcon />} 
+                  >
+                    {userCV ? 'Editar CV' : 'Crear CV'}
+                  </Button>
+                </Box>
+              </Box>
+                
+            </Box>
+
+
+
+
+
+
           </Box>
         </Box>
       ) : (

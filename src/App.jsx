@@ -21,6 +21,7 @@ import { AuthProvider } from "./hooks/contexts/AuthenticationContext";
 function App() {
   return (
     <>
+
       <Providers>
         <AuthProvider>
           <BrowserRouter>
@@ -36,10 +37,8 @@ function App() {
                     <Route path="/buscar" element={<SearchPage />} />
                     <Route path="/perfil/:id" element={<ProfilePage />} />
                     <Route path="/crear-post" element={<CreatePostPage />} />
-                    <Route
-                      path="/CurriculumForm"
-                      element={<CurriculumForm />}
-                    />
+                    <Route path="/crear-cv" element={<CurriculumForm />} />
+                    <Route path="/editar-cv/:id" element={<CurriculumForm />} />
                     {/* <Route path="/calendario" element={<Calendario />} /> */}
                   </Routes>
                 </Box>
@@ -49,6 +48,7 @@ function App() {
           </BrowserRouter>
         </AuthProvider>
       </Providers>
+
     </>
   );
 }
