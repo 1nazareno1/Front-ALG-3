@@ -7,32 +7,43 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserSession } from "../../redux/slices/authSlice";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
+import { useSelector } from "react-redux";
+import { useEffect, useMemo, useState } from "react";
+import { useAuth } from "../../hooks/contexts/AuthenticationContext";
+import { DebounceClass, validateEmail, validatePassword } from "../../utils/Commons";
 
 export const LoginModal = ({ open, onClose }) => {
   const { status } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  const { handleLogin } = useAuth();
 
-  const [nombre, setNombre] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleLogin = async () => {
-    try {
-      const response = await dispatch(getUserSession({ email: nombre, password })).unwrap();
-    } catch {
-      toast.error("Error al iniciar sesión");
-    }
-  };
-
-  // condición de validación: ambos campos llenos
-  const isFormValid = nombre.trim().length > 3 && password.trim().length > 7;
 
   useEffect(() => {
     if (status === "succesful") onClose();
   }, [status, onClose]);
+
+  // Validaciones y submit: email y contraseña
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const debounce = useMemo(() => new DebounceClass(500), []);
+
+  function handleSubmit() {
+    if (status === "loading") return;
+    if (!validateEmail(email) || !validatePassword(password)) return;
+    handleLogin({ email, password });
+  }
+
+  const isFormValid = validateEmail(email) && validatePassword(password);
+
+  useEffect(() => {
+    debounce.callback(() => {
+      setEmailError(email.length > 0 ? !validateEmail(email) : false);
+      setPasswordError(
+        password.length > 0 ? !validatePassword(password) : false
+      );
+    });
+  }, [email, password, debounce]);
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -95,12 +106,21 @@ export const LoginModal = ({ open, onClose }) => {
         <TextField
           variant="outlined"
           fullWidth
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleSubmit();
+            }
+          }}
+          type="email"
           sx={{ mb: 2 }}
           InputProps={{
             sx: { height: 35, fontsize: 15 },
           }}
+          helperText={emailError ? "Por favor escriba un email válido" : ""}
+          error={emailError}
         />
 
         {/* Contraseña */}
@@ -121,16 +141,28 @@ export const LoginModal = ({ open, onClose }) => {
           fullWidth
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleSubmit();
+            }
+          }}
           sx={{ mb: 3 }}
           InputProps={{
             sx: { height: 35, fontsize: 15 },
           }}
+          helperText={
+            passwordError
+              ? "La contraseña debe tener al menos 8 caracteres"
+              : ""
+          }
+          error={passwordError}
         />
 
         {/* Botón ingresar */}
         <Button
-          onClick={handleLogin}
-          disabled={!isFormValid || status === "loading"} // 🔹 bloqueo dinámico
+          onClick={() => handleLogin({ email, password })}
+          disabled={emailError || !isFormValid || status === "loading"}
           sx={(theme) => ({
             alignItems: "center",
             variant: "contained",

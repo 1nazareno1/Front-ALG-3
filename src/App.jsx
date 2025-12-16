@@ -11,38 +11,44 @@ import { Providers } from "./redux/Providers";
 import { RegisterPage } from "./pages/register/RegisterPage";
 import { SearchPage } from "./pages/search/SearchPage";
 import { theme } from "./theme/Theme";
-import { ThemeProvider } from "@mui/material";
+import { Box, ThemeProvider } from "@mui/material";
 import { Toaster } from "sonner";
 
 import CurriculumForm from "./pages/profile/CurriculumForm";
+import { AuthProvider } from "./hooks/contexts/AuthenticationContext";
 
 //* Este archivo contiene toda la aplicación
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Providers>
-          <ThemeProvider theme={theme}>
-            <Interface>
-              <Routes>
-                <Route path="/inicio" index element={<HomePage />} />
-                <Route path="/foro/:id" element={<ForumPage />} />
-                <Route path="/post/:id" element={<ForumPostPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/registro" element={<RegisterPage />} />
-                <Route path="/buscar" element={<SearchPage />} />
-                <Route path="/perfil/:id" element={<ProfilePage />} />
-                <Route path="/crear-post" element={<CreatePostPage />} />
-                <Route path="/crear-cv" element={<CurriculumForm />} />
-                <Route path="/editar-cv/:id" element={<CurriculumForm />} />
 
-                {/* <Route path="/calendario" element={<Calendario />} /> */}
-              </Routes>
-            </Interface>
-          </ThemeProvider>
-          <Toaster richColors position="bottom-right" expand />
-        </Providers>
-      </BrowserRouter>
+      <Providers>
+        <AuthProvider>
+          <BrowserRouter>
+            <ThemeProvider theme={theme}>
+              <Interface>
+                <Box sx={{ marginTop: "90px" }}>
+                  <Routes>
+                    <Route path="/inicio" index element={<HomePage />} />
+                    <Route path="/foro/:id" element={<ForumPage />} />
+                    <Route path="/post/:id" element={<ForumPostPage />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/registro" element={<RegisterPage />} />
+                    <Route path="/buscar" element={<SearchPage />} />
+                    <Route path="/perfil/:id" element={<ProfilePage />} />
+                    <Route path="/crear-post" element={<CreatePostPage />} />
+                    <Route path="/crear-cv" element={<CurriculumForm />} />
+                    <Route path="/editar-cv/:id" element={<CurriculumForm />} />
+                    {/* <Route path="/calendario" element={<Calendario />} /> */}
+                  </Routes>
+                </Box>
+              </Interface>
+            </ThemeProvider>
+            <Toaster richColors position="bottom-right" expand />
+          </BrowserRouter>
+        </AuthProvider>
+      </Providers>
+
     </>
   );
 }

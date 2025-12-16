@@ -44,6 +44,8 @@ export const LateralNavbar = () => {
         width: "78px",
         paddingTop: theme.spacing(2),
         gap: theme.spacing(3),
+        position: "fixed",
+        left: 0,
       })}
     >
       <Box display={"flex"} flexDirection={"column"} gap={1}>

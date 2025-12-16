@@ -17,6 +17,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 
 export const ProfilePage = () => {
   const { searchedUser, status } = useSelector((state) => state.usuarios);
+  const { userID } = useSelector((state) => state.auth);
   const [userPosts, setUserPosts] = React.useState([]);
   const [userCV, setUserCV] = React.useState(null);
   const { downMd } = useWindowSize();
@@ -40,7 +41,7 @@ export const ProfilePage = () => {
       }
     };
     fetchData();
-  }, [searchedUser, userId, navigate]);
+  }, [dispatch, searchedUser, userId, navigate]);
 
   // Cuando tengamos la API, reemplazar esto con una llamada real a /api/curriculum/:userId
   useEffect(() => {
@@ -73,7 +74,7 @@ export const ProfilePage = () => {
       }
     };
     fetchPostData();
-  }, [searchedUser]);
+  }, [dispatch, navigate, searchedUser, userId]);
 
   const getRegistrationDate = (dateString) => {
     const date = new Date(dateString);
@@ -100,7 +101,7 @@ export const ProfilePage = () => {
                 overflow={"hidden"}
                 textOverflow={"ellipsis"}
               >
-                {searchedUser?.email|| "Email no proporcionado"}
+                {searchedUser?.email || "Email no proporcionado"}
               </Typography>
             </Box>
             <Box>
@@ -124,9 +125,11 @@ export const ProfilePage = () => {
               <Typography variant="h4" fontWeight={700}>
                 {searchedUser.nombre_apellido || "Nombre de usuario"}
               </Typography>
-              <Button variant="contained" startIcon={<EditIcon />}>
-                Editar perfil
-              </Button>
+              {userID == userId ? (
+                <Button variant="contained" startIcon={<EditIcon />}>
+                  Editar perfil
+                </Button>
+              ) : null}
             </Box>
             <Divider flexItem sx={{ mb: 1 }} />
             {/* Posts del usuario */}
@@ -175,7 +178,13 @@ export const ProfilePage = () => {
                         })}
                       >
                         {" "}
-                        <Typography fontWeight={500}>{post.titulo}</Typography>
+                        <Typography
+                          fontWeight={500}
+                          sx={{ cursor: "pointer" }}
+                          onClick={() => navigate(`/post/${post.id}`)}
+                        >
+                          {post.titulo}
+                        </Typography>
                         <Typography fontSize={14} color="text.secondary">
                           {new Date(post.createdAt).toLocaleDateString(
                             "es-ES",
@@ -247,7 +256,7 @@ export const ProfilePage = () => {
                     Carrera
                   </Typography>
                   <Typography fontSize={"14px"}>
-                    Analisis de sistemas
+                    {searchedUser.carrera_iseta}
                   </Typography>
                 </Box>
                 <Box display={"flex"} justifyContent={"space-between"}>

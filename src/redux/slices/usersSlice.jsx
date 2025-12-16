@@ -11,10 +11,7 @@ const initialState = {
 
 export const createUser = createAsyncThunk("users/createUser", async (id) => {
   try {
-    const res = await axios.put(
-      `http://localhost:5000/api/user/${id}`
-
-    );
+    const res = await axios.put(`http://localhost:5000/api/user/${id}`);
     return res.data;
   } catch {
     toast.error(`ERROR: No se pudo crear el usuario`);
@@ -23,10 +20,7 @@ export const createUser = createAsyncThunk("users/createUser", async (id) => {
 
 export const getUserById = createAsyncThunk("users/getUserById", async (id) => {
   try {
-    const res = await axios.get(
-      `http://localhost:5000/api/user/${id}`
-
-    );
+    const res = await axios.get(`http://localhost:5000/api/user/${id}`);
     return res.data;
   } catch {
     toast.error(`ERROR: No se pudo obtener el usuario de ID ${id}`);
@@ -36,7 +30,6 @@ export const getUserById = createAsyncThunk("users/getUserById", async (id) => {
 export const getAllUsers = createAsyncThunk("users/getAllUsers", async () => {
   try {
     const res = await axios.get(`http://localhost:5000/api/user`);
-    
     return res.data;
   } catch {
     toast.error(`ERROR: No se pudieron obtener los usuarios`);
