@@ -31,6 +31,7 @@ export const UserCardComponent = ({
         flexDirection: "column",
         padding: theme.spacing(2),
         minWidth: "327px",
+        marginLeft: "auto",
       })}
     >
       {username ? (

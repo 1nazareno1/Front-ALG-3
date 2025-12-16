@@ -1,11 +1,13 @@
-import { Add } from "@mui/icons-material";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { CreateButton } from "../commons/CreateButton";
 
 export const ForumCategories = ({ categories }) => {
   const { downMd } = useWindowSize();
   const navigate = useNavigate();
+  const { rol } = useSelector((state) => state.auth);
 
   return (
     <Box
@@ -15,24 +17,18 @@ export const ForumCategories = ({ categories }) => {
         maxWidth: "850px",
       })}
     >
-      <Box display={"flex"} justifyContent={downMd ? "flex-start" : "flex-end"}>
-        <Button
-          variant="contained"
-          onClick={() => navigate("/crear-post")}
-          sx={(theme) => ({
-            display: "flex",
-            alignItems: "center",
-            gap: theme.spacing(1),
-            height: "40px",
-            marginLeft: downMd ? theme.spacing(2) : theme.spacing(0),
-            marginBottom: theme.spacing(2),
-          })}
+      {rol === "ADMIN" && (
+        <Box
+          display={"flex"}
+          justifyContent={downMd ? "flex-start" : "flex-end"}
+          mb={2}
         >
-          {" "}
-          <Add />
-          Crear categoria
-        </Button>
-      </Box>
+          <CreateButton
+            onClick={() => navigate("/crear-categoria")}
+            text="Crear categoria"
+          />
+        </Box>
+      )}
       <Box
         sx={(theme) => ({
           backgroundColor: theme.palette.primary.main,
@@ -114,6 +110,7 @@ export const ForumCategories = ({ categories }) => {
                   <Typography
                     fontSize={14}
                     sx={(theme) => ({
+                      fontWeight: 500,
                       cursor: "pointer",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -130,14 +127,14 @@ export const ForumCategories = ({ categories }) => {
                   </Typography>
                   <Typography
                     fontSize={12}
-                    sx={(theme) => ({
+                    sx={{
                       cursor: "pointer",
                       height: "36px",
                       overflow: "hidden",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "wrap",
-                    })}
+                    }}
                     onClick={() => navigate(`/foro/${id}`)}
                   >
                     {contenido}

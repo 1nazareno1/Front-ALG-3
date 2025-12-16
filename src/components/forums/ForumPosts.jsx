@@ -1,17 +1,24 @@
 import {
-  Add,
   ChevronLeft,
   LockOutlined,
   PushPinOutlined,
 } from "@mui/icons-material";
-import { Box, Button, Tooltip, Typography } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { CreateButton } from "../commons/CreateButton";
 
 export const ForumPosts = ({ posts, postsStatus, users }) => {
   const { downMd } = useWindowSize();
   const navigate = useNavigate();
   const location = useLocation();
+  const { isLogged } = useSelector((state) => state.auth);
+  const { postsCategories } = useSelector((state) => state.posts);
+
+  const categoryName = postsCategories.find(
+    (c) => c.id == location.pathname.split("/")[2]
+  )?.nombre;
 
   return (
     <Box
@@ -38,26 +45,17 @@ export const ForumPosts = ({ posts, postsStatus, users }) => {
             Volver al foro
           </Typography>
         </Box>
-        <Button
-          disabled={postsStatus !== "succesful"}
-          variant="contained"
-          onClick={() =>
-            navigate("/crear-post", {
-              state: { forumId: location.pathname.split("/")[2] },
-            })
-          }
-          sx={(theme) => ({
-            display: "flex",
-            alignItems: "center",
-            gap: theme.spacing(1),
-            height: "40px",
-            marginLeft: downMd ? theme.spacing(2) : theme.spacing(0),
-          })}
-        >
-          {" "}
-          <Add />
-          Crear post
-        </Button>
+        {isLogged && (
+          <CreateButton
+            disabled={postsStatus !== "succesful"}
+            onClick={() => {
+              navigate("/crear-post", {
+                state: { forumId: location.pathname.split("/")[2] },
+              });
+            }}
+            text="Crear post"
+          />
+        )}
       </Box>
       <Box
         sx={(theme) => ({
@@ -70,7 +68,7 @@ export const ForumPosts = ({ posts, postsStatus, users }) => {
           width: "100%",
         })}
       >
-        <Typography>General</Typography>
+        <Typography>{categoryName}</Typography>
       </Box>
       <Box display={"flex"}>
         <Box
@@ -90,7 +88,7 @@ export const ForumPosts = ({ posts, postsStatus, users }) => {
           })}
         >
           <Typography fontSize={10} color="primary.contrastText">
-            Temas
+            Posts
           </Typography>
         </Box>
         <Box
@@ -156,7 +154,7 @@ export const ForumPosts = ({ posts, postsStatus, users }) => {
           <Typography fontSize={14} textAlign={"center"}>
             {posts == undefined
               ? ""
-              : "No existen posts dentro de esta categoria. ¡Se el primero en crear            uno!"}
+              : "No existen posts dentro de esta categoria. ¡Se el primero en crear uno!"}
           </Typography>
         </Box>
       ) : (

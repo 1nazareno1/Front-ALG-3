@@ -97,12 +97,11 @@ export const SearchPage = () => {
       )}
       {searchStatus === "succesful" && results.length > 0 ? (
         <Box mt={5}>
-          {results.map((post) => {
-            return <SearchResult post={post} />;
-          })}
-          {results.map((post) => {
-            return <SearchResult post={post} />;
-          })}
+          <Box>
+            <Typography fontWeight={400} fontSize={14} color="textSecondary" mb={1}>
+              Se ha{results.length > 1 ? "n" : ""} encontrado {results.length} resultado{results.length > 1 ? "s" : ""}:
+            </Typography>
+          </Box>
           {results.map((post) => {
             return <SearchResult post={post} />;
           })}

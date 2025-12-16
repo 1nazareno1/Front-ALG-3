@@ -1,21 +1,39 @@
 import { ArrowBack } from "@mui/icons-material";
 import { Box, CircularProgress } from "@mui/material";
-import { PostTopContent } from "../../components/posts/PostTopContent";
-import { UserCardComponent } from "../../components/posts/UserCardComponent";
+import { DeletePostModal } from "../../components/modals/DeletePostModal";
 import { PostBodyContent } from "../../components/posts/PostBodyContent";
-import { ReportModal } from "../../components/modals/ReportModal";
+import { PostTopContent } from "../../components/posts/PostTopContent";
+import { ReportPostModal } from "../../components/modals/ReportPostModal";
 import { useForumPostPage } from "./useForumPostPage";
+import { UserCardComponent } from "../../components/posts/UserCardComponent";
+import { ReportMessageModal } from "../../components/modals/ReportMessageModal";
+import { DeleteMessageModal } from "../../components/modals/DeleteMessageModal";
 
 export const ForumPostPage = () => {
   const {
+    deleteMessageData,
+    deleteMessageModalOpen,
+    handleDelete,
+    handleDeleteMessage,
+    handleDeleteModal,
+    handleMessageReport,
+    handleOpenMessageDeleteModal,
+    handleOpenMessageReportModal,
     handleReport,
     handleReportModal,
     handleUserLike,
     loading,
+    messagesStatus,
     navigate,
     postData,
+    postsStatus,
+    reportMessageData,
+    reportMessageModalOpen,
     reportModalOpen,
     searchedUser,
+    setDeleteMessageModalOpen,
+    setPostData,
+    setReportMessageModalOpen,
     setReportModalOpen,
     setUserModalOpen,
     upLg,
@@ -29,6 +47,7 @@ export const ForumPostPage = () => {
         display: "flex",
         gap: theme.spacing(3),
         margin: theme.spacing(3),
+        paddingTop: theme.spacing(3),
         [theme.breakpoints.down("lg")]: {
           gap: theme.spacing(6),
           margin: theme.spacing(2),
@@ -64,7 +83,8 @@ export const ForumPostPage = () => {
             })}
           >
             <PostTopContent
-              handleReport={handleReportModal}
+              handleDeleteModal={handleDeleteModal}
+              handleReportModal={handleReportModal}
               navigate={navigate}
               postData={postData}
               setUserModalOpen={setUserModalOpen}
@@ -73,8 +93,13 @@ export const ForumPostPage = () => {
               userModalOpen={userModalOpen}
             />
             <PostBodyContent
+              handleOpenMessageDeleteModal={handleOpenMessageDeleteModal}
+              handleOpenMessageReportModal={handleOpenMessageReportModal}
               handleUserLike={handleUserLike}
+              messagesStatus={messagesStatus}
+              navigate={navigate}
               postData={postData}
+              setPostData={setPostData}
               userLike={userLike}
             />
           </Box>
@@ -94,12 +119,36 @@ export const ForumPostPage = () => {
         </>
       )}
       {postData ? (
-        <ReportModal
-          handleReport={handleReport}
-          open={reportModalOpen}
-          postTitle={postData.titulo}
-          setOpen={setReportModalOpen}
-        />
+        <>
+          <DeletePostModal
+            handleDelete={handleDelete}
+            open={deleteMessageModalOpen}
+            postId={postData.id}
+            postTitle={postData.titulo}
+            setOpen={setDeleteMessageModalOpen}
+            postsStatus={postsStatus}
+          />
+          <ReportPostModal
+            handleReport={handleReport}
+            open={reportModalOpen}
+            postId={postData.id}
+            postTitle={postData.titulo}
+            setOpen={setReportModalOpen}
+            postsStatus={postsStatus}
+          />
+          <ReportMessageModal
+            open={reportMessageModalOpen}
+            setOpen={setReportMessageModalOpen}
+            handleMessageReport={handleMessageReport}
+            reportMessageData={reportMessageData}
+          />
+          <DeleteMessageModal
+            open={deleteMessageModalOpen}
+            setOpen={setDeleteMessageModalOpen}
+            handleDeleteMessage={handleDeleteMessage}
+            deleteMessageData={deleteMessageData}
+          />
+        </>
       ) : null}
     </Box>
   );
